@@ -41,7 +41,7 @@
   };
 </script>
 
-  <title>咖啡 - 退役競程選手</title>
+  <title>咖啡</title>
   
 
 
@@ -114,11 +114,6 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
 
   </li>
-        <li class="menu-item menu-item-yotube">
-
-    <a href="https://www.youtube.com/@coffee-ul9fj" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>yotube</a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
@@ -132,7 +127,7 @@
             <a href="https://www.facebook.com/profile.php?id=100054052144225" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100054052144225" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
           </span>
           <span class="links-of-author-item">
-            <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+            <a href="https://youtube.com/@coffee-ul9fj" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@coffee-ul9fj" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
           </span>
       </div>
   </ul>
@@ -163,10 +158,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/14/403%20.%20%E6%A8%B9%E7%9B%B4%E5%BE%91/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/14/CSES2215/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/coffee.jpg">
       <meta itemprop="name" content="coffee5427">
       <meta itemprop="description" content="">
     </span>
@@ -177,7 +172,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/03/14/403%20.%20%E6%A8%B9%E7%9B%B4%E5%BE%91/" class="post-title-link" itemprop="url">樹直徑</a>
+            <a href="/2023/03/14/CSES2215/" class="post-title-link" itemprop="url">樹直徑</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +183,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-03-14 19:16:59 / 修改時間：20:03:40" itemprop="dateCreated datePublished" datetime="2023-03-14T19:16:59+08:00">2023-03-14</time>
+              <time title="創建時間：2023-03-14 19:16:59 / 修改時間：22:47:37" itemprop="dateCreated datePublished" datetime="2023-03-14T19:16:59+08:00">2023-03-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,8 +204,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/03/14/403%20.%20%E6%A8%B9%E7%9B%B4%E5%BE%91/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/14/403 . 樹直徑/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/03/14/CSES2215/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/14/CSES2215/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -225,12 +220,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>小風手上有一棵 $N$ 個點的樹，顧名思義，它有 $N-1$ 條邊連接著 $N$ 個點，使得任意兩個點都可以透過若干條邊抵達，節點以 $1$ 至 $N$ 編號。</p>
-<p>小風覺得這棵樹太長了，所以他想進行如下操作<strong>一次</strong>：砍掉樹上的其中一條邊，再另外加上一條邊回去使其保持連通。小風想要透過這個操作減少樹的直徑，請問小風可以透過這個操作讓樹直徑最小為何？</p>
-<p>對任意兩點，我們定義其距離為這兩個點之間唯一路徑的邊數，對一個樹我們定義其直徑為任意兩點之間距離的最大值。</p>
+          <h1 id="CSES-2215"><a href="#CSES-2215" class="headerlink" title="CSES 2215"></a><a target="_blank" rel="noopener" href="https://cses.fi/problemset/task/2215/">CSES 2215</a></h1><h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
+<li><p>構造一個 $1..n$ 的排列使得他的 <strong>最長單調子序列</strong> 恰好長度為 $k$</p>
+</li>
+<li><p><strong>最長單調子序列</strong> 是指這個子序列單調遞增或單調遞減</p>
+</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/03/14/403%20.%20%E6%A8%B9%E7%9B%B4%E5%BE%91/#more" rel="contents">
+              <a class="btn" href="/2023/03/14/CSES2215/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -254,10 +252,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/14/default/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/coffee.jpg">
       <meta itemprop="name" content="coffee5427">
       <meta itemprop="description" content="">
     </span>
@@ -268,7 +266,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/03/14/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2022/03/14/default/" class="post-title-link" itemprop="url">Hello Blog</a>
         </h2>
 
         <div class="post-meta">
@@ -278,8 +276,15 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2023-03-14 18:47:52" itemprop="dateCreated datePublished" datetime="2023-03-14T18:47:52+08:00">2023-03-14</time>
+              <time title="創建時間：2022-03-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-14T00:00:00+08:00">2022-03-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2023-03-14 22:46:46" itemprop="dateModified" datetime="2023-03-14T22:46:46+08:00">2023-03-14</time>
+              </span>
 
           
   
@@ -290,8 +295,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/03/14/hello-world/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/14/hello-world/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2022/03/14/default/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/03/14/default/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -306,16 +311,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+          <p>the start of the blog</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/14/default/">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -388,6 +392,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="coffee5427"
+      src="/images/coffee.jpg">
   <p class="site-author-name" itemprop="name">coffee5427</p>
   <div class="site-description" itemprop="description"></div>
 </div>
