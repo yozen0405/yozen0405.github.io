@@ -791,8 +791,9 @@ pre .javascript .function {
   margin-bottom: 20px;
   padding: 1em;
   position: relative;
-  border: 1px solid #eee;
-  border-left-width: 5px;
+  background: #f9f9f9;
+  border: initial;
+  border-left: 3px solid #eee;
 }
 .post-body .note h2,
 .post-body .note h3,
@@ -834,6 +835,7 @@ pre .javascript .function {
   font-weight: 900;
 }
 .post-body .note.default {
+  background: #f7f7f7;
   border-left-color: #777;
 }
 .post-body .note.default h2,
@@ -848,6 +850,7 @@ pre .javascript .function {
   color: #777;
 }
 .post-body .note.primary {
+  background: #f5f0fa;
   border-left-color: #6f42c1;
 }
 .post-body .note.primary h2,
@@ -862,6 +865,7 @@ pre .javascript .function {
   color: #6f42c1;
 }
 .post-body .note.info {
+  background: #eef7fa;
   border-left-color: #428bca;
 }
 .post-body .note.info h2,
@@ -876,6 +880,7 @@ pre .javascript .function {
   color: #428bca;
 }
 .post-body .note.success {
+  background: #eff8f0;
   border-left-color: #5cb85c;
 }
 .post-body .note.success h2,
@@ -890,6 +895,7 @@ pre .javascript .function {
   color: #5cb85c;
 }
 .post-body .note.warning {
+  background: #fdf8ea;
   border-left-color: #f0ad4e;
 }
 .post-body .note.warning h2,
@@ -904,6 +910,7 @@ pre .javascript .function {
   color: #f0ad4e;
 }
 .post-body .note.danger {
+  background: #fcf1f2;
   border-left-color: #d9534f;
 }
 .post-body .note.danger h2,
@@ -1276,7 +1283,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff4;
+  background: #d1491b;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1829,7 +1836,6 @@ pre .javascript .function {
   visibility: visible;
 }
 .post-body iframe,
-.post-body img,
 .post-body video {
   margin-bottom: 20px;
 }
@@ -2786,4 +2792,37 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
+}
+.content-wrap {
+  opacity: 0.95;
+}
+.side bar {
+  opacity: 0.95;
+}
+.popup {
+  opacity: 0.95;
+}
+.blockquote-center:before {
+  border-top: 1px solid #111;
+  filter: invert(100%);
+}
+.blockquote-center:after {
+  border-bottom: 1px solid #111;
+  filter: invert(100%);
+}
+blockquote {
+  color: light #808080;
+}
+.post-body .note {
+  color: #000;
+}
+.post-body .note span.exturl {
+  color: #0593d3;
+  border-bottom: none;
+  border-bottom: 1px solid #0593d3;
+}
+.post-body .note span.exturl:hover {
+  color: #fc6423;
+  border-bottom: none;
+  border-bottom: 1px solid #fc6423;
 }

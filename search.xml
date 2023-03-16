@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello Blog</title>
+    <url>/2022/03/14/default/</url>
+    <content><![CDATA[<p>終於搞出自己的 $\text{Blog}$ 了，ya!</p>
+<div class="note default">
+            <p>default 提示</p>
+          </div>
+<div class="note primary">
+            <p>primary 提示</p>
+          </div>
+<div class="note success">
+            <p>success 提示</p>
+          </div>
+<div class="note info">
+            <p>info 提示</p>
+          </div>
+<div class="note warning">
+            <p>warning 提示</p>
+          </div>
+<div class="note danger">
+            <p>danger 提示</p>
+          </div>
+<div class="note info no-icon">
+            <h4 id="No-icon-note"><a href="#No-icon-note" class="headerlink" title="No icon note"></a>No icon note</h4><p>Note <strong>without</strong> icon: <code>note info no-icon</code></p>
+          </div>
+<p><img src="https://lh3.googleusercontent.com/oLEVnJW3kea37wC5emwa7vXFxSbuCoQnutCfXF_QYNLNJE6I6C42vgRUB6yaReYoCYigaavvh3UlnePaa91Ytrv9EA=w640-h400-e365-rj-sc0x00ffffff" alt=""></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>vscode install</title>
+    <url>/2023/03/14/vscode/</url>
+    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
+<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
+<li>mingw64下載 (可自行挑選下載方式)<ul>
+<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
+<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
+<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
+<li>ex: <code>cd Desktop</code></li>
+</ul>
+</li>
+<li><p><code>cd ..</code> 退到上一步的folder</p>
+</li>
+<li><p><code>mkdir &lt;name&gt;</code> 創建一個新的folder </p>
+<ul>
+<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
+</ul>
+</li>
+</ul>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
+<li><p><code>ctrl+shift+p</code> vscode搜尋欄</p>
+</li>
+<li><p><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code></p>
+<ul>
+<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
+</ul>
+</li>
+<li><p><code>.\&lt;檔名&gt;.exe</code> 執行code</p>
+<ul>
+<li><code>.\main.exe</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><ul>
+<li>如果找不到 bin 資料夾?<ul>
+<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   </li>
+</ul>
+</li>
+<li>如果出現類似已下指令 可能代表你忘了  <code>save</code> </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果有 <code>save</code> 解果出現以下指令 代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>教學</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSES 2215</title>
     <url>/2023/03/14/CSES2215/</url>
     <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/2215/">題目</a></h2><ul>
@@ -82,88 +166,65 @@
 <li><a href="https://abc864197532.github.io/2021/09/15/cses-additional-sol/">https://abc864197532.github.io/2021/09/15/cses-additional-sol/</a></li>
 </ul>
 ]]></content>
-      <categories>
-        <category>IOIC</category>
-      </categories>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
   </entry>
   <entry>
-    <title>Hello Blog</title>
-    <url>/2022/03/14/default/</url>
-    <content><![CDATA[<p>終於搞出自己的 $\text{Blog}$ 了，ya!</p>
-<div class="note default">
-            <p>default 提示</p>
+    <title>中國剩餘定理 不互質</title>
+    <url>/2023/03/16/CRT/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
+<li>給你一套方程組如下，其中模數( $k_i$ )不一定互質，求出最小正整數解 $x$ ，如果沒有則輸出 $-1$</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{cases}x\equiv p_1\pmod {k_1} \\ x\equiv p_2\pmod {k_2}\\ ......\\ x\equiv p_n\pmod {k_n}\end{cases}</script><span id="more"></span>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>先以兩兩來看 <br></p>
+<p><script type="math/tex">\begin{cases} x\equiv p_1\pmod {k_1} \\x\equiv p_2\pmod {k_2} \end{cases}</script>  <br></p>
+<p>$\Rightarrow \begin{cases} x=k_1x_1+p_1 \tag{1} \\x=k_2x_2+p_2 \end{cases}$  <br></p>
+<p>$k_1x_1+p_1=k_2x_2+p_2$  <br></p>
+<p>$k_1x_1+(-k_2)x_2=p_2-p_1$  <br></p>
+<p>我們下面主要要解的是 $x_1$ 所以跟 $x_2$ 係數的正負沒什麼關西，所以以下都寫正號  <br></p>
+<div class="note info no-icon">
+            <h3 id="貝祖定理"><a href="#貝祖定理" class="headerlink" title="貝祖定理:"></a>貝祖定理:</h3><p>在 $ax+by=m$ 中，若且唯若 $m$ 是 $a$ 及 $b$ 的最大公因數 $\gcd(a,b)$ 的倍數，有整數解  <br></p>
           </div>
-<div class="note primary">
-            <p>primary 提示</p>
+<p>若 $x_1,x_2$ 有解，則整除 $\gcd(k_1,k_2) \mid p_2-p_1$ ， 如果不是的話代表無解  <br></p>
+<p>令 $\gcd(k_1,k_2)=d$，與 $p_2 - p_1 = c$  <br></p>
+<p>$\Rightarrow \frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = \frac{c}{d} \tag{2}$  <br></p>
+<p>其中 $\frac{k_1}{d}$ 與 $\frac{k_2}{d}$ 互質  <br></p>
+<div class="note info no-icon">
+            <h3 id="模逆元移向證明"><a href="#模逆元移向證明" class="headerlink" title="模逆元移向證明:"></a>模逆元移向證明:</h3><p>$a \times b \equiv c \pmod{m}$  <br><br>兩邊同乘 $b^{-1} \Rightarrow a \times (b \times b^{-1}) \equiv c \times b ^{-1} \pmod{m}$  <br><br>$a \equiv c \times b^{-1} \pmod{m}$  <br></p>
           </div>
-<div class="note success">
-            <p>success 提示</p>
-          </div>
-<div class="note info">
-            <p>info 提示</p>
-          </div>
-<div class="note warning">
-            <p>warning 提示</p>
-          </div>
-<div class="note danger">
-            <p>danger 提示</p>
+<p>設 $x^\prime_1$ 為 $\frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = 1$ 的解則， $x^\prime_1 \equiv (\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ，這個可以用 extgcd 算出來  <br><br>故 $(2)$ 式中 $x_1$ 的解可為 $ansx_1 \equiv \frac{c}{d} \times(\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ( $ansx_1$ 是 $(2)$ 式中 $x_1$ 的解)代回 $(1)$  <br></p>
+<p>$X=k_1 \times ansx_1 + p_1$  <br><br>$\Rightarrow X=k_1[\frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_2}{d}]+p_1$  <br><br>$\Rightarrow X =k_1\times \frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_1 k_2}{d}+p_1$  <br><br>而新的同餘式就是  <br><br>$\Rightarrow x \equiv k_1\times\frac{c}{d}\times(\frac{k_1}{d})^{-1}+ p_1 \pmod{\frac{k_1 k_2}{d}}$   <br><br>即可表達為 $x \equiv k_1\times ansx_1 + p_1\pmod{\frac{k_1 k_2}{d}}$   <br><br>又 $k_1 k_2 = \gcd(k_1,k_2) \times \text{lcm}(k_1,k_2)$ $\Rightarrow \frac{k_1 k_2}{d}= lcm$  <br><br>故若得前 $i-1$ 個式子合併得到 $x \equiv X \pmod{lcm}$  <br><br>而與第 $i$ 式合併為 $x=ansx_i\times lcm+X \pmod{\frac{lcm\times k_i}{d}}$  <br></p>
+<p>以上面來的 $x=k_1x_1+p_1$ 說，目前的 $k_1=lcm,p_1=X,x_1=ansx_1=ansx_i目前要求的$  <br></p>
+<div class="note info no-icon">
+            <h3 id="輾轉相除法"><a href="#輾轉相除法" class="headerlink" title="輾轉相除法:  "></a>輾轉相除法:  <br></h3><p>$\gcd(a,b)=gcd(b,b \% a)$  <br><br>令 $d=\gcd(a,b),a=nd,b=md$  <br><br>一直互相相減之後就會得到 $d$  <br><br><a href="https://hackmd.io/@Koios/rJ_lER719">https://hackmd.io/@Koios/rJ_lER719</a>  <br></p>
           </div>
 <div class="note info no-icon">
-            <h4 id="No-icon-note"><a href="#No-icon-note" class="headerlink" title="No icon note"></a>No icon note</h4><p>Note <strong>without</strong> icon: <code>note info no-icon</code></p>
+            <h3 id="證明-為什麼除以一個數取模等於乘以這個數的模逆元"><a href="#證明-為什麼除以一個數取模等於乘以這個數的模逆元" class="headerlink" title="證明: 為什麼除以一個數取模等於乘以這個數的模逆元   "></a>證明: 為什麼除以一個數取模等於乘以這個數的模逆元   <br></h3><p><a href="https://cdn.discordapp.com/attachments/972879937180692551/990257847252160572/unknown.png">證明圖片</a>  <br></p>
           </div>
+<div class="note info no-icon">
+            <h3 id="擴展歐里基德推導"><a href="#擴展歐里基德推導" class="headerlink" title="擴展歐里基德推導:  "></a>擴展歐里基德推導:  <br></h3><p>$ax+by=\gcd(a,b)$  <br><br>$bx_1+(a \% b)y_1=\gcd(a,b)$  <br><br>$\Rightarrow ax+by=bx_1+(a-b\times \lfloor{\frac{a}{b}} \rfloor) y_1$  <br><br>整理右式 $\Rightarrow ax+by=ay_1+b(x_1 - \lfloor{\frac{a}{b}} \rfloor y_1)$  <br><br>推得轉移式 $x=y_1,y=x_1 - \lfloor{\frac{a}{b}} \rfloor y_1$  <br></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          </div>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[<span class="number">1001</span>], k[<span class="number">1001</span>]; </span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> X = p[<span class="number">1</span>];</span><br><span class="line">    <span class="type">int</span> lcm = k[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    x ≡ p1(mod k1)</span></span><br><span class="line"><span class="comment">    x ≡ p2(mod k2)</span></span><br><span class="line"><span class="comment">    x = x1 * k1 + p1</span></span><br><span class="line"><span class="comment">    x = x2 * k2 + p2</span></span><br><span class="line"><span class="comment">    x1 * k1 - x2 * k2 = p2 - p1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">// 可以假設 k1 是已經有的</span></span><br><span class="line">    <span class="comment">// k2 是現在要算的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> c = p[i] - X; <span class="comment">// p2-p1</span></span><br><span class="line">        <span class="type">int</span> d = __gcd(k[i], lcm); <span class="comment">//k1*k2</span></span><br><span class="line">        <span class="keyword">if</span> (c % d != <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">auto</span> [x,y] = <span class="built_in">ex_gcd</span>(lcm/d, k[i]/d); </span><br><span class="line">        <span class="comment">// (lcm/d)*(x1) + (k2/d)*(x2) = 1</span></span><br><span class="line">        x = (c) / d * x % (k[i] / d);</span><br><span class="line">        <span class="comment">// 因為是模逆元, 被 模過 k[i]*d 下, 要是又超過了就要在模一次</span></span><br><span class="line">        X += lcm*x; <span class="comment">// X 每次都要更新</span></span><br><span class="line">        lcm = lcm / d * k[i]; <span class="comment">// lcm 每次都要更新</span></span><br><span class="line">        <span class="comment">// x ≡ X (mod lcm)</span></span><br><span class="line">        X %= lcm;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (X &gt; <span class="number">0</span>) ? X  : X + lcm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cin &gt;&gt; k[i] &gt;&gt; p[i];</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="built_in">china</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>credit :  </p>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_43602607/article/details/108270977?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165719694016781685328819%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165719694016781685328819&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~sobaiduend~default-3-108270977-null-null.185%5Ev2%5Econtrol&amp;utm_term=%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%20%E4%B8%8D%E4%BA%92%E8%B4%A8&amp;spm=1018.2226.3001.4450">資料1</a></li>
+<li><a href="https://img-blog.csdnimg.cn/20191006130325870.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0MyMDIwMzE0Mw==,size_16,color_FFFFFF,t_70">資料2</a></li>
+</ul>
+<h2 id="互質"><a href="#互質" class="headerlink" title="互質"></a>互質</h2><p>$\begin{cases}<br>x\equiv p_1\pmod {k_1} \\<br>x\equiv p_2\pmod {k_2} \\<br>\cdots \\<br>x\equiv p_k\pmod {k_n}<br>\end{cases}$</p>
+<ul>
+<li>$M = k_1 \times k_2 \times\dots\times k_n$</li>
+<li>$M_i = \frac{M}{k_i}$</li>
+<li>$t_i \equiv M_i^{-1} \pmod {k_i}$</li>
+<li>$X = p_1t_1M_1 + p_2t_2M_2 + \dots +p_nt_nM_n$</li>
+<li>$x=X \pmod{M}$</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> M = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) M *= k[i];</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Mi = M / k[i];</span><br><span class="line">        <span class="keyword">auto</span> [t, y] = <span class="built_in">ex_gcd</span>(Mi, k[i]);</span><br><span class="line">        ret = (ret + p[i]*Mi*t) % M;</span><br><span class="line">        <span class="comment">// 最後要去在 1 ~ M 的解, 所以要 mod M</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (ret + M) % M;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
-  </entry>
-  <entry>
-    <title>vscode install</title>
-    <url>/2023/03/14/vscode/</url>
-    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
-<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
-<li>mingw64下載 (可自行挑選下載方式)<ul>
-<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
-<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
-<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
-<li>ex: <code>cd Desktop</code></li>
-</ul>
-</li>
-<li><p><code>cd ..</code> 退到上一步的folder</p>
-</li>
-<li><p><code>mkdir &lt;name&gt;</code> 創建一個新的folder </p>
-<ul>
-<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
-</ul>
-</li>
-</ul>
-<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
-<li><p><code>ctrl+shift+p</code> vscode搜尋欄</p>
-</li>
-<li><p><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code></p>
-<ul>
-<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
-</ul>
-</li>
-<li><p><code>.\&lt;檔名&gt;.exe</code> 執行code</p>
-<ul>
-<li><code>.\main.exe</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><ul>
-<li>如果找不到 bin 資料夾?<ul>
-<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   </li>
-</ul>
-</li>
-<li>如果出現類似已下指令 可能代表你忘了  <code>save</code> </li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果有 <code>save</code> 解果出現以下指令 代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>整理</tag>
+      </tags>
   </entry>
 </search>
