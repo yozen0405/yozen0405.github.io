@@ -25,8 +25,8 @@
     --card-bg-color: #555;
     --text-color: #ccc;
     --blockquote-color: #bbb;
-    --link-color: #ccc;
-    --link-hover-color: #eee;
+    --link-color: $white;
+    --link-hover-color: $white;
     --brand-color: #ddd;
     --brand-hover-color: #ddd;
     --table-row-odd-bg-color: #282828;
@@ -1283,7 +1283,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d1491b;
+  background: #ffbfaa;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2377,7 +2377,7 @@ mjx-container + br {
 }
 .header-inner {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 0 0 16px 16px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
   overflow: hidden;
   padding: 0;
@@ -2410,7 +2410,7 @@ mjx-container + br {
 }
 .content-wrap {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 0 0 16px 16px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
   box-sizing: border-box;
   padding: 40px;
@@ -2568,7 +2568,7 @@ mjx-container + br {
 }
 .sidebar-inner {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 16px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   box-sizing: border-box;
   color: var(--text-color);
@@ -2666,18 +2666,18 @@ mjx-container + br {
 }
 .post-block {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 0 0 16px 16px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
   padding: 40px;
 }
 .post-block + .post-block {
-  border-radius: initial;
+  border-radius: 16px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   margin-top: 12px;
 }
 .comments {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 16px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   margin-top: 12px;
   padding: 40px;
@@ -2693,7 +2693,7 @@ mjx-container + br {
 }
 .pagination {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 16px;
   border-top: initial;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   margin: 12px 0 0;
@@ -2744,7 +2744,7 @@ mjx-container + br {
     margin-top: 20px;
   }
   .post-block {
-    border-radius: initial;
+    border-radius: 16px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
     padding: 20px;
   }
@@ -2767,7 +2767,7 @@ mjx-container + br {
     margin: 12px 0;
   }
   .post-block {
-    border-radius: initial;
+    border-radius: 16px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
     min-height: auto;
     padding: 12px;
@@ -2792,12 +2792,14 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
+  color: #ebebeb;
 }
 .content-wrap {
   opacity: 0.95;
 }
 .side bar {
   opacity: 0.95;
+  color: #fff;
 }
 .popup {
   opacity: 0.95;
@@ -2816,13 +2818,22 @@ blockquote {
 .post-body .note {
   color: #000;
 }
-.post-body .note span.exturl {
+.post-body .note p a,
+.post-body .note p span.exturl {
   color: #0593d3;
   border-bottom: none;
   border-bottom: 1px solid #0593d3;
 }
-.post-body .note span.exturl:hover {
+.post-body .note p a:hover,
+.post-body .note p span.exturl:hover {
   color: #fc6423;
   border-bottom: none;
   border-bottom: 1px solid #fc6423;
+}
+img {
+  opacity: 1;
+}
+.post-body .image-caption,
+.post-body .figure .caption {
+  margin: 10px auto 15px;
 }
