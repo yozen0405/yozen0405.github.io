@@ -1,92 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>中國剩餘定理 不互質</title>
-    <url>/2023/03/16/CRT/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
-<li>給你一套方程組如下，其中模數( $k_i$ )不一定互質，求出最小正整數解 $x$ ，如果沒有則輸出 $-1$</li>
-</ul>
-<script type="math/tex; mode=display">
-\begin{cases}x\equiv p_1\pmod {k_1} \\ x\equiv p_2\pmod {k_2}\\ ......\\ x\equiv p_n\pmod {k_n}\end{cases}</script><span id="more"></span>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>先以兩兩來看 <br></p>
-<p><script type="math/tex">\begin{cases} x\equiv p_1\pmod {k_1} \\x\equiv p_2\pmod {k_2} \end{cases}</script>  <br></p>
-<p>$\Rightarrow \begin{cases} x=k_1x_1+p_1 \tag{1} \\x=k_2x_2+p_2 \end{cases}$  <br></p>
-<p>$k_1x_1+p_1=k_2x_2+p_2$  <br></p>
-<p>$k_1x_1+(-k_2)x_2=p_2-p_1$  <br></p>
-<p>我們下面主要要解的是 $x_1$ 所以跟 $x_2$ 係數的正負沒什麼關西，所以以下都寫正號  <br></p>
-<div class="note info no-icon">
-            <h3 id="貝祖定理"><a href="#貝祖定理" class="headerlink" title="貝祖定理:"></a>貝祖定理:</h3><p>在 $ax+by=m$ 中，若且唯若 $m$ 是 $a$ 及 $b$ 的最大公因數 $\gcd(a,b)$ 的倍數，有整數解  <br></p>
-          </div>
-<p>若 $x_1,x_2$ 有解，則整除 $\gcd(k_1,k_2) \mid p_2-p_1$ ， 如果不是的話代表無解  <br></p>
-<p>令 $\gcd(k_1,k_2)=d$，與 $p_2 - p_1 = c$  <br></p>
-<p>$\Rightarrow \frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = \frac{c}{d} \tag{2}$  <br></p>
-<p>其中 $\frac{k_1}{d}$ 與 $\frac{k_2}{d}$ 互質  <br></p>
-<div class="note info no-icon">
-            <h3 id="模逆元移向證明"><a href="#模逆元移向證明" class="headerlink" title="模逆元移向證明:"></a>模逆元移向證明:</h3><p>$a \times b \equiv c \pmod{m}$  <br><br>兩邊同乘 $b^{-1} \Rightarrow a \times (b \times b^{-1}) \equiv c \times b ^{-1} \pmod{m}$  <br><br>$a \equiv c \times b^{-1} \pmod{m}$  <br></p>
-          </div>
-<p>設 $x^\prime_1$ 為 $\frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = 1$ 的解則， $x^\prime_1 \equiv (\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ，這個可以用 extgcd 算出來  <br><br>故 $(2)$ 式中 $x_1$ 的解可為 $ansx_1 \equiv \frac{c}{d} \times(\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ( $ansx_1$ 是 $(2)$ 式中 $x_1$ 的解)代回 $(1)$  <br></p>
-<p>$X=k_1 \times ansx_1 + p_1$  <br><br>$\Rightarrow X=k_1[\frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_2}{d}]+p_1$  <br><br>$\Rightarrow X =k_1\times \frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_1 k_2}{d}+p_1$  <br><br>而新的同餘式就是  <br><br>$\Rightarrow x \equiv k_1\times\frac{c}{d}\times(\frac{k_1}{d})^{-1}+ p_1 \pmod{\frac{k_1 k_2}{d}}$   <br><br>即可表達為 $x \equiv k_1\times ansx_1 + p_1\pmod{\frac{k_1 k_2}{d}}$   <br><br>又 $k_1 k_2 = \gcd(k_1,k_2) \times \text{lcm}(k_1,k_2)$ $\Rightarrow \frac{k_1 k_2}{d}= lcm$  <br><br>故若得前 $i-1$ 個式子合併得到 $x \equiv X \pmod{lcm}$  <br><br>而與第 $i$ 式合併為 $x=ansx_i\times lcm+X \pmod{\frac{lcm\times k_i}{d}}$  <br></p>
-<p>以上面來的 $x=k_1x_1+p_1$ 說，目前的 $k_1=lcm,p_1=X,x_1=ansx_1=ansx_i目前要求的$  <br></p>
-<div class="note info no-icon">
-            <h3 id="輾轉相除法"><a href="#輾轉相除法" class="headerlink" title="輾轉相除法:  "></a>輾轉相除法:  <br></h3><p>$\gcd(a,b)=gcd(b,b \% a)$  <br><br>令 $d=\gcd(a,b),a=nd,b=md$  <br><br>一直互相相減之後就會得到 $d$  <br><br><a href="https://hackmd.io/@Koios/rJ_lER719">https://hackmd.io/@Koios/rJ_lER719</a>  <br></p>
-          </div>
-<div class="note info no-icon">
-            <h3 id="證明-為什麼除以一個數取模等於乘以這個數的模逆元"><a href="#證明-為什麼除以一個數取模等於乘以這個數的模逆元" class="headerlink" title="證明: 為什麼除以一個數取模等於乘以這個數的模逆元   "></a>證明: 為什麼除以一個數取模等於乘以這個數的模逆元   <br></h3><p><a href="https://cdn.discordapp.com/attachments/972879937180692551/990257847252160572/unknown.png">證明圖片</a>  <br></p>
-          </div>
-<div class="note info no-icon">
-            <h3 id="擴展歐里基德推導"><a href="#擴展歐里基德推導" class="headerlink" title="擴展歐里基德推導:  "></a>擴展歐里基德推導:  <br></h3><p>$ax+by=\gcd(a,b)$  <br><br>$bx_1+(a \% b)y_1=\gcd(a,b)$  <br><br>$\Rightarrow ax+by=bx_1+(a-b\times \lfloor{\frac{a}{b}} \rfloor) y_1$  <br><br>整理右式 $\Rightarrow ax+by=ay_1+b(x_1 - \lfloor{\frac{a}{b}} \rfloor y_1)$  <br><br>推得轉移式 $x=y_1,y=x_1 - \lfloor{\frac{a}{b}} \rfloor y_1$  <br></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          </div>
-<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[<span class="number">1001</span>], k[<span class="number">1001</span>]; </span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> X = p[<span class="number">1</span>];</span><br><span class="line">    <span class="type">int</span> lcm = k[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    x ≡ p1(mod k1)</span></span><br><span class="line"><span class="comment">    x ≡ p2(mod k2)</span></span><br><span class="line"><span class="comment">    x = x1 * k1 + p1</span></span><br><span class="line"><span class="comment">    x = x2 * k2 + p2</span></span><br><span class="line"><span class="comment">    x1 * k1 - x2 * k2 = p2 - p1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">// 可以假設 k1 是已經有的</span></span><br><span class="line">    <span class="comment">// k2 是現在要算的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> c = p[i] - X; <span class="comment">// p2-p1</span></span><br><span class="line">        <span class="type">int</span> d = __gcd(k[i], lcm); <span class="comment">//k1*k2</span></span><br><span class="line">        <span class="keyword">if</span> (c % d != <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">auto</span> [x,y] = <span class="built_in">ex_gcd</span>(lcm/d, k[i]/d); </span><br><span class="line">        <span class="comment">// (lcm/d)*(x1) + (k2/d)*(x2) = 1</span></span><br><span class="line">        x = (c) / d * x % (k[i] / d);</span><br><span class="line">        <span class="comment">// 因為是模逆元, 被 模過 k[i]*d 下, 要是又超過了就要在模一次</span></span><br><span class="line">        X += lcm*x; <span class="comment">// X 每次都要更新</span></span><br><span class="line">        lcm = lcm / d * k[i]; <span class="comment">// lcm 每次都要更新</span></span><br><span class="line">        <span class="comment">// x ≡ X (mod lcm)</span></span><br><span class="line">        X %= lcm;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (X &gt; <span class="number">0</span>) ? X  : X + lcm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cin &gt;&gt; k[i] &gt;&gt; p[i];</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="built_in">china</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>credit :  </p>
-<ul>
-<li><a href="https://blog.csdn.net/weixin_43602607/article/details/108270977?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165719694016781685328819%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165719694016781685328819&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~sobaiduend~default-3-108270977-null-null.185%5Ev2%5Econtrol&amp;utm_term=%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%20%E4%B8%8D%E4%BA%92%E8%B4%A8&amp;spm=1018.2226.3001.4450">資料1</a></li>
-<li><a href="https://img-blog.csdnimg.cn/20191006130325870.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0MyMDIwMzE0Mw==,size_16,color_FFFFFF,t_70">資料2</a></li>
-</ul>
-<h2 id="互質"><a href="#互質" class="headerlink" title="互質"></a>互質</h2><p>$\begin{cases}<br>x\equiv p_1\pmod {k_1} \\<br>x\equiv p_2\pmod {k_2} \\<br>\cdots \\<br>x\equiv p_k\pmod {k_n}<br>\end{cases}$</p>
-<ul>
-<li>$M = k_1 \times k_2 \times\dots\times k_n$</li>
-<li>$M_i = \frac{M}{k_i}$</li>
-<li>$t_i \equiv M_i^{-1} \pmod {k_i}$</li>
-<li>$X = p_1t_1M_1 + p_2t_2M_2 + \dots +p_nt_nM_n$</li>
-<li>$x=X \pmod{M}$</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> M = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) M *= k[i];</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Mi = M / k[i];</span><br><span class="line">        <span class="keyword">auto</span> [t, y] = <span class="built_in">ex_gcd</span>(Mi, k[i]);</span><br><span class="line">        ret = (ret + p[i]*Mi*t) % M;</span><br><span class="line">        <span class="comment">// 最後要去在 1 ~ M 的解, 所以要 mod M</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (ret + M) % M;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>整理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CSES 1678</title>
-    <url>/2023/03/17/CSES1678/</url>
-    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
-<li>有向圖輸出環</li>
-</ul>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li><p>我們想把這張圖變成一張頂環樹</p>
-<ul>
-<li>頂環樹找 $\texttt{cycle}$ 只需要用 $\texttt{topo sort}$ 把  $\texttt{in degree}=0$ 的點刪掉讓圖上只剩環即可</li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">topo</span> (); <span class="comment">// 進行 topo sort</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">        tmp = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">                F[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://user-images.githubusercontent.com/71330526/204506183-b92d0490-06ce-4b5b-a2cc-33246ed2ffb2.png" alt="頂環樹"></p>
-<div class="note info no-icon">
-            <p>頂環樹 $\texttt{:}$</p><ul><li>圖上只有一個環</li><li>每個 $\texttt{node}$ 的 $\texttt{out degree}$ 都是 $1$<ul><li>所以可以一直走，不可能會有一個結尾的點，也就代表有一個環</li><li>若有結尾的點代表該點 $\texttt{out degree}$ 是 $0$ ， 矛盾</li></ul></li><li>所有 $\texttt{outdegree}$ 是 $0$ 的點一直移除(像是在做 $\texttt{topo sort}$ ) 做完之後，所有人的 $\texttt{outdegree}$ 都至少 $1$ </li><li>對於每個剩下的點，把指出去的邊 ( $\texttt{out-going edge}$ ) 只保留一條 </li></ul>
-          </div>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>讓每個人的 $\texttt{out degree}$ 都恰好是 $1$ 就變成頂環樹了 </li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn], R[maxn], H[maxn], F[maxn];</span><br><span class="line"><span class="type">int</span> out[maxn], in[maxn], vis[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        R[v].<span class="built_in">pb</span>(u);</span><br><span class="line">        out[u]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">topo</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span> &amp;&amp; out[i] &gt;= <span class="number">1</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[u]) &#123;</span><br><span class="line">            in[v]--;</span><br><span class="line">            <span class="keyword">if</span> (in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// print cycle</span></span><br><span class="line">    ans.<span class="built_in">pb</span>(u);</span><br><span class="line">    <span class="keyword">if</span> (vis[u]) &#123;</span><br><span class="line">        cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : F[u]) &#123;</span><br><span class="line">        <span class="built_in">dfs</span> (v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">del</span>(); <span class="comment">// delete out[i] == 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v); <span class="comment">// 頂環樹</span></span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">topo</span> (); <span class="comment">// only keep the cycle</span></span><br><span class="line">    <span class="type">int</span> tmp = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            tmp = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    F[i].<span class="built_in">pb</span>(v); <span class="comment">// only cycle graph</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (~tmp) <span class="built_in">dfs</span> (tmp);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>CSES</tag>
-        <tag>題解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CSES 1654</title>
     <url>/2023/03/18/CSES1654/</url>
     <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1654/">題目</a></h2><ul>
@@ -147,10 +61,7 @@
 <li>無向圖輸出環</li>
 </ul>
 <h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  </li>
-</ul>
-<span id="more"></span>
-<ul>
+<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
 <li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
 <li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
 </ul>
@@ -163,6 +74,62 @@
       <tags>
         <tag>CSES</tag>
         <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>中國剩餘定理 不互質</title>
+    <url>/2023/03/16/CRT/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
+<li>給你一套方程組如下，其中模數( $k_i$ )不一定互質，求出最小正整數解 $x$ ，如果沒有則輸出 $-1$</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{cases}x\equiv p_1\pmod {k_1} \\ x\equiv p_2\pmod {k_2}\\ ......\\ x\equiv p_n\pmod {k_n}\end{cases}</script><span id="more"></span>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>先以兩兩來看 <br></p>
+<p><script type="math/tex">\begin{cases} x\equiv p_1\pmod {k_1} \\x\equiv p_2\pmod {k_2} \end{cases}</script>  <br></p>
+<p>$\Rightarrow \begin{cases} x=k_1x_1+p_1 \tag{1} \\x=k_2x_2+p_2 \end{cases}$  <br></p>
+<p>$k_1x_1+p_1=k_2x_2+p_2$  <br></p>
+<p>$k_1x_1+(-k_2)x_2=p_2-p_1$  <br></p>
+<p>我們下面主要要解的是 $x_1$ 所以跟 $x_2$ 係數的正負沒什麼關西，所以以下都寫正號  <br></p>
+<div class="note info no-icon">
+            <h3 id="貝祖定理"><a href="#貝祖定理" class="headerlink" title="貝祖定理:"></a>貝祖定理:</h3><p>在 $ax+by=m$ 中，若且唯若 $m$ 是 $a$ 及 $b$ 的最大公因數 $\gcd(a,b)$ 的倍數，有整數解  <br></p>
+          </div>
+<p>若 $x_1,x_2$ 有解，則整除 $\gcd(k_1,k_2) \mid p_2-p_1$ ， 如果不是的話代表無解  <br></p>
+<p>令 $\gcd(k_1,k_2)=d$，與 $p_2 - p_1 = c$  <br></p>
+<p>$\Rightarrow \frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = \frac{c}{d} \tag{2}$  <br></p>
+<p>其中 $\frac{k_1}{d}$ 與 $\frac{k_2}{d}$ 互質  <br></p>
+<div class="note info no-icon">
+            <h3 id="模逆元移向證明"><a href="#模逆元移向證明" class="headerlink" title="模逆元移向證明:"></a>模逆元移向證明:</h3><p>$a \times b \equiv c \pmod{m}$  <br><br>兩邊同乘 $b^{-1} \Rightarrow a \times (b \times b^{-1}) \equiv c \times b ^{-1} \pmod{m}$  <br><br>$a \equiv c \times b^{-1} \pmod{m}$  <br></p>
+          </div>
+<p>設 $x^\prime_1$ 為 $\frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = 1$ 的解則， $x^\prime_1 \equiv (\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ，這個可以用 extgcd 算出來  <br><br>故 $(2)$ 式中 $x_1$ 的解可為 $ansx_1 \equiv \frac{c}{d} \times(\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ( $ansx_1$ 是 $(2)$ 式中 $x_1$ 的解)代回 $(1)$  <br></p>
+<p>$X=k_1 \times ansx_1 + p_1$  <br><br>$\Rightarrow X=k_1[\frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_2}{d}]+p_1$  <br><br>$\Rightarrow X =k_1\times \frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_1 k_2}{d}+p_1$  <br><br>而新的同餘式就是  <br><br>$\Rightarrow x \equiv k_1\times\frac{c}{d}\times(\frac{k_1}{d})^{-1}+ p_1 \pmod{\frac{k_1 k_2}{d}}$   <br><br>即可表達為 $x \equiv k_1\times ansx_1 + p_1\pmod{\frac{k_1 k_2}{d}}$   <br><br>又 $k_1 k_2 = \gcd(k_1,k_2) \times \text{lcm}(k_1,k_2)$ $\Rightarrow \frac{k_1 k_2}{d}= lcm$  <br><br>故若得前 $i-1$ 個式子合併得到 $x \equiv X \pmod{lcm}$  <br><br>而與第 $i$ 式合併為 $x=ansx_i\times lcm+X \pmod{\frac{lcm\times k_i}{d}}$  <br></p>
+<p>以上面來的 $x=k_1x_1+p_1$ 說，目前的 $k_1=lcm,p_1=X,x_1=ansx_1=ansx_i目前要求的$  <br></p>
+<div class="note info no-icon">
+            <h3 id="輾轉相除法"><a href="#輾轉相除法" class="headerlink" title="輾轉相除法:  "></a>輾轉相除法:  <br></h3><p>$\gcd(a,b)=gcd(b,b \% a)$  <br><br>令 $d=\gcd(a,b),a=nd,b=md$  <br><br>一直互相相減之後就會得到 $d$  <br><br><a href="https://hackmd.io/@Koios/rJ_lER719">https://hackmd.io/@Koios/rJ_lER719</a>  <br></p>
+          </div>
+<div class="note info no-icon">
+            <h3 id="證明-為什麼除以一個數取模等於乘以這個數的模逆元"><a href="#證明-為什麼除以一個數取模等於乘以這個數的模逆元" class="headerlink" title="證明: 為什麼除以一個數取模等於乘以這個數的模逆元   "></a>證明: 為什麼除以一個數取模等於乘以這個數的模逆元   <br></h3><p><a href="https://cdn.discordapp.com/attachments/972879937180692551/990257847252160572/unknown.png">證明圖片</a>  <br></p>
+          </div>
+<div class="note info no-icon">
+            <h3 id="擴展歐里基德推導"><a href="#擴展歐里基德推導" class="headerlink" title="擴展歐里基德推導:  "></a>擴展歐里基德推導:  <br></h3><p>$ax+by=\gcd(a,b)$  <br><br>$bx_1+(a \% b)y_1=\gcd(a,b)$  <br><br>$\Rightarrow ax+by=bx_1+(a-b\times \lfloor{\frac{a}{b}} \rfloor) y_1$  <br><br>整理右式 $\Rightarrow ax+by=ay_1+b(x_1 - \lfloor{\frac{a}{b}} \rfloor y_1)$  <br><br>推得轉移式 $x=y_1,y=x_1 - \lfloor{\frac{a}{b}} \rfloor y_1$  <br></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          </div>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[<span class="number">1001</span>], k[<span class="number">1001</span>]; </span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> X = p[<span class="number">1</span>];</span><br><span class="line">    <span class="type">int</span> lcm = k[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    x ≡ p1(mod k1)</span></span><br><span class="line"><span class="comment">    x ≡ p2(mod k2)</span></span><br><span class="line"><span class="comment">    x = x1 * k1 + p1</span></span><br><span class="line"><span class="comment">    x = x2 * k2 + p2</span></span><br><span class="line"><span class="comment">    x1 * k1 - x2 * k2 = p2 - p1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">// 可以假設 k1 是已經有的</span></span><br><span class="line">    <span class="comment">// k2 是現在要算的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> c = p[i] - X; <span class="comment">// p2-p1</span></span><br><span class="line">        <span class="type">int</span> d = __gcd(k[i], lcm); <span class="comment">//k1*k2</span></span><br><span class="line">        <span class="keyword">if</span> (c % d != <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">auto</span> [x,y] = <span class="built_in">ex_gcd</span>(lcm/d, k[i]/d); </span><br><span class="line">        <span class="comment">// (lcm/d)*(x1) + (k2/d)*(x2) = 1</span></span><br><span class="line">        x = (c) / d * x % (k[i] / d);</span><br><span class="line">        <span class="comment">// 因為是模逆元, 被 模過 k[i]*d 下, 要是又超過了就要在模一次</span></span><br><span class="line">        X += lcm*x; <span class="comment">// X 每次都要更新</span></span><br><span class="line">        lcm = lcm / d * k[i]; <span class="comment">// lcm 每次都要更新</span></span><br><span class="line">        <span class="comment">// x ≡ X (mod lcm)</span></span><br><span class="line">        X %= lcm;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (X &gt; <span class="number">0</span>) ? X  : X + lcm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cin &gt;&gt; k[i] &gt;&gt; p[i];</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="built_in">china</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>credit :  </p>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_43602607/article/details/108270977?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165719694016781685328819%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165719694016781685328819&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~sobaiduend~default-3-108270977-null-null.185%5Ev2%5Econtrol&amp;utm_term=%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%20%E4%B8%8D%E4%BA%92%E8%B4%A8&amp;spm=1018.2226.3001.4450">資料1</a></li>
+<li><a href="https://img-blog.csdnimg.cn/20191006130325870.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0MyMDIwMzE0Mw==,size_16,color_FFFFFF,t_70">資料2</a></li>
+</ul>
+<h2 id="互質"><a href="#互質" class="headerlink" title="互質"></a>互質</h2><p>$\begin{cases}<br>x\equiv p_1\pmod {k_1} \\<br>x\equiv p_2\pmod {k_2} \\<br>\cdots \\<br>x\equiv p_k\pmod {k_n}<br>\end{cases}$</p>
+<ul>
+<li>$M = k_1 \times k_2 \times\dots\times k_n$</li>
+<li>$M_i = \frac{M}{k_i}$</li>
+<li>$t_i \equiv M_i^{-1} \pmod {k_i}$</li>
+<li>$X = p_1t_1M_1 + p_2t_2M_2 + \dots +p_nt_nM_n$</li>
+<li>$x=X \pmod{M}$</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> M = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) M *= k[i];</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Mi = M / k[i];</span><br><span class="line">        <span class="keyword">auto</span> [t, y] = <span class="built_in">ex_gcd</span>(Mi, k[i]);</span><br><span class="line">        ret = (ret + p[i]*Mi*t) % M;</span><br><span class="line">        <span class="comment">// 最後要去在 1 ~ M 的解, 所以要 mod M</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (ret + M) % M;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
@@ -250,6 +217,102 @@
       <tags>
         <tag>CSES</tag>
         <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CSES 1678</title>
+    <url>/2023/03/17/CSES1678/</url>
+    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
+<li>有向圖輸出環</li>
+</ul>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li><p>我們想把這張圖變成一張頂環樹</p>
+<ul>
+<li>頂環樹找 $\texttt{cycle}$ 只需要用 $\texttt{topo sort}$ 把  $\texttt{in degree}=0$ 的點刪掉讓圖上只剩環即可</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">topo</span> (); <span class="comment">// 進行 topo sort</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">        tmp = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">                F[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/71330526/204506183-b92d0490-06ce-4b5b-a2cc-33246ed2ffb2.png" alt="頂環樹"></p>
+<div class="note info no-icon">
+            <p>頂環樹 $\texttt{:}$</p><ul><li>圖上只有一個環</li><li>每個 $\texttt{node}$ 的 $\texttt{out degree}$ 都是 $1$<ul><li>所以可以一直走，不可能會有一個結尾的點，也就代表有一個環</li><li>若有結尾的點代表該點 $\texttt{out degree}$ 是 $0$ ， 矛盾</li></ul></li><li>所有 $\texttt{outdegree}$ 是 $0$ 的點一直移除(像是在做 $\texttt{topo sort}$ ) 做完之後，所有人的 $\texttt{outdegree}$ 都至少 $1$ </li><li>對於每個剩下的點，把指出去的邊 ( $\texttt{out-going edge}$ ) 只保留一條 </li></ul>
+          </div>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>讓每個人的 $\texttt{out degree}$ 都恰好是 $1$ 就變成頂環樹了 </li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn], R[maxn], H[maxn], F[maxn];</span><br><span class="line"><span class="type">int</span> out[maxn], in[maxn], vis[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        R[v].<span class="built_in">pb</span>(u);</span><br><span class="line">        out[u]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">topo</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span> &amp;&amp; out[i] &gt;= <span class="number">1</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[u]) &#123;</span><br><span class="line">            in[v]--;</span><br><span class="line">            <span class="keyword">if</span> (in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// print cycle</span></span><br><span class="line">    ans.<span class="built_in">pb</span>(u);</span><br><span class="line">    <span class="keyword">if</span> (vis[u]) &#123;</span><br><span class="line">        cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : F[u]) &#123;</span><br><span class="line">        <span class="built_in">dfs</span> (v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">del</span>(); <span class="comment">// delete out[i] == 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v); <span class="comment">// 頂環樹</span></span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">topo</span> (); <span class="comment">// only keep the cycle</span></span><br><span class="line">    <span class="type">int</span> tmp = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            tmp = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    F[i].<span class="built_in">pb</span>(v); <span class="comment">// only cycle graph</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (~tmp) <span class="built_in">dfs</span> (tmp);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>平均變異次數</title>
+    <url>/2023/03/18/c893/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://zerojudge.tw/ShowProblem?problemid=c893">題目</a></h2><ul>
+<li>給 $n,k,c[1]\sim c[k]$ <ul>
+<li>代表 $a$ 出現 $c[1]$ 次，$b$ 出現 $c[2]$ 次…</li>
+<li>$\sum\limits_{i=1}^k c[i]=n$ </li>
+<li>這些 $1\sim k$ 組成了一個長度為 $n$ 的字串</li>
+</ul>
+</li>
+<li>問對於這些字元能組成的排列字串 $a$ ， $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  的總和除以方法數是多少<ul>
+<li>對於每種排列 $a$ 的  $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  加起來之後再去除以「排列方法數」是多少</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li>$ans=\frac{1}{方法數}\sum\limits_{合法\text{a}}\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$</li>
+<li>$ans=\sum\limits_{i=1}^{n-1}\color{aqua}{\frac{1}{方法數}\sum\limits_{合法\text{a}}[a_i\neq a_{i+1}]}$<ul>
+<li>我們先只討論 $i=1$</li>
+<li>淺藍色的地方就是在算平均有幾次 $[a_1\neq a_2]$</li>
+<li>平均次數 $=$ 期望次數</li>
+</ul>
+</li>
+</ul>
+<div class="note info no-icon">
+            <h3 id="平均值跟期望值的關西-texttt"><a href="#平均值跟期望值的關西-texttt" class="headerlink" title="平均值跟期望值的關西 $\texttt{?}$"></a>平均值跟期望值的關西 $\texttt{?}$</h3><p>骰正常的 $6$ 面骰子，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}\tag{}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{1}{6}\times 1+\frac{1}{6}\times 2+\frac{1}{6}\times 3+\frac{1}{6}\times 4+\frac{1}{6}\times 5+\frac{1}{6}\times 6 \\ &amp; =  \frac{1+2+3+4+5+6}{6}\end{align}$</p><p>骰子的 $6$ 面分別為 $\{1,1,2,2,3,3\}$，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{2}{6}\times 1+\frac{2}{6}\times 2+\frac{2}{6}\times 3 \\ &amp; =  \frac{1+1+2+2+3+3}{6} \end{align}$</p><ul><li>期望值就是把機率乘上 $\texttt{value}$ ， 平均值就是總方法數分之每次 $\texttt{value}$</li><li>機率其實就是 $\frac{出現的次數}{總方法數}$ </li><li>代表期望值可以寫成 <script type="math/tex; mode=display">\begin{align}E[x] &= \sum \frac{出現的次數\times \texttt{value}}{總方法數} \\ &=\sum \frac{\underbrace{\texttt{value}+\texttt{value}+..\texttt{value}}_{出現的次數}}{總方法數} \end{align}</script></li><li>就跟平均的一模一樣，所以<strong>平均值$=$期望值</strong></li></ul>
+          </div>
+<ul>
+<li>回到剛剛的問題</li>
+<li>平均次數 $=$ 期望次數 $=1\times P+0\times (1-P)=P$<ul>
+<li>代表在這個題目機率 $P=$ 期望次數</li>
+<li>所以我們下面直接用機率來算</li>
+<li>其中 $P$ 為 $[a_1\neq a_2]$ 的機率</li>
+<li>$P=1-P([a_1=a_2])$</li>
+</ul>
+</li>
+<li>因為期望值可以線性疊加<ul>
+<li>$E[x_1+x_2]=E[x_1]+E[x_2]$</li>
+<li>全部一起算 $=$ 單獨分開算</li>
+</ul>
+</li>
+<li>令總字數為 $m$<ul>
+<li>$m=\sum\limits_{i=1}^k c[i]$</li>
+</ul>
+</li>
+<li>$P([a_1=a_2])=\frac{c[a]}{m}\times \frac{c[a]-1}{(m-1)}+\frac{c[b]}{m}\times \frac{c[b]-1}{(m-1)}+..$</li>
+<li>$\texttt{ex:aabbbcc}$<ul>
+<li>$P([a_1=a_2])=\frac{2}{7}\times \frac{1}{6}+\frac{3}{7}\times \frac{2}{6}+\frac{2}{7}\times \frac{1}{6}$</li>
+<li>$\texttt{a}$ 放在第一個的機率為 $\frac{2}{7}$ (因為總共 $7$ 個字母他站兩個)</li>
+<li>$\texttt{a}$ 放在第一個又放在第二個的機率為 $\frac{2}{7}\times \frac{1}{6}$ (因為總共 $7$ 個字母 $\texttt{a}$ 站兩個，$\texttt{a}$ 已經放一個下去了所以剩 $1$ 個全部剩 $6$ 個)</li>
+</ul>
+</li>
+<li>又類似抽籤跟順序無關<ul>
+<li>我們放的位置 $a_i,a_{i+1}$ 也跟順序無關</li>
+<li>所以任意 $a_i,a_{i+1}$ 都是一樣的，直接 $P([a_1\neq a_2])\times (n-1)$ 就是答案了 ( $n-1$ 個縫)</li>
+</ul>
+</li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, k;</span><br><span class="line"><span class="type">int</span> c[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        cin &gt;&gt; c[i];</span><br><span class="line">        m += c[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        ans += (<span class="type">double</span>) (c[i] * (c[i] - <span class="number">1</span>)) / ((m) * (m - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ans = (<span class="type">double</span>) (<span class="number">1</span> - ans) * (n - <span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span> (<span class="number">3</span>) &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>題解</tag>
+        <tag>ZJ</tag>
       </tags>
   </entry>
   <entry>
@@ -467,69 +530,112 @@
       </tags>
   </entry>
   <entry>
-    <title>平均變異次數</title>
-    <url>/2023/03/18/c893/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://zerojudge.tw/ShowProblem?problemid=c893">題目</a></h2><ul>
-<li>給 $n,k,c[1]\sim c[k]$ <ul>
-<li>代表 $a$ 出現 $c[1]$ 次，$b$ 出現 $c[2]$ 次…</li>
-<li>$\sum\limits_{i=1}^k c[i]=n$ </li>
-<li>這些 $1\sim k$ 組成了一個長度為 $n$ 的字串</li>
-</ul>
-</li>
-<li>問對於這些字元能組成的排列字串 $a$ ， $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  的總和除以方法數是多少<ul>
-<li>對於每種排列 $a$ 的  $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  加起來之後再去除以「排列方法數」是多少</li>
+    <title>vscode install</title>
+    <url>/2023/03/14/vscode/</url>
+    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
+<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
+<li>mingw64下載 (可自行挑選下載方式)<ul>
+<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
+<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
 </ul>
 </li>
 </ul>
 <span id="more"></span>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>$ans=\frac{1}{方法數}\sum\limits_{合法\text{a}}\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$</li>
-<li>$ans=\sum\limits_{i=1}^{n-1}\color{aqua}{\frac{1}{方法數}\sum\limits_{合法\text{a}}[a_i\neq a_{i+1}]}$<ul>
-<li>我們先只討論 $i=1$</li>
-<li>淺藍色的地方就是在算平均有幾次 $[a_1\neq a_2]$</li>
-<li>平均次數 $=$ 期望次數</li>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        影片
+    </div>
+    <div class='spoiler-content'>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/8QdDlNOMCgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+</div>
+<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
+<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
+<li>ex: <code>cd Desktop</code></li>
+</ul>
+</li>
+<li><code>cd ..</code> 退到上一步的folder</li>
+<li><code>mkdir &lt;name&gt;</code> 創建一個新的folder <ul>
+<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
+</ul>
+</li>
+<li><code>ls</code> 展示目前路徑裡的檔案和資料夾</li>
+</ul>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
+<li><code>ctrl+shift+p</code> vscode搜尋欄</li>
+<li><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code><ul>
+<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
+</ul>
+</li>
+<li><code>.\&lt;檔名&gt;.exe</code> 執行code<ul>
+<li><code>.\main.exe</code></li>
 </ul>
 </li>
 </ul>
-<div class="note info no-icon">
-            <h3 id="平均值跟期望值的關西-texttt"><a href="#平均值跟期望值的關西-texttt" class="headerlink" title="平均值跟期望值的關西 $\texttt{?}$"></a>平均值跟期望值的關西 $\texttt{?}$</h3><p>骰正常的 $6$ 面骰子，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}\tag{}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{1}{6}\times 1+\frac{1}{6}\times 2+\frac{1}{6}\times 3+\frac{1}{6}\times 4+\frac{1}{6}\times 5+\frac{1}{6}\times 6 \\ &amp; =  \frac{1+2+3+4+5+6}{6}\end{align}$</p><p>骰子的 $6$ 面分別為 $\{1,1,2,2,3,3\}$，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{2}{6}\times 1+\frac{2}{6}\times 2+\frac{2}{6}\times 3 \\ &amp; =  \frac{1+1+2+2+3+3}{6} \end{align}$</p><ul><li>期望值就是把機率乘上 $\texttt{value}$ ， 平均值就是總方法數分之每次 $\texttt{value}$</li><li>機率其實就是 $\frac{出現的次數}{總方法數}$ </li><li>代表期望值可以寫成 <script type="math/tex; mode=display">\begin{align}E[x] &= \sum \frac{出現的次數\times \texttt{value}}{總方法數} \\ &=\sum \frac{\underbrace{\texttt{value}+\texttt{value}+..\texttt{value}}_{出現的次數}}{總方法數} \end{align}</script></li><li>就跟平均的一模一樣，所以<strong>平均值$=$期望值</strong></li></ul>
-          </div>
+<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><blockquote>
+<p>Q: 如果找不到 bin 資料夾 ?</p>
+</blockquote>
 <ul>
-<li>回到剛剛的問題</li>
-<li>平均次數 $=$ 期望次數 $=1\times P+0\times (1-P)=P$<ul>
-<li>代表在這個題目機率 $P=$ 期望次數</li>
-<li>所以我們下面直接用機率來算</li>
-<li>其中 $P$ 為 $[a_1\neq a_2]$ 的機率</li>
-<li>$P=1-P([a_1=a_2])$</li>
-</ul>
-</li>
-<li>因為期望值可以線性疊加<ul>
-<li>$E[x_1+x_2]=E[x_1]+E[x_2]$</li>
-<li>全部一起算 $=$ 單獨分開算</li>
-</ul>
-</li>
-<li>令總字數為 $m$<ul>
-<li>$m=\sum\limits_{i=1}^k c[i]$</li>
-</ul>
-</li>
-<li>$P([a_1=a_2])=\frac{c[a]}{m}\times \frac{c[a]-1}{(m-1)}+\frac{c[b]}{m}\times \frac{c[b]-1}{(m-1)}+..$</li>
-<li>$\texttt{ex:aabbbcc}$<ul>
-<li>$P([a_1=a_2])=\frac{2}{7}\times \frac{1}{6}+\frac{3}{7}\times \frac{2}{6}+\frac{2}{7}\times \frac{1}{6}$</li>
-<li>$\texttt{a}$ 放在第一個的機率為 $\frac{2}{7}$ (因為總共 $7$ 個字母他站兩個)</li>
-<li>$\texttt{a}$ 放在第一個又放在第二個的機率為 $\frac{2}{7}\times \frac{1}{6}$ (因為總共 $7$ 個字母 $\texttt{a}$ 站兩個，$\texttt{a}$ 已經放一個下去了所以剩 $1$ 個全部剩 $6$ 個)</li>
-</ul>
-</li>
-<li>又類似抽籤跟順序無關<ul>
-<li>我們放的位置 $a_i,a_{i+1}$ 也跟順序無關</li>
-<li>所以任意 $a_i,a_{i+1}$ 都是一樣的，直接 $P([a_1\neq a_2])\times (n-1)$ 就是答案了 ( $n-1$ 個縫)</li>
+<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   <ul>
+<li>如果出現類似已下指令 可能代表你忘了 save</li>
 </ul>
 </li>
 </ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, k;</span><br><span class="line"><span class="type">int</span> c[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        cin &gt;&gt; c[i];</span><br><span class="line">        m += c[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        ans += (<span class="type">double</span>) (c[i] * (c[i] - <span class="number">1</span>)) / ((m) * (m - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ans = (<span class="type">double</span>) (<span class="number">1</span> - ans) * (n - <span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span> (<span class="number">3</span>) &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 如果有 save 解果出現以下指令 ?</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
+</ul>
+<blockquote>
+<p>Q: terminal那邊要 run code 有更簡潔的方式嗎 ?</p>
+</blockquote>
+<ul>
+<li>直接 <code>ctrl+shift+B</code> 就可以了 (編譯+生exe)</li>
+</ul>
+<blockquote>
+<p>Q: 我用 <code>ctrl+ F5</code> 偵錯他會顯示 <code>launch.json</code> 不存在 ? </p>
+</blockquote>
+<ul>
+<li>這是正常的，因為這部影片並沒有提到 debugger 的部分</li>
+<li>debugger 詳細部分可上 <a href="https://code.visualstudio.com/docs/editor/debugging">這篇官網資料</a> 查看</li>
+</ul>
+<blockquote>
+<p>Q: terminal 出現 當 <code>C_Cpp.intelliSenseEngine</code> 設為 <code>disabled</code> 時，無法執行 IntelliSense 的相關命令</p>
+</blockquote>
+<ul>
+<li>可以參考<a href="https://blog.csdn.net/lxj362343/article/details/125711213">這篇博客</a></li>
+</ul>
+<blockquote>
+<p>Q: 檔案執行時一直跳出 launch json 要怎麼辦 ?</p>
+</blockquote>
+<ul>
+<li>看起來你是啟動到 debug 模式了</li>
+<li><a href="https://code.visualstudio.com/docs/cpp/launch-json-reference">詳細資料</a></li>
+</ul>
+<blockquote>
+<p>Q: 執行指令時，出現以下錯誤</p>
+<p><img src="https://i.stack.imgur.com/KrGg0.png" alt="error message"></p>
+</blockquote>
+<ul>
+<li>卸載 <code>clangd</code> 這個 extension</li>
+<li>點擊左上角的 <code>File → Preferences → Settings</code></li>
+<li>在搜尋欄打上 <code>Intellisense engine</code></li>
+<li>找到 <code>C_Cpp: IntelliSense Engine</code> 將其設置為 <code>Default</code> (如下圖)</li>
+</ul>
+<p><img src="https://i.stack.imgur.com/AJnT2.png" alt="將其設置為 default " style="zoom:33%;" /></p>
+<blockquote>
+<p>在影片中 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=289s">4:49</a> 秒時，它找不到 <code>C/C++: Edit Configurations (UI)</code> ?</p>
+</blockquote>
+<ul>
+<li>需要先下載好 C/C++ 的 extension (影片中的 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
+<li><a href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
+</ul>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
-        <tag>題解</tag>
-        <tag>ZJ</tag>
+        <tag>教學</tag>
       </tags>
   </entry>
   <entry>
@@ -559,61 +665,5 @@
           </div>
 <p><img src="https://lh3.googleusercontent.com/oLEVnJW3kea37wC5emwa7vXFxSbuCoQnutCfXF_QYNLNJE6I6C42vgRUB6yaReYoCYigaavvh3UlnePaa91Ytrv9EA=w640-h400-e365-rj-sc0x00ffffff" alt=""></p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-  </entry>
-  <entry>
-    <title>vscode install</title>
-    <url>/2023/03/14/vscode/</url>
-    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
-<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
-<li>mingw64下載 (可自行挑選下載方式)<ul>
-<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
-<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
-<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
-<li>ex: <code>cd Desktop</code></li>
-</ul>
-</li>
-<li><p><code>cd ..</code> 退到上一步的folder</p>
-</li>
-<li><p><code>mkdir &lt;name&gt;</code> 創建一個新的folder </p>
-<ul>
-<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
-</ul>
-</li>
-</ul>
-<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
-<li><p><code>ctrl+shift+p</code> vscode搜尋欄</p>
-</li>
-<li><p><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code></p>
-<ul>
-<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
-</ul>
-</li>
-<li><p><code>.\&lt;檔名&gt;.exe</code> 執行code</p>
-<ul>
-<li><code>.\main.exe</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><ul>
-<li>如果找不到 bin 資料夾?<ul>
-<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   </li>
-</ul>
-</li>
-<li>如果出現類似已下指令 可能代表你忘了  <code>save</code> </li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果有 <code>save</code> 解果出現以下指令 代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
-      </tags>
   </entry>
 </search>

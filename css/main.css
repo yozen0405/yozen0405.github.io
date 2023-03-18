@@ -1261,7 +1261,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #333dff;
+  background: #ff0132;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2798,8 +2798,11 @@ blockquote {
   color: #000;
 }
 .post-body .note ::selection {
-  background: #2ebaff;
+  background: #c4e7e8;
   color: #000;
+}
+.post-body .note blockquote {
+  color: #6e6e6e;
 }
 .post-body .note p a,
 .post-body .note p span.exturl {
