@@ -427,33 +427,11 @@ td {
   transition-delay: 0s;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
-  color: #fff;
-  font-size: 14px;
+  background: #fff;
+  border: 0;
+  font-size: 0.8125em;
   right: 0;
-  top: 2px;
-}
-.highlight-container {
-  background: #21252b;
-  border-radius: 5px;
-  box-shadow: 0 10px 30px 0 rgba(0,0,0,0.4);
-  padding-top: 30px;
-}
-.highlight-container::before {
-  background: #fc625d;
-  border-radius: 50%;
-  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
-  content: ' ';
-  height: 12px;
-  left: 12px;
-  margin-top: -20px;
-  position: absolute;
-  width: 12px;
-}
-.highlight-container .highlight {
-  border-radius: 0 0 5px 5px;
-}
-.highlight-container .highlight .table-container {
-  border-radius: 0 0 5px 5px;
+  top: 0;
 }
 .highlight,
 pre {
@@ -1283,7 +1261,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffbfaa;
+  background: #b50ec3;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2783,8 +2761,9 @@ mjx-container + br {
     margin: 8px 0 0;
   }
 }
-*::selection {
-  background: #add8e6;
+::selection {
+  background: #3390ff;
+  color: #fff;
 }
 body {
   background: url("https://images5.alphacoders.com/737/737385.jpg");
@@ -2818,6 +2797,10 @@ blockquote {
 .post-body .note {
   color: #000;
 }
+.post-body .note ::selection {
+  background: #2ebaff;
+  color: #000;
+}
 .post-body .note p a,
 .post-body .note p span.exturl {
   color: #0593d3;
@@ -2836,4 +2819,13 @@ img {
 .post-body .image-caption,
 .post-body .figure .caption {
   margin: 10px auto 15px;
+}
+.gist .blob-code-inner {
+  color: #fff;
+}
+.gist .blob-num {
+  color: #000;
+}
+.gist .blob-code {
+  color: #000;
 }
