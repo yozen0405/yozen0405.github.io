@@ -1,25 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CSES 1669</title>
-    <url>/2023/03/18/CSES1669/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1669/">題目</a></h2><ul>
-<li>無向圖輸出環</li>
+    <title>中國剩餘定理 不互質</title>
+    <url>/2023/03/16/CRT/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
+<li>給你一套方程組如下，其中模數( $k_i$ )不一定互質，求出最小正整數解 $x$ ，如果沒有則輸出 $-1$</li>
 </ul>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
-<li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
-<li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
+<script type="math/tex; mode=display">
+\begin{cases}x\equiv p_1\pmod {k_1} \\ x\equiv p_2\pmod {k_2}\\ ......\\ x\equiv p_n\pmod {k_n}\end{cases}</script><span id="more"></span>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>先以兩兩來看 <br></p>
+<p><script type="math/tex">\begin{cases} x\equiv p_1\pmod {k_1} \\x\equiv p_2\pmod {k_2} \end{cases}</script>  <br></p>
+<p>$\Rightarrow \begin{cases} x=k_1x_1+p_1 \tag{1} \\x=k_2x_2+p_2 \end{cases}$  <br></p>
+<p>$k_1x_1+p_1=k_2x_2+p_2$  <br></p>
+<p>$k_1x_1+(-k_2)x_2=p_2-p_1$  <br></p>
+<p>我們下面主要要解的是 $x_1$ 所以跟 $x_2$ 係數的正負沒什麼關西，所以以下都寫正號  <br></p>
+<div class="note info no-icon">
+            <h3 id="貝祖定理"><a href="#貝祖定理" class="headerlink" title="貝祖定理:"></a>貝祖定理:</h3><p>在 $ax+by=m$ 中，若且唯若 $m$ 是 $a$ 及 $b$ 的最大公因數 $\gcd(a,b)$ 的倍數，有整數解  <br></p>
+          </div>
+<p>若 $x_1,x_2$ 有解，則整除 $\gcd(k_1,k_2) \mid p_2-p_1$ ， 如果不是的話代表無解  <br></p>
+<p>令 $\gcd(k_1,k_2)=d$，與 $p_2 - p_1 = c$  <br></p>
+<p>$\Rightarrow \frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = \frac{c}{d} \tag{2}$  <br></p>
+<p>其中 $\frac{k_1}{d}$ 與 $\frac{k_2}{d}$ 互質  <br></p>
+<div class="note info no-icon">
+            <h3 id="模逆元移向證明"><a href="#模逆元移向證明" class="headerlink" title="模逆元移向證明:"></a>模逆元移向證明:</h3><p>$a \times b \equiv c \pmod{m}$  <br><br>兩邊同乘 $b^{-1} \Rightarrow a \times (b \times b^{-1}) \equiv c \times b ^{-1} \pmod{m}$  <br><br>$a \equiv c \times b^{-1} \pmod{m}$  <br></p>
+          </div>
+<p>設 $x^\prime_1$ 為 $\frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = 1$ 的解則， $x^\prime_1 \equiv (\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ，這個可以用 extgcd 算出來  <br><br>故 $(2)$ 式中 $x_1$ 的解可為 $ansx_1 \equiv \frac{c}{d} \times(\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ( $ansx_1$ 是 $(2)$ 式中 $x_1$ 的解)代回 $(1)$  <br></p>
+<p>$X=k_1 \times ansx_1 + p_1$  <br><br>$\Rightarrow X=k_1[\frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_2}{d}]+p_1$  <br><br>$\Rightarrow X =k_1\times \frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_1 k_2}{d}+p_1$  <br><br>而新的同餘式就是  <br><br>$\Rightarrow x \equiv k_1\times\frac{c}{d}\times(\frac{k_1}{d})^{-1}+ p_1 \pmod{\frac{k_1 k_2}{d}}$   <br><br>即可表達為 $x \equiv k_1\times ansx_1 + p_1\pmod{\frac{k_1 k_2}{d}}$   <br><br>又 $k_1 k_2 = \gcd(k_1,k_2) \times \text{lcm}(k_1,k_2)$ $\Rightarrow \frac{k_1 k_2}{d}= lcm$  <br><br>故若得前 $i-1$ 個式子合併得到 $x \equiv X \pmod{lcm}$  <br><br>而與第 $i$ 式合併為 $x=ansx_i\times lcm+X \pmod{\frac{lcm\times k_i}{d}}$  <br></p>
+<p>以上面來的 $x=k_1x_1+p_1$ 說，目前的 $k_1=lcm,p_1=X,x_1=ansx_1=ansx_i目前要求的$  <br></p>
+<div class="note info no-icon">
+            <h3 id="輾轉相除法"><a href="#輾轉相除法" class="headerlink" title="輾轉相除法:  "></a>輾轉相除法:  <br></h3><p>$\gcd(a,b)=gcd(b,b \% a)$  <br><br>令 $d=\gcd(a,b),a=nd,b=md$  <br><br>一直互相相減之後就會得到 $d$  <br><br><a href="https://hackmd.io/@Koios/rJ_lER719">https://hackmd.io/@Koios/rJ_lER719</a>  <br></p>
+          </div>
+<div class="note info no-icon">
+            <h3 id="證明-為什麼除以一個數取模等於乘以這個數的模逆元"><a href="#證明-為什麼除以一個數取模等於乘以這個數的模逆元" class="headerlink" title="證明: 為什麼除以一個數取模等於乘以這個數的模逆元   "></a>證明: 為什麼除以一個數取模等於乘以這個數的模逆元   <br></h3><p><a href="https://cdn.discordapp.com/attachments/972879937180692551/990257847252160572/unknown.png">證明圖片</a>  <br></p>
+          </div>
+<div class="note info no-icon">
+            <h3 id="擴展歐里基德推導"><a href="#擴展歐里基德推導" class="headerlink" title="擴展歐里基德推導:  "></a>擴展歐里基德推導:  <br></h3><p>$ax+by=\gcd(a,b)$  <br><br>$bx_1+(a \% b)y_1=\gcd(a,b)$  <br><br>$\Rightarrow ax+by=bx_1+(a-b\times \lfloor{\frac{a}{b}} \rfloor) y_1$  <br><br>整理右式 $\Rightarrow ax+by=ay_1+b(x_1 - \lfloor{\frac{a}{b}} \rfloor y_1)$  <br><br>推得轉移式 $x=y_1,y=x_1 - \lfloor{\frac{a}{b}} \rfloor y_1$  <br></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          </div>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[<span class="number">1001</span>], k[<span class="number">1001</span>]; </span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> X = p[<span class="number">1</span>];</span><br><span class="line">    <span class="type">int</span> lcm = k[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    x ≡ p1(mod k1)</span></span><br><span class="line"><span class="comment">    x ≡ p2(mod k2)</span></span><br><span class="line"><span class="comment">    x = x1 * k1 + p1</span></span><br><span class="line"><span class="comment">    x = x2 * k2 + p2</span></span><br><span class="line"><span class="comment">    x1 * k1 - x2 * k2 = p2 - p1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">// 可以假設 k1 是已經有的</span></span><br><span class="line">    <span class="comment">// k2 是現在要算的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> c = p[i] - X; <span class="comment">// p2-p1</span></span><br><span class="line">        <span class="type">int</span> d = __gcd(k[i], lcm); <span class="comment">//k1*k2</span></span><br><span class="line">        <span class="keyword">if</span> (c % d != <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">auto</span> [x,y] = <span class="built_in">ex_gcd</span>(lcm/d, k[i]/d); </span><br><span class="line">        <span class="comment">// (lcm/d)*(x1) + (k2/d)*(x2) = 1</span></span><br><span class="line">        x = (c) / d * x % (k[i] / d);</span><br><span class="line">        <span class="comment">// 因為是模逆元, 被 模過 k[i]*d 下, 要是又超過了就要在模一次</span></span><br><span class="line">        X += lcm*x; <span class="comment">// X 每次都要更新</span></span><br><span class="line">        lcm = lcm / d * k[i]; <span class="comment">// lcm 每次都要更新</span></span><br><span class="line">        <span class="comment">// x ≡ X (mod lcm)</span></span><br><span class="line">        X %= lcm;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (X &gt; <span class="number">0</span>) ? X  : X + lcm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cin &gt;&gt; k[i] &gt;&gt; p[i];</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="built_in">china</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>credit :  </p>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_43602607/article/details/108270977?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165719694016781685328819%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165719694016781685328819&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~sobaiduend~default-3-108270977-null-null.185%5Ev2%5Econtrol&amp;utm_term=%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%20%E4%B8%8D%E4%BA%92%E8%B4%A8&amp;spm=1018.2226.3001.4450">資料1</a></li>
+<li><a href="https://img-blog.csdnimg.cn/20191006130325870.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0MyMDIwMzE0Mw==,size_16,color_FFFFFF,t_70">資料2</a></li>
 </ul>
-</li>
-<li>$x_i \rightarrow  … \rightarrow  x_j \rightarrow  x_i$ 就是一個環</li>
-<li>$\texttt{backtracking}$ 輸出</li>
+<h2 id="互質"><a href="#互質" class="headerlink" title="互質"></a>互質</h2><p>$\begin{cases}<br>x\equiv p_1\pmod {k_1} \\<br>x\equiv p_2\pmod {k_2} \\<br>\cdots \\<br>x\equiv p_k\pmod {k_n}<br>\end{cases}$</p>
+<ul>
+<li>$M = k_1 \times k_2 \times\dots\times k_n$</li>
+<li>$M_i = \frac{M}{k_i}$</li>
+<li>$t_i \equiv M_i^{-1} \pmod {k_i}$</li>
+<li>$X = p_1t_1M_1 + p_2t_2M_2 + \dots +p_nt_nM_n$</li>
+<li>$x=X \pmod{M}$</li>
 </ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn];</span><br><span class="line"><span class="type">int</span> pre[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u, <span class="type">int</span> par)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == par) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre[v]) &#123; <span class="comment">// if (visited[v])</span></span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            <span class="keyword">while</span> (ans.<span class="built_in">back</span>() != v) &#123; <span class="comment">// backtracking</span></span><br><span class="line">                ans.<span class="built_in">pb</span>(pre[ans.<span class="built_in">back</span>()]);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pre[v] = u;</span><br><span class="line">        <span class="built_in">dfs</span> (v, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        G[v].<span class="built_in">pb</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!pre[i]) &#123;</span><br><span class="line">            pre[i] = i;</span><br><span class="line">            <span class="built_in">dfs</span> (i, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> M = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) M *= k[i];</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Mi = M / k[i];</span><br><span class="line">        <span class="keyword">auto</span> [t, y] = <span class="built_in">ex_gcd</span>(Mi, k[i]);</span><br><span class="line">        ret = (ret + p[i]*Mi*t) % M;</span><br><span class="line">        <span class="comment">// 最後要去在 1 ~ M 的解, 所以要 mod M</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (ret + M) % M;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
-        <tag>CSES</tag>
-        <tag>題解</tag>
+        <tag>整理</tag>
       </tags>
   </entry>
   <entry>
@@ -77,59 +111,25 @@
       </tags>
   </entry>
   <entry>
-    <title>中國剩餘定理 不互質</title>
-    <url>/2023/03/16/CRT/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
-<li>給你一套方程組如下，其中模數( $k_i$ )不一定互質，求出最小正整數解 $x$ ，如果沒有則輸出 $-1$</li>
+    <title>CSES 1669</title>
+    <url>/2023/03/18/CSES1669/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1669/">題目</a></h2><ul>
+<li>無向圖輸出環</li>
 </ul>
-<script type="math/tex; mode=display">
-\begin{cases}x\equiv p_1\pmod {k_1} \\ x\equiv p_2\pmod {k_2}\\ ......\\ x\equiv p_n\pmod {k_n}\end{cases}</script><span id="more"></span>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>先以兩兩來看 <br></p>
-<p><script type="math/tex">\begin{cases} x\equiv p_1\pmod {k_1} \\x\equiv p_2\pmod {k_2} \end{cases}</script>  <br></p>
-<p>$\Rightarrow \begin{cases} x=k_1x_1+p_1 \tag{1} \\x=k_2x_2+p_2 \end{cases}$  <br></p>
-<p>$k_1x_1+p_1=k_2x_2+p_2$  <br></p>
-<p>$k_1x_1+(-k_2)x_2=p_2-p_1$  <br></p>
-<p>我們下面主要要解的是 $x_1$ 所以跟 $x_2$ 係數的正負沒什麼關西，所以以下都寫正號  <br></p>
-<div class="note info no-icon">
-            <h3 id="貝祖定理"><a href="#貝祖定理" class="headerlink" title="貝祖定理:"></a>貝祖定理:</h3><p>在 $ax+by=m$ 中，若且唯若 $m$ 是 $a$ 及 $b$ 的最大公因數 $\gcd(a,b)$ 的倍數，有整數解  <br></p>
-          </div>
-<p>若 $x_1,x_2$ 有解，則整除 $\gcd(k_1,k_2) \mid p_2-p_1$ ， 如果不是的話代表無解  <br></p>
-<p>令 $\gcd(k_1,k_2)=d$，與 $p_2 - p_1 = c$  <br></p>
-<p>$\Rightarrow \frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = \frac{c}{d} \tag{2}$  <br></p>
-<p>其中 $\frac{k_1}{d}$ 與 $\frac{k_2}{d}$ 互質  <br></p>
-<div class="note info no-icon">
-            <h3 id="模逆元移向證明"><a href="#模逆元移向證明" class="headerlink" title="模逆元移向證明:"></a>模逆元移向證明:</h3><p>$a \times b \equiv c \pmod{m}$  <br><br>兩邊同乘 $b^{-1} \Rightarrow a \times (b \times b^{-1}) \equiv c \times b ^{-1} \pmod{m}$  <br><br>$a \equiv c \times b^{-1} \pmod{m}$  <br></p>
-          </div>
-<p>設 $x^\prime_1$ 為 $\frac{k_1}{d} \times x_1 + \frac{k_2}{d} \times x_2 = 1$ 的解則， $x^\prime_1 \equiv (\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ，這個可以用 extgcd 算出來  <br><br>故 $(2)$ 式中 $x_1$ 的解可為 $ansx_1 \equiv \frac{c}{d} \times(\frac{k_1}{d})^{-1} \pmod{\frac{k_2}{d}}$ ( $ansx_1$ 是 $(2)$ 式中 $x_1$ 的解)代回 $(1)$  <br></p>
-<p>$X=k_1 \times ansx_1 + p_1$  <br><br>$\Rightarrow X=k_1[\frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_2}{d}]+p_1$  <br><br>$\Rightarrow X =k_1\times \frac{c}{d} \times(\frac{k_1}{d})^{-1}+tmp\times \frac{k_1 k_2}{d}+p_1$  <br><br>而新的同餘式就是  <br><br>$\Rightarrow x \equiv k_1\times\frac{c}{d}\times(\frac{k_1}{d})^{-1}+ p_1 \pmod{\frac{k_1 k_2}{d}}$   <br><br>即可表達為 $x \equiv k_1\times ansx_1 + p_1\pmod{\frac{k_1 k_2}{d}}$   <br><br>又 $k_1 k_2 = \gcd(k_1,k_2) \times \text{lcm}(k_1,k_2)$ $\Rightarrow \frac{k_1 k_2}{d}= lcm$  <br><br>故若得前 $i-1$ 個式子合併得到 $x \equiv X \pmod{lcm}$  <br><br>而與第 $i$ 式合併為 $x=ansx_i\times lcm+X \pmod{\frac{lcm\times k_i}{d}}$  <br></p>
-<p>以上面來的 $x=k_1x_1+p_1$ 說，目前的 $k_1=lcm,p_1=X,x_1=ansx_1=ansx_i目前要求的$  <br></p>
-<div class="note info no-icon">
-            <h3 id="輾轉相除法"><a href="#輾轉相除法" class="headerlink" title="輾轉相除法:  "></a>輾轉相除法:  <br></h3><p>$\gcd(a,b)=gcd(b,b \% a)$  <br><br>令 $d=\gcd(a,b),a=nd,b=md$  <br><br>一直互相相減之後就會得到 $d$  <br><br><a href="https://hackmd.io/@Koios/rJ_lER719">https://hackmd.io/@Koios/rJ_lER719</a>  <br></p>
-          </div>
-<div class="note info no-icon">
-            <h3 id="證明-為什麼除以一個數取模等於乘以這個數的模逆元"><a href="#證明-為什麼除以一個數取模等於乘以這個數的模逆元" class="headerlink" title="證明: 為什麼除以一個數取模等於乘以這個數的模逆元   "></a>證明: 為什麼除以一個數取模等於乘以這個數的模逆元   <br></h3><p><a href="https://cdn.discordapp.com/attachments/972879937180692551/990257847252160572/unknown.png">證明圖片</a>  <br></p>
-          </div>
-<div class="note info no-icon">
-            <h3 id="擴展歐里基德推導"><a href="#擴展歐里基德推導" class="headerlink" title="擴展歐里基德推導:  "></a>擴展歐里基德推導:  <br></h3><p>$ax+by=\gcd(a,b)$  <br><br>$bx_1+(a \% b)y_1=\gcd(a,b)$  <br><br>$\Rightarrow ax+by=bx_1+(a-b\times \lfloor{\frac{a}{b}} \rfloor) y_1$  <br><br>整理右式 $\Rightarrow ax+by=ay_1+b(x_1 - \lfloor{\frac{a}{b}} \rfloor y_1)$  <br><br>推得轉移式 $x=y_1,y=x_1 - \lfloor{\frac{a}{b}} \rfloor y_1$  <br></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          </div>
-<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[<span class="number">1001</span>], k[<span class="number">1001</span>]; </span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function">pii <span class="title">ex_gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    pii p = <span class="built_in">ex_gcd</span>(b, a%b);</span><br><span class="line">    <span class="type">int</span> x = p.second;</span><br><span class="line">    <span class="type">int</span> y = p.first - p.second*(a/b);</span><br><span class="line">    <span class="keyword">return</span> &#123;x,y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> X = p[<span class="number">1</span>];</span><br><span class="line">    <span class="type">int</span> lcm = k[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    x ≡ p1(mod k1)</span></span><br><span class="line"><span class="comment">    x ≡ p2(mod k2)</span></span><br><span class="line"><span class="comment">    x = x1 * k1 + p1</span></span><br><span class="line"><span class="comment">    x = x2 * k2 + p2</span></span><br><span class="line"><span class="comment">    x1 * k1 - x2 * k2 = p2 - p1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">// 可以假設 k1 是已經有的</span></span><br><span class="line">    <span class="comment">// k2 是現在要算的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> c = p[i] - X; <span class="comment">// p2-p1</span></span><br><span class="line">        <span class="type">int</span> d = __gcd(k[i], lcm); <span class="comment">//k1*k2</span></span><br><span class="line">        <span class="keyword">if</span> (c % d != <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">auto</span> [x,y] = <span class="built_in">ex_gcd</span>(lcm/d, k[i]/d); </span><br><span class="line">        <span class="comment">// (lcm/d)*(x1) + (k2/d)*(x2) = 1</span></span><br><span class="line">        x = (c) / d * x % (k[i] / d);</span><br><span class="line">        <span class="comment">// 因為是模逆元, 被 模過 k[i]*d 下, 要是又超過了就要在模一次</span></span><br><span class="line">        X += lcm*x; <span class="comment">// X 每次都要更新</span></span><br><span class="line">        lcm = lcm / d * k[i]; <span class="comment">// lcm 每次都要更新</span></span><br><span class="line">        <span class="comment">// x ≡ X (mod lcm)</span></span><br><span class="line">        X %= lcm;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (X &gt; <span class="number">0</span>) ? X  : X + lcm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            cin &gt;&gt; k[i] &gt;&gt; p[i];</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="built_in">china</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>credit :  </p>
-<ul>
-<li><a href="https://blog.csdn.net/weixin_43602607/article/details/108270977?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165719694016781685328819%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165719694016781685328819&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~sobaiduend~default-3-108270977-null-null.185%5Ev2%5Econtrol&amp;utm_term=%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%20%E4%B8%8D%E4%BA%92%E8%B4%A8&amp;spm=1018.2226.3001.4450">資料1</a></li>
-<li><a href="https://img-blog.csdnimg.cn/20191006130325870.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0MyMDIwMzE0Mw==,size_16,color_FFFFFF,t_70">資料2</a></li>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
+<li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
+<li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
 </ul>
-<h2 id="互質"><a href="#互質" class="headerlink" title="互質"></a>互質</h2><p>$\begin{cases}<br>x\equiv p_1\pmod {k_1} \\<br>x\equiv p_2\pmod {k_2} \\<br>\cdots \\<br>x\equiv p_k\pmod {k_n}<br>\end{cases}$</p>
-<ul>
-<li>$M = k_1 \times k_2 \times\dots\times k_n$</li>
-<li>$M_i = \frac{M}{k_i}$</li>
-<li>$t_i \equiv M_i^{-1} \pmod {k_i}$</li>
-<li>$X = p_1t_1M_1 + p_2t_2M_2 + \dots +p_nt_nM_n$</li>
-<li>$x=X \pmod{M}$</li>
+</li>
+<li>$x_i \rightarrow  … \rightarrow  x_j \rightarrow  x_i$ 就是一個環</li>
+<li>$\texttt{backtracking}$ 輸出</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">china</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> M = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) M *= k[i];</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Mi = M / k[i];</span><br><span class="line">        <span class="keyword">auto</span> [t, y] = <span class="built_in">ex_gcd</span>(Mi, k[i]);</span><br><span class="line">        ret = (ret + p[i]*Mi*t) % M;</span><br><span class="line">        <span class="comment">// 最後要去在 1 ~ M 的解, 所以要 mod M</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (ret + M) % M;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn];</span><br><span class="line"><span class="type">int</span> pre[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u, <span class="type">int</span> par)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == par) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre[v]) &#123; <span class="comment">// if (visited[v])</span></span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            <span class="keyword">while</span> (ans.<span class="built_in">back</span>() != v) &#123; <span class="comment">// backtracking</span></span><br><span class="line">                ans.<span class="built_in">pb</span>(pre[ans.<span class="built_in">back</span>()]);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pre[v] = u;</span><br><span class="line">        <span class="built_in">dfs</span> (v, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        G[v].<span class="built_in">pb</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!pre[i]) &#123;</span><br><span class="line">            pre[i] = i;</span><br><span class="line">            <span class="built_in">dfs</span> (i, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
-        <tag>整理</tag>
+        <tag>CSES</tag>
+        <tag>題解</tag>
       </tags>
   </entry>
   <entry>
@@ -247,72 +247,6 @@
       <tags>
         <tag>CSES</tag>
         <tag>題解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>平均變異次數</title>
-    <url>/2023/03/18/c893/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://zerojudge.tw/ShowProblem?problemid=c893">題目</a></h2><ul>
-<li>給 $n,k,c[1]\sim c[k]$ <ul>
-<li>代表 $a$ 出現 $c[1]$ 次，$b$ 出現 $c[2]$ 次…</li>
-<li>$\sum\limits_{i=1}^k c[i]=n$ </li>
-<li>這些 $1\sim k$ 組成了一個長度為 $n$ 的字串</li>
-</ul>
-</li>
-<li>問對於這些字元能組成的排列字串 $a$ ， $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  的總和除以方法數是多少<ul>
-<li>對於每種排列 $a$ 的  $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  加起來之後再去除以「排列方法數」是多少</li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>$ans=\frac{1}{方法數}\sum\limits_{合法\text{a}}\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$</li>
-<li>$ans=\sum\limits_{i=1}^{n-1}\color{aqua}{\frac{1}{方法數}\sum\limits_{合法\text{a}}[a_i\neq a_{i+1}]}$<ul>
-<li>我們先只討論 $i=1$</li>
-<li>淺藍色的地方就是在算平均有幾次 $[a_1\neq a_2]$</li>
-<li>平均次數 $=$ 期望次數</li>
-</ul>
-</li>
-</ul>
-<div class="note info no-icon">
-            <h3 id="平均值跟期望值的關西-texttt"><a href="#平均值跟期望值的關西-texttt" class="headerlink" title="平均值跟期望值的關西 $\texttt{?}$"></a>平均值跟期望值的關西 $\texttt{?}$</h3><p>骰正常的 $6$ 面骰子，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}\tag{}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{1}{6}\times 1+\frac{1}{6}\times 2+\frac{1}{6}\times 3+\frac{1}{6}\times 4+\frac{1}{6}\times 5+\frac{1}{6}\times 6 \\ &amp; =  \frac{1+2+3+4+5+6}{6}\end{align}$</p><p>骰子的 $6$ 面分別為 $\{1,1,2,2,3,3\}$，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{2}{6}\times 1+\frac{2}{6}\times 2+\frac{2}{6}\times 3 \\ &amp; =  \frac{1+1+2+2+3+3}{6} \end{align}$</p><ul><li>期望值就是把機率乘上 $\texttt{value}$ ， 平均值就是總方法數分之每次 $\texttt{value}$</li><li>機率其實就是 $\frac{出現的次數}{總方法數}$ </li><li>代表期望值可以寫成 <script type="math/tex; mode=display">\begin{align}E[x] &= \sum \frac{出現的次數\times \texttt{value}}{總方法數} \\ &=\sum \frac{\underbrace{\texttt{value}+\texttt{value}+..\texttt{value}}_{出現的次數}}{總方法數} \end{align}</script></li><li>就跟平均的一模一樣，所以<strong>平均值$=$期望值</strong></li></ul>
-          </div>
-<ul>
-<li>回到剛剛的問題</li>
-<li>平均次數 $=$ 期望次數 $=1\times P+0\times (1-P)=P$<ul>
-<li>代表在這個題目機率 $P=$ 期望次數</li>
-<li>所以我們下面直接用機率來算</li>
-<li>其中 $P$ 為 $[a_1\neq a_2]$ 的機率</li>
-<li>$P=1-P([a_1=a_2])$</li>
-</ul>
-</li>
-<li>因為期望值可以線性疊加<ul>
-<li>$E[x_1+x_2]=E[x_1]+E[x_2]$</li>
-<li>全部一起算 $=$ 單獨分開算</li>
-</ul>
-</li>
-<li>令總字數為 $m$<ul>
-<li>$m=\sum\limits_{i=1}^k c[i]$</li>
-</ul>
-</li>
-<li>$P([a_1=a_2])=\frac{c[a]}{m}\times \frac{c[a]-1}{(m-1)}+\frac{c[b]}{m}\times \frac{c[b]-1}{(m-1)}+..$</li>
-<li>$\texttt{ex:aabbbcc}$<ul>
-<li>$P([a_1=a_2])=\frac{2}{7}\times \frac{1}{6}+\frac{3}{7}\times \frac{2}{6}+\frac{2}{7}\times \frac{1}{6}$</li>
-<li>$\texttt{a}$ 放在第一個的機率為 $\frac{2}{7}$ (因為總共 $7$ 個字母他站兩個)</li>
-<li>$\texttt{a}$ 放在第一個又放在第二個的機率為 $\frac{2}{7}\times \frac{1}{6}$ (因為總共 $7$ 個字母 $\texttt{a}$ 站兩個，$\texttt{a}$ 已經放一個下去了所以剩 $1$ 個全部剩 $6$ 個)</li>
-</ul>
-</li>
-<li>又類似抽籤跟順序無關<ul>
-<li>我們放的位置 $a_i,a_{i+1}$ 也跟順序無關</li>
-<li>所以任意 $a_i,a_{i+1}$ 都是一樣的，直接 $P([a_1\neq a_2])\times (n-1)$ 就是答案了 ( $n-1$ 個縫)</li>
-</ul>
-</li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, k;</span><br><span class="line"><span class="type">int</span> c[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        cin &gt;&gt; c[i];</span><br><span class="line">        m += c[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        ans += (<span class="type">double</span>) (c[i] * (c[i] - <span class="number">1</span>)) / ((m) * (m - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ans = (<span class="type">double</span>) (<span class="number">1</span> - ans) * (n - <span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span> (<span class="number">3</span>) &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>題解</tag>
-        <tag>ZJ</tag>
       </tags>
   </entry>
   <entry>
@@ -555,6 +489,72 @@
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
   </entry>
   <entry>
+    <title>平均變異次數</title>
+    <url>/2023/03/18/c893/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://zerojudge.tw/ShowProblem?problemid=c893">題目</a></h2><ul>
+<li>給 $n,k,c[1]\sim c[k]$ <ul>
+<li>代表 $a$ 出現 $c[1]$ 次，$b$ 出現 $c[2]$ 次…</li>
+<li>$\sum\limits_{i=1}^k c[i]=n$ </li>
+<li>這些 $1\sim k$ 組成了一個長度為 $n$ 的字串</li>
+</ul>
+</li>
+<li>問對於這些字元能組成的排列字串 $a$ ， $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  的總和除以方法數是多少<ul>
+<li>對於每種排列 $a$ 的  $\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$  加起來之後再去除以「排列方法數」是多少</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li>$ans=\frac{1}{方法數}\sum\limits_{合法\text{a}}\sum\limits_{i=1}^{n-1}[a_i\neq a_{i+1}]$</li>
+<li>$ans=\sum\limits_{i=1}^{n-1}\color{aqua}{\frac{1}{方法數}\sum\limits_{合法\text{a}}[a_i\neq a_{i+1}]}$<ul>
+<li>我們先只討論 $i=1$</li>
+<li>淺藍色的地方就是在算平均有幾次 $[a_1\neq a_2]$</li>
+<li>平均次數 $=$ 期望次數</li>
+</ul>
+</li>
+</ul>
+<div class="note info no-icon">
+            <h3 id="平均值跟期望值的關西-texttt"><a href="#平均值跟期望值的關西-texttt" class="headerlink" title="平均值跟期望值的關西 $\texttt{?}$"></a>平均值跟期望值的關西 $\texttt{?}$</h3><p>骰正常的 $6$ 面骰子，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}\tag{}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{1}{6}\times 1+\frac{1}{6}\times 2+\frac{1}{6}\times 3+\frac{1}{6}\times 4+\frac{1}{6}\times 5+\frac{1}{6}\times 6 \\ &amp; =  \frac{1+2+3+4+5+6}{6}\end{align}$</p><p>骰子的 $6$ 面分別為 $\{1,1,2,2,3,3\}$，骰 $6$ 次，請問能骰到的平均點數</p><p>$\begin{align} \texttt{avg}&amp;= \frac{總和}{總方法數} \\ &amp;= \frac{1+2+3+4+5+6}{6} \end{align}$</p><p>$\begin{align}\texttt{E[X]} &amp;=機率_1\times x_1+機率_2\times x_2+…+機率_n\times x_n  \\ &amp; =\frac{2}{6}\times 1+\frac{2}{6}\times 2+\frac{2}{6}\times 3 \\ &amp; =  \frac{1+1+2+2+3+3}{6} \end{align}$</p><ul><li>期望值就是把機率乘上 $\texttt{value}$ ， 平均值就是總方法數分之每次 $\texttt{value}$</li><li>機率其實就是 $\frac{出現的次數}{總方法數}$ </li><li>代表期望值可以寫成 <script type="math/tex; mode=display">\begin{align}E[x] &= \sum \frac{出現的次數\times \texttt{value}}{總方法數} \\ &=\sum \frac{\underbrace{\texttt{value}+\texttt{value}+..\texttt{value}}_{出現的次數}}{總方法數} \end{align}</script></li><li>就跟平均的一模一樣，所以<strong>平均值$=$期望值</strong></li></ul>
+          </div>
+<ul>
+<li>回到剛剛的問題</li>
+<li>平均次數 $=$ 期望次數 $=1\times P+0\times (1-P)=P$<ul>
+<li>代表在這個題目機率 $P=$ 期望次數</li>
+<li>所以我們下面直接用機率來算</li>
+<li>其中 $P$ 為 $[a_1\neq a_2]$ 的機率</li>
+<li>$P=1-P([a_1=a_2])$</li>
+</ul>
+</li>
+<li>因為期望值可以線性疊加<ul>
+<li>$E[x_1+x_2]=E[x_1]+E[x_2]$</li>
+<li>全部一起算 $=$ 單獨分開算</li>
+</ul>
+</li>
+<li>令總字數為 $m$<ul>
+<li>$m=\sum\limits_{i=1}^k c[i]$</li>
+</ul>
+</li>
+<li>$P([a_1=a_2])=\frac{c[a]}{m}\times \frac{c[a]-1}{(m-1)}+\frac{c[b]}{m}\times \frac{c[b]-1}{(m-1)}+..$</li>
+<li>$\texttt{ex:aabbbcc}$<ul>
+<li>$P([a_1=a_2])=\frac{2}{7}\times \frac{1}{6}+\frac{3}{7}\times \frac{2}{6}+\frac{2}{7}\times \frac{1}{6}$</li>
+<li>$\texttt{a}$ 放在第一個的機率為 $\frac{2}{7}$ (因為總共 $7$ 個字母他站兩個)</li>
+<li>$\texttt{a}$ 放在第一個又放在第二個的機率為 $\frac{2}{7}\times \frac{1}{6}$ (因為總共 $7$ 個字母 $\texttt{a}$ 站兩個，$\texttt{a}$ 已經放一個下去了所以剩 $1$ 個全部剩 $6$ 個)</li>
+</ul>
+</li>
+<li>又類似抽籤跟順序無關<ul>
+<li>我們放的位置 $a_i,a_{i+1}$ 也跟順序無關</li>
+<li>所以任意 $a_i,a_{i+1}$ 都是一樣的，直接 $P([a_1\neq a_2])\times (n-1)$ 就是答案了 ( $n-1$ 個縫)</li>
+</ul>
+</li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, k;</span><br><span class="line"><span class="type">int</span> c[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        cin &gt;&gt; c[i];</span><br><span class="line">        m += c[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        ans += (<span class="type">double</span>) (c[i] * (c[i] - <span class="number">1</span>)) / ((m) * (m - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ans = (<span class="type">double</span>) (<span class="number">1</span> - ans) * (n - <span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span> (<span class="number">3</span>) &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>題解</tag>
+        <tag>ZJ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vscode install</title>
     <url>/2023/03/14/vscode/</url>
     <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
@@ -659,6 +659,196 @@
 <li>需要先下載好 C/C++ 的 extension (影片中的 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
 <li><a href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
 </ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>教學</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/03/14/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+  </entry>
+  <entry>
+    <title>hexo next 教學</title>
+    <url>/2023/03/23/hexo%20next/</url>
+    <content><![CDATA[<h2 id="下載軟體"><a href="#下載軟體" class="headerlink" title="下載軟體"></a>下載軟體</h2><blockquote>
+<h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h3><p>下載位置：<a href="https://nodejs.org/zh-tw/download/">下載 | Node.js</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/ub2U0xs.png" alt="安裝介面" style="zoom:33%;" /></p>
+<p>windows 用戶點<font color="#FC4E4E">紅色</font>圈起來的，mac 用戶點<font color="#00A2E8">藍色</font>圈起來的</p>
+<blockquote>
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>下載位置：<a href="https://git-scm.com/downloads">Git - Downloads</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/v6LwRcv.png" style="zoom:33%;" /></p>
+<p>windows 用戶點<font color="#FC4E4E">紅色</font>圈起來的 <code>Download for Windows</code></p>
+<blockquote>
+<h3 id="Vscode"><a href="#Vscode" class="headerlink" title="Vscode"></a>Vscode</h3><p>下載位置：<a href="https://code.visualstudio.com/download">Download Visual Studio Code</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/xToEIWN.png" style="zoom:33%;" /></p>
+<p>直接下載就可以用了</p>
+<p>windows 用戶點<font color="#FC4E4E">紅色</font>圈起來的，mac 用戶點<font color="#75F94D">綠色</font>圈起來的</p>
+<blockquote>
+<h3 id="文章編輯器-Typora"><a href="#文章編輯器-Typora" class="headerlink" title="文章編輯器 Typora"></a>文章編輯器 Typora</h3><p>下載位置：<a href="https://typora.io/#download">Typora — a markdown editor, markdown reader.</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/DW5u5sE.png" style="zoom:33%;" /></p>
+<p>點<font color="#FC4E4E">紅色</font>圈起來的</p>
+<p>這個軟體使用起來是免費的，所以不用擔心，如果之後看到以下畫面</p>
+<p><img src="https://i.imgur.com/uZJS8rH.png" style="zoom:50%;" /></p>
+<p>就點 <code>不是現在</code> 即可</p>
+<h2 id="架設-hexo"><a href="#架設-hexo" class="headerlink" title="架設 hexo"></a>架設 hexo</h2><h3 id="檢查"><a href="#檢查" class="headerlink" title="檢查"></a>檢查</h3><p>在你建立的 <code>hexo</code> 資料夾開啟 <code>cmd</code></p>
+<p>對 <code>hexo</code> 這個資料夾點擊右鍵 $\rightarrow$ 在終端中開啟</p>
+<p><img src="https://i.imgur.com/fitXCVt.png" style="zoom:50%;" /></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查詢安裝的 node 版本</span></span><br><span class="line">node <span class="literal">-v</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查詢安裝的 npm 版本</span></span><br><span class="line">npm <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<p>如果都沒有出現 <font color="#FC4E4E">error</font> 代表 ok</p>
+<h3 id="利用-npm-下載-Hexo"><a href="#利用-npm-下載-Hexo" class="headerlink" title="利用 npm 下載 Hexo"></a>利用 npm 下載 Hexo</h3><ul>
+<li>首先我們要先建立一個空的資料夾，並進到那個資料夾裡面，這裡我用 hexo 做為資料夾名稱</li>
+<li>在執行完第二個指令後，看到 terminal 顯示 <code>INFO Start blogging with Hexo!</code>，就表示已經安裝成功了。</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先進入我們新建的資料夾</span></span><br><span class="line"><span class="built_in">cd</span> hexo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝 hexo</span></span><br><span class="line">npm install hexo<span class="literal">-cli</span> <span class="literal">-g</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 執行 hexo 初始化</span></span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<div class="note danger no-icon">
+            <h4 id="如果出現以下警告"><a href="#如果出現以下警告" class="headerlink" title="如果出現以下警告"></a>如果出現以下警告</h4><p><img src="https://i.imgur.com/yi9JAA0.png" alt=""></p><hr><p>在搜尋欄搜尋 <code>Windows PowerShell</code>，對他點擊右鍵</p><p>$\rightarrow$ 點擊以<strong>「系統管理員身分執行」</strong>，如下圖</p><p><img src="https://i.imgur.com/UGSTxmq.png" style="zoom:50%;" /></p><p>開啟後打上以下指令<br><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> RemoteSigned</span><br></pre></td></tr></table></figure></p><p><img src="https://firebasestorage.googleapis.com/v0/b/welcomewebworld-4097b.appspot.com/o/blogImg%2Fother%2F2020-05-10_22-38-18.png?alt=media&amp;token=68a6e168-1ee6-4864-a4d3-73d576e74e24" alt=""></p><p>按下(輸入 A) [A] 就可以了</p><p>你就可以再回去試試看執行 <code>npm</code>  指令了</p>
+          </div>
+<h3 id="在自己的電腦上啟動-Hexo"><a href="#在自己的電腦上啟動-Hexo" class="headerlink" title="在自己的電腦上啟動 Hexo"></a>在自己的電腦上啟動 Hexo</h3><p>輸入以下指令來啟動 Hexo</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<ul>
+<li>執行指令後，若有看到這行字的話，就表示我們安裝成功了</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">INFO  Hexo is running at http://localhost:<span class="number">4000</span> . Press Ctrl+C to stop</span><br></pre></td></tr></table></figure>
+<ul>
+<li>之後我們打開瀏覽器 (Chrome, Firefox)，在網址列輸入 <a href="http://localhost:4000/">http://localhost:4000/</a> 就可以看到 Hexo 的畫面了 (如下圖)。</li>
+</ul>
+<p><img src="https://ycjhuo.gitlab.io/assets/img/20-01.8ceaf1f7.png" style="zoom: 50%;" /></p>
+<h2 id="加上-NexT-主題"><a href="#加上-NexT-主題" class="headerlink" title="加上 NexT 主題"></a>加上 NexT 主題</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme<span class="literal">-next</span>/hexo<span class="literal">-theme-next</span> themes/next</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/zaU56V9.png" style="zoom:60%;" /></p>
+<p>再來到 <code>hexo\_config.yml</code>  (這裡的 <code>hexo</code> 是指網站一開始的資料夾)</p>
+<p>可以用 vscode 來開啟檔案 </p>
+<p>下載完後 <code>ctrl + F</code>  搜尋  <code># Extensions</code>，並進行以下設置：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span> </span><br></pre></td></tr></table></figure>
+<p>改 <code>theme: next</code></p>
+<p>再來我們在打上 </p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>再去  <a href="http://localhost:4000/">http://localhost:4000/</a> 就可以看到變化了</p>
+<p><img src="https://img.guiblogs.com/hexo30-5/demo-next.jpg" alt="Next 佈景主題樣式" style="zoom: 50%;" /></p>
+<h2 id="建立文章"><a href="#建立文章" class="headerlink" title="建立文章"></a>建立文章</h2><ul>
+<li>要建立新文章的話，在這個資料夾底下 <code>hexo\source\posts</code> 建立 <code>檔名.md</code> 即可</li>
+<li>至於裡面的內容，一定要先至少打上</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"># 文章的標題</span><br><span class="line">title: </span><br><span class="line"># 發布文章的時間 (可以留空)</span><br><span class="line">date: </span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>在下面的部分 (第 6 行之後) 就可以開始撰寫文章的正文了</p>
+</li>
+<li><p>以下提供一個範例</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: My first blog</span><br><span class="line">date: 2020-09-17 21:18:00</span><br><span class="line">description: whats up guys</span><br><span class="line">tags: </span><br><span class="line">- [blog]	</span><br><span class="line">- [test]</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">This is my first post.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>寫好後，重新整理 <a href="http://localhost:4000/">http://localhost:4000/</a> 即可看到變化</li>
+</ul>
+<h2 id="加上數學式"><a href="#加上數學式" class="headerlink" title="加上數學式"></a>加上數學式</h2><p>在 <code>hexo\themes\next\_config.yml</code> 中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Math Formulas Render Support</span></span><br><span class="line"><span class="attr">math:</span></span><br><span class="line">  <span class="comment"># Default (true) will load mathjax / katex script on demand.</span></span><br><span class="line">  <span class="comment"># That is it only render those page which has `mathjax: true` in Front-matter.</span></span><br><span class="line">  <span class="comment"># If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># hexo-renderer-pandoc (or hexo-renderer-kramed) requi#FC4E4E for full MathJax support.</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># See: https://mhchem.github.io/MathJax-mhchem/</span></span><br><span class="line">    <span class="attr">mhchem:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># hexo-renderer-markdown-it-plus (or hexo-renderer-markdown-it with markdown-it-katex plugin) requi#FC4E4E for full Katex support.</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># See: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex</span></span><br><span class="line">    <span class="attr">copy_tex:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>在 window powershell 打上以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo<span class="literal">-renderer-marked</span> <span class="literal">--save</span></span><br><span class="line">npm install hexo<span class="literal">-renderer-pandoc</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+<p>另外需要注意，如果置 <code>mathjax: true</code>，且使用了 <code>hexo-renderer-kramed</code> 渲染引擎，會遇到一行只能使用一個行內公式的情況。</p>
+<p>解決方法是到路徑 <code>hexo\node_modules\kramed\lib\rules\inline.js</code> 將</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> inline = &#123;</span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>修改為</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> inline = &#123;</span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>最後，記得在想使用 latex math 的檔案下，加上 <code>mathjax: true</code></p>
+<p><img src="https://i.imgur.com/UmFMIeL.png" style="zoom:67%;" /></p>
+<p>就可以使用 $\LaTeX$ 了</p>
+<h2 id="一些優化設定"><a href="#一些優化設定" class="headerlink" title="一些優化設定"></a>一些優化設定</h2><h3 id="Scheme-設定"><a href="#Scheme-設定" class="headerlink" title="Scheme 設定"></a>Scheme 設定</h3><p>到 <code>hexo\themes\next\_config.yml</code> 找到以下語法</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># Scheme Settings</span></span><br><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Muse</span></span><br><span class="line"><span class="comment">#scheme: Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dark Mode</span></span><br><span class="line"><span class="attr">darkmode:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>將 <code>scheme: Gemini</code> 註解打掉並將 <code>scheme: Muse</code> 加上註解 <code>#</code></p>
+<p>開啟黑暗模式的話就把 <code>darkmode: false</code> 改成 <code>darkmode: true</code></p>
+<h3 id="設定頁尾作者鏈結"><a href="#設定頁尾作者鏈結" class="headerlink" title="設定頁尾作者鏈結"></a>設定頁尾作者鏈結</h3><p>在昨天的篇章有設定到作者名字，因此正常來說頁尾部分就會顯示你所設定的名稱。不過預設僅僅是一段文字，要怎麼設定成一個鏈結呢？</p>
+<p><img src="https://img.guiblogs.com/hexo30-6/footer-author-text.jpg" alt=""></p>
+<p>到 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If not defined, `author` from Hexo `_config.yml` will be used.</span></span><br><span class="line"><span class="attr">copyright:</span></span><br></pre></td></tr></table></figure>
+<p>如果想插入連結，撰寫 HTML a 鏈結語法，設定完成後就可以看到頁尾作者文字變成了鏈結</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">copyright: &quot;&lt;a href=&#x27;指定鏈結&#x27;&gt;你的名字&lt;/a&gt;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img.guiblogs.com/hexo30-6/footer-author-link.jpg" alt="變更頁尾作者名字，順便設定成超鏈結"></p>
+<h3 id="主選單設置"><a href="#主選單設置" class="headerlink" title="主選單設置"></a>主選單設置</h3><p><img src="https://i.imgur.com/ohpaBfP.png" alt="Next 主選單設置" style="zoom:70%;" /></p>
+<h3 id="新增自訂頁面"><a href="#新增自訂頁面" class="headerlink" title="新增自訂頁面"></a>新增自訂頁面</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;頁面名稱（網址用）&quot;</span></span><br></pre></td></tr></table></figure>
+<p>例如我就新增了</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+<h4 id="存放位置與頁面資訊"><a href="#存放位置與頁面資訊" class="headerlink" title="存放位置與頁面資訊"></a>存放位置與頁面資訊</h4><p>有別於文章與草稿有各自不同的目錄存放，<strong>頁面檔案是獨立存放於一個目錄中的</strong>，像是我剛剛建立了 about 頁面，頁面存放位置於 <code>hexo\source\about</code> 內，而檔案名稱為 <code>index.md</code>。</p>
+<p>因此如果你要將草稿建立成頁面，假設你的頁面叫做「message」，就要在 source 目錄內建立一個名為 message 的目錄，將草稿檔案移進去目錄後，將檔案名稱改為 <code>index.md</code> 即可。</p>
+<p>如果我們想使頁面不能留言，就再加上 <code>comments: false</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: about</span><br><span class="line">date: 2021-08-28 18:46:39</span><br><span class="line">comments: false </span><br></pre></td></tr></table></figure>
+<h4 id="利用主選單連到頁面"><a href="#利用主選單連到頁面" class="headerlink" title="利用主選單連到頁面"></a>利用主選單連到頁面</h4><p>開啟 <code>hexo\themes\next\_config.yml</code> 檔案並找到以下語法：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="comment">#tags: /tags/ || fa fa-tags</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || fa fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure>
+<p>我們只要將 <code>#about</code> 那一行解除註解即可。不過如果你的關於頁面不是設定成 about（或許可能是你的英文名字），那就改成你設定的名稱即可。</p>
+<h3 id="閱讀進度條"><a href="#閱讀進度條" class="headerlink" title="閱讀進度條"></a>閱讀進度條</h3><p>上一段剛好有介紹到閱讀進度數值，而這一段則是可以在讀者滑動的過程中，頂部或是底部有個進度條，隨著你的閱讀進度進行滑動。</p>
+<p>在 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Reading progress bar</span></span><br><span class="line"><span class="attr">reading_progress:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Available values: top | bottom</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">top</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&quot;#37c6c0&quot;</span></span><br><span class="line">  <span class="attr">height:</span> <span class="string">3px</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>enable：設定是否開啟進度條，開啟則設定 true</li>
+<li>position：設定進度條在頂部還是底部顯示</li>
+<li>color：進度條背景顏色</li>
+<li>height：進度條高度</li>
+</ul>
+<p>將 <code>enable: true</code> 即可</p>
+<h3 id="回到頂部按鈕"><a href="#回到頂部按鈕" class="headerlink" title="回到頂部按鈕"></a>回到頂部按鈕</h3><p><img src="https://i.imgur.com/9rtDXiJ.png" alt=""></p>
+<p>在 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>將 sidebar 設定為 true：設定在側邊欄的個人資訊區塊中，Social Links 下，顯示回到頂部按鈕。</li>
+<li>將 scrollpercent 設定為 true：回到頂部按鈕旁加上閱讀進度百分比。</li>
+</ul>
+<h3 id="程式碼區塊樣式"><a href="#程式碼區塊樣式" class="headerlink" title="程式碼區塊樣式"></a>程式碼區塊樣式</h3><p>在 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span></span><br><span class="line">  <span class="comment"># See: https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">  <span class="attr">highlight_theme:</span> <span class="string">normal</span></span><br><span class="line">  <span class="comment"># Add copy button on codeblock</span></span><br><span class="line">  <span class="attr">copy_button:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># Show text copy result.</span></span><br><span class="line">    <span class="attr">show_result:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># Available values: default | flat | mac</span></span><br><span class="line">    <span class="attr">style:</span></span><br></pre></td></tr></table></figure>
+<p>將 <code>highlight_theme: normal</code> 改成 <code>highlight_theme: night bright</code></p>
+<h2 id="將頁面上傳到-github-io"><a href="#將頁面上傳到-github-io" class="headerlink" title="將頁面上傳到 github.io"></a>將頁面上傳到 github.io</h2><h3 id="新增儲存庫-留言"><a href="#新增儲存庫-留言" class="headerlink" title="新增儲存庫 留言"></a>新增儲存庫 留言</h3><p>如果你本身已經有 Github 帳號或是剛辦好的，那就可以新增儲存庫了。首先來到已經為登入狀態的 Github 任一頁面，右上角會有個「+」按鈕，按下去後會出現下拉式選單，點擊第一個「New repository」。</p>
+<p><img src="https://i.imgur.com/iuCXGcf.png" alt="點擊新增儲存庫"></p>
+<p>此時請在你的 Reponsitory name 輸入「你的 Github 帳號.github.io」</p>
+<p>例如我就是 <code>yozen0405.github.io</code></p>
+<p><img src="https://i.imgur.com/gJDSfqc.png" alt="填寫網址"></p>
+<p>填寫完成往下滑按下「Create repository」後，如果看到以下畫面就代表成功囉！此時，右上角是否有看到一個 HTTPS 的網址？請將它複製起來，待會會用到。</p>
+<p><img src="https://i.imgur.com/MXgtC5S.png" alt="儲存庫建立成功"></p>
+<h3 id="設定-Hexo-連結儲存庫"><a href="#設定-Hexo-連結儲存庫" class="headerlink" title="設定 Hexo 連結儲存庫"></a>設定 Hexo 連結儲存庫</h3><p>部署前要先設定 Hexo 的 <code>_config.yml</code> 檔案中連接到 Github 儲存庫的相關設定，首先要找到 <code># Deployment</code> 這段（基本上預設會在檔案最下面）：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span> <span class="comment"># 使用 Git 部署</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/Github帳號/Github帳號.github.io.git</span> <span class="comment"># 你的儲存庫 clone</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span> <span class="comment"># 儲存庫分支</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;First Commit&quot;</span> <span class="comment"># Commit 訊息</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>type：部署類型</li>
+<li>repo：儲存庫 clone</li>
+<li>branch：儲存庫分支</li>
+<li>message：Commit 訊息</li>
+</ul>
+<p>這是我的設定，可以參考</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span> <span class="comment"># 使用 Git 部署</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/yozen0405/yozen0405.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span> <span class="comment"># 儲存庫分支</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;First Commit&quot;</span> <span class="comment"># Commit 訊息</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>預設可能只有 type 而已，然而<strong>必須加上 repo、branch 等資訊才能進行部署</strong>（畢竟要設定部署的儲存庫嘛），message 不是必要的，不過我建議還是加，這樣整體在看的時候比較能夠一目了然每一次的部署是為了什麼而更新</p>
+</li>
+<li><p>再來就是 <strong>冒號後必須空一個空白在接設定值！</strong></p>
+</li>
+</ul>
+<h3 id="上傳到-github"><a href="#上傳到-github" class="headerlink" title="上傳到 github"></a>上傳到 github</h3><p>在 <code>hexo</code> 資料夾用終端機開啟 (<code>cmd</code>)</p>
+<p>輸入以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+<p>部署 Hexo 必須要安裝 <code>Hexo-deployer-git Git</code> 部署套件，因此需要執行以下指令安裝：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install hexo<span class="literal">-deployer-git</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+<p>再來就要執行 <code>hexo d</code> Hexo 的部署指令，就會開始將我們前面產生的靜態網頁部署到 Github Pages </p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo d </span><br></pre></td></tr></table></figure>
+<div class="note danger no-icon">
+            <h4 id="如果顯示一大堆警告"><a href="#如果顯示一大堆警告" class="headerlink" title="如果顯示一大堆警告"></a>如果顯示一大堆警告</h4><p>在 <code>cmd</code> 輸入以下指令</p><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git config <span class="literal">--global</span> github_user_name</span><br><span class="line">git config <span class="literal">--global</span> github_user_email</span><br></pre></td></tr></table></figure><p>例如我就是</p><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git config <span class="literal">--global</span> yozen0405</span><br><span class="line">git config <span class="literal">--global</span> yozen0405@gmail.com</span><br></pre></td></tr></table></figure>
+          </div>
+<p>如果執行後如圖這樣，恭喜你成功部署上去啦！打上 <code>https://你的github名字/你的github名字.github.io</code> 即可看到</p>
+<p><img src="https://i.imgur.com/OSjiRTi.png" alt="Hexo 檔案成功部署到 Github" style="zoom:50%;" /></p>
+<h3 id="公開部落格頁面"><a href="#公開部落格頁面" class="headerlink" title="公開部落格頁面"></a>公開部落格頁面</h3><p><img src="https://i.imgur.com/znpEkeJ.png" style="zoom:33%;" /></p>
+<p>點擊 <code>Settings</code></p>
+<p><img src="https://i.imgur.com/Z0B2kFS.png" style="zoom:33%;" /></p>
+<p>點擊 <code>Pages</code></p>
+<p><img src="https://i.imgur.com/Jo7fktP.png" style="zoom:33%;" /></p>
+<p>點擊紅色框起來的部分就可以看到妳的網站了</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>教學</tag>
