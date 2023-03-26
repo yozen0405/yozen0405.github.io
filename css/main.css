@@ -1261,7 +1261,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #545899;
+  background: #00dbff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2818,6 +2818,9 @@ blockquote {
 }
 img {
   opacity: 100;
+}
+img:hover {
+  opacity: 0.95;
 }
 .post-body .image-caption,
 .post-body .figure .caption {
