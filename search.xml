@@ -220,6 +220,186 @@
       </tags>
   </entry>
   <entry>
+    <title>MST</title>
+    <url>/2023/03/27/MST/</url>
+    <content><![CDATA[<h2 id="算法概要"><a href="#算法概要" class="headerlink" title="算法概要"></a>算法概要</h2><ul>
+<li>對於每個 node 周圍最小 edge 一定會再 MST 內</li>
+<li>Kruskal<ul>
+<li>每次選 <strong>整張圖</strong> 最小權的邊</li>
+</ul>
+</li>
+<li>Prim<ul>
+<li>去選從<strong>起點</strong>擴張出來的集合<strong>周圍的</strong>最小邊</li>
+</ul>
+</li>
+<li>Boruvka<ul>
+<li>對於<strong>目前選到</strong>的每個集合，選他<strong>周圍的</strong>最小邊<span id="more"></span></li>
+<li>對於這種邊數很多，但是很多邊用不到的東西 </li>
+<li>Boruvka 比較容易快速省略掉不需要的邊（只找需要的出來）</li>
+</ul>
+</li>
+</ul>
+<h3 id="習題"><a href="#習題" class="headerlink" title="習題"></a>習題</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>題目</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://tioj.ck.tp.edu.tw/problems/1795">https://tioj.ck.tp.edu.tw/problems/1795</a></td>
+<td><li>kruskal<br><li>最大 MST &amp; 最小 MST 應用</td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/problemset/problem/1468/J">https://codeforces.com/problemset/problem/1468/J</a></td>
+<td><li>kruskal<br><li><a href="https://blog.csdn.net/weixin_51797626/article/details/124066368?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124066368-blog-113801758.topnsimilarv1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124066368-blog-113801758.topnsimilarv1&amp;utm_relevant_index=2">題解</a></td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/problemset/problem/1095/F">https://codeforces.com/problemset/problem/1095/F</a></td>
+<td><li>kruskal<br><li>貪心<br><li>$\text{edge}_w=a_x+a_y \text{ or } w$</td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/group/GG44hyrVLY/contest/297533/problem/E">0x01 2020 花中一模 pE</a></td>
+<td><li>Boruvka<br><li>$\text{edge}_w=a_x+a_y \text{ or } w$</td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/contest/1513/problem/D">https://codeforces.com/contest/1513/problem/D</a></td>
+<td><li>kruskal 過程想法<br><li><a href="http://codepad.org/UTaMikoD">code</a></td>
+</tr>
+<tr>
+<td><a href="https://atcoder.jp/contests/abc282/tasks/abc282_e">https://atcoder.jp/contests/abc282/tasks/abc282_e</a></td>
+<td><li>kruskal<br><li>將題目轉換成 MST 問題</td>
+</tr>
+<tr>
+<td><a href="https://tioj.ck.tp.edu.tw/problems/2164">https://tioj.ck.tp.edu.tw/problems/2164</a></td>
+<td><li>prim<br><li>曼哈頓路徑</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="超級原點"><a href="#超級原點" class="headerlink" title="超級原點"></a>超級原點</h2><ul>
+<li><a href="https://codeforces.com/problemset/problem/1245/D">https://codeforces.com/problemset/problem/1245/D</a></li>
+</ul>
+<h2 id="K-度限制生成树"><a href="#K-度限制生成树" class="headerlink" title="K 度限制生成树"></a>K 度限制生成树</h2><ul>
+<li><a href="https://codeforces.com/problemset/problem/125/E">https://codeforces.com/problemset/problem/125/E</a></li>
+<li>$\texttt{Aliens}$ 優化</li>
+</ul>
+<p><img src="https://i.imgur.com/Y1gJe8e.png" style="zoom: 50%;" /></p>
+<h2 id="補圖技巧"><a href="#補圖技巧" class="headerlink" title="補圖技巧"></a>補圖技巧</h2><ul>
+<li>一般題目都會上限 $m=\text{min}(2\times 10^5, \frac{n\times (n-1)}{2})$, 其中 $m$ 代表 $(u,v)$ 沒有邊的數量</li>
+<li>維護一個還沒分到組的 <code>set</code> ,分到組時把他從 <code>set</code> 刪掉<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">    vis[u] = <span class="number">1</span>;</span><br><span class="line">    st.<span class="built_in">erase</span>(u);</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ret;</span><br><span class="line">    <span class="comment">// v 還沒加進集合的</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> v : st) &#123; <span class="comment">// 沒出現 -&gt; 有邊</span></span><br><span class="line">        <span class="keyword">if</span>(!G[u].<span class="built_in">count</span>(v)) ret.<span class="built_in">vush_back</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> ele : ret)&#123;</span><br><span class="line">        st.<span class="built_in">erase</span>(ele);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> ele : ret)&#123;</span><br><span class="line">        vis[ele]=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(ele);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><a href="https://codeforces.com/problemset/problem/920/E">https://codeforces.com/problemset/problem/920/E</a></li>
+<li><a href="https://codeforces.com/problemset/problem/1242/B">https://codeforces.com/problemset/problem/1242/B</a></li>
+</ul>
+<h2 id="衝突邊技巧"><a href="#衝突邊技巧" class="headerlink" title="衝突邊技巧"></a>衝突邊技巧</h2><ul>
+<li>判斷 MST 是否唯一</li>
+<li>如果並非唯一, 代表它可以被相同權重的邊給替換</li>
+<li>$\Rightarrow$ 對於相同的邊一起去跑</li>
+</ul>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        範例圖
+    </div>
+    <div class='spoiler-content'>
+        <p><img src="https://i.imgur.com/ie8AaZS.png" style="zoom: 50%;" /></p>
+
+    </div>
+</div>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) par[i] = i;</span><br><span class="line">    <span class="built_in">sort</span>(E.<span class="built_in">begin</span>(), E.<span class="built_in">end</span>(), [](Edge a, Edge b) &#123; <span class="keyword">return</span> a.w &lt; b.w; &#125;);</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m;) &#123;</span><br><span class="line">        <span class="type">int</span> r = i;</span><br><span class="line">        <span class="keyword">while</span> (E[i].w == E[r + <span class="number">1</span>].w) r++; <span class="comment">//[i, r]</span></span><br><span class="line">        <span class="comment">// 判斷有多少合法邊</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= r; j++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="built_in">find</span>(E[j].u), y = <span class="built_in">find</span>(E[j].v);</span><br><span class="line">            <span class="keyword">if</span> (x == y) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">// 是 MST 有可能選到的</span></span><br><span class="line">            cnt++; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判斷真正的唯一方案數有幾個</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= r; j++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="built_in">find</span>(E[j].u), y = <span class="built_in">find</span>(E[j].v);</span><br><span class="line">            <span class="keyword">if</span> (x == y) <span class="keyword">continue</span>; <span class="comment">// 已經被併過了, 屬於同一方案</span></span><br><span class="line">            <span class="comment">// 再不同的集合, 唯一的方案</span></span><br><span class="line">            <span class="built_in">merge</span>(x, y), cnt--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ans = (合法邊) - (唯一方案數) = 其實加了是重複的方案的邊 </span></span><br><span class="line">        i = r + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://codeforces.com/contest/1108/problem/F">https://codeforces.com/contest/1108/problem/F</a></li>
+<li><a href="https://codeforces.com/contest/160/problem/D">https://codeforces.com/contest/160/problem/D</a><ul>
+<li>因為對於每條邊都需要看他是哪種性質</li>
+<li>所以要判斷特定的邊是否是唯一的就不能只算唯一方案數了</li>
+<li>必須用 BCC 去看如下</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.discordapp.com/attachments/972879937180692551/1014553797806272583/858cfd42763fb554.png" alt=""></p>
+<ul>
+<li><a href="https://blog.csdn.net/m0_56280274/article/details/123765300?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-123765300-blog-101834844.topnsimilarv1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-123765300-blog-101834844.topnsimilarv1&amp;utm_relevant_index=2">網址</a><ul>
+<li>他只是想看他是不是”對於跟他邊權一樣”的這些 edge ，唯一的 edge 而已</li>
+<li>所以並不需考慮之前邊權比較小的時候留下來的邊，等同於新建一張圖</li>
+</ul>
+</li>
+</ul>
+<h2 id="維護環技巧"><a href="#維護環技巧" class="headerlink" title="維護環技巧"></a>維護環技巧</h2><ul>
+<li><a href="https://codeforces.com/contest/609/problem/E">https://codeforces.com/contest/609/problem/E</a></li>
+<li><a href="https://tioj.ck.tp.edu.tw/problems/1445">https://tioj.ck.tp.edu.tw/problems/1445</a></li>
+<li>維護環技巧, 加入沒辦選到的, 刪掉環上除了他以外最大</li>
+<li>實作, LCA, kruskal, dp 配合倍增法建表</li>
+<li>次小生成樹</li>
+</ul>
+<h2 id="最小化最大最小差"><a href="#最小化最大最小差" class="headerlink" title="最小化最大最小差"></a>最小化最大最小差</h2><ul>
+<li>找一顆生成樹滿足 有選到的 (權重最大Edge) 減掉 (權重最小Edge) 要<strong>最小</strong><ul>
+<li>$\texttt{min(maxW - minW)}$</li>
+</ul>
+</li>
+<li>有兩層最大或最小可以去枚舉內層</li>
+<li>以這題來說去枚舉 $\texttt{minW}$ 對於每個 $\texttt{minW}$ 找最小的 $\texttt{maxW}$ 讓他剛好可以形成生成樹</li>
+</ul>
+<h3 id="N-1e3-M-1e4-C-1e9-1e9"><a href="#N-1e3-M-1e4-C-1e9-1e9" class="headerlink" title="N = 1e3, M = 1e4, C = -1e9~1e9"></a>N = 1e3, M = 1e4, C = -1e9~1e9</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sort</span> (Edges)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">    <span class="comment">// mn 為 E[i].w, mx 用 Kruskal 找</span></span><br><span class="line">    <span class="built_in">Dsu_init</span>(); <span class="comment">// O(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= m; j++) &#123;</span><br><span class="line">        <span class="comment">// Kruskal O(m)</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans = <span class="built_in">min</span> (ans, mx - mn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tot: O(nlgn + m^2)</span></span><br></pre></td></tr></table></figure>
+<h3 id="N-2e5-M-2e5-C-100"><a href="#N-2e5-M-2e5-C-100" class="headerlink" title="N = 2e5, M = 2e5, C = 100"></a>N = 2e5, M = 2e5, C = 100</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sort</span> (Edges) <span class="comment">// &#123;w, u, v&#125;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= C; i++) &#123;</span><br><span class="line">    <span class="type">int</span> idx = Edges.<span class="built_in">lower_bound</span>(&#123;i, <span class="number">0</span>, <span class="number">0</span>&#125;) - Edges.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="built_in">Dsu_init</span>(); <span class="comment">// O(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = idx; j &lt;= m; j++) &#123;</span><br><span class="line">        <span class="comment">// Kruskal O(m)</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans = <span class="built_in">min</span> (ans, mx - mn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tot: O(nlgn + C(n + m))</span></span><br></pre></td></tr></table></figure>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><ul>
+<li>利用範圍來控制 Kruskal</li>
+</ul>
+<h2 id="最大化最小邊"><a href="#最大化最小邊" class="headerlink" title="最大化最小邊"></a>最大化最小邊</h2><ul>
+<li><a href="https://tioj.ck.tp.edu.tw/problems/1340">https://tioj.ck.tp.edu.tw/problems/1340</a></li>
+<li><a href="https://zerojudge.tw/ShowProblem?problemid=j125">https://zerojudge.tw/ShowProblem?problemid=j125</a></li>
+</ul>
+<h3 id="法1"><a href="#法1" class="headerlink" title="法1"></a>法1</h3><ul>
+<li>從小到大枚舉($\texttt{Greedy}$)</li>
+<li>$\texttt{Kruskal}$ 最大生成樹</li>
+</ul>
+<h3 id="法2"><a href="#法2" class="headerlink" title="法2"></a>法2</h3><ul>
+<li>二分搜</li>
+<li>$\texttt{DFS/BFS check}$ 只選邊權 $\le x$ 的是否能連通</li>
+</ul>
+<h2 id="額外練習"><a href="#額外練習" class="headerlink" title="額外練習"></a>額外練習</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>題目</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://atcoder.jp/contests/abc210/tasks/abc210_e">https://atcoder.jp/contests/abc210/tasks/abc210_e</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://atcoder.jp/contests/arc076/tasks/arc076_b">https://atcoder.jp/contests/arc076/tasks/arc076_b</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://atcoder.jp/contests/abc270/tasks/abc270_f">https://atcoder.jp/contests/abc270/tasks/abc270_f</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/problemset/problem/1245/D">https://codeforces.com/problemset/problem/1245/D</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1138">http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1138</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://judge.ioicamp.org/contests/2/problems/207">https://judge.ioicamp.org/contests/2/problems/207</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>MST</tag>
+        <tag>algo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSES 1678</title>
     <url>/2023/03/17/CSES1678/</url>
     <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
@@ -528,7 +708,7 @@
   </entry>
   <entry>
     <title>Hello Blog</title>
-    <url>/2022/03/14/default/</url>
+    <url>/2023/03/14/default/</url>
     <content><![CDATA[<p>終於搞出自己的 $\text{Blog}$ 了，ya!</p>
 <div class="note default">
             <p>default 提示</p>
@@ -551,7 +731,6 @@
 <div class="note info no-icon">
             <h4 id="No-icon-note"><a href="#No-icon-note" class="headerlink" title="No icon note"></a>No icon note</h4><p>Note <strong>without</strong> icon: <code>note info no-icon</code></p>
           </div>
-<p><img src="https://lh3.googleusercontent.com/oLEVnJW3kea37wC5emwa7vXFxSbuCoQnutCfXF_QYNLNJE6I6C42vgRUB6yaReYoCYigaavvh3UlnePaa91Ytrv9EA=w640-h400-e365-rj-sc0x00ffffff" alt=""></p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
   </entry>
   <entry>
@@ -559,7 +738,7 @@
     <url>/2023/03/23/hexo%20next/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 1 篇 : 架設博客」的教學，以下是全部教學篇的總覽</p>
 <div class="note info no-icon">
-            <ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
           </div>
 <h2 id="下載軟體"><a href="#下載軟體" class="headerlink" title="下載軟體"></a>下載軟體</h2><blockquote>
 <h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h3><p>下載位置：<a href="https://nodejs.org/zh-tw/download/">下載 | Node.js</a></p>
@@ -722,6 +901,182 @@
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>教學</tag>
+        <tag>github</tag>
+        <tag>hexo next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode install</title>
+    <url>/2023/03/14/vscode/</url>
+    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
+<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
+<li>mingw64下載 (可自行挑選下載方式)<ul>
+<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
+<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        影片
+    </div>
+    <div class='spoiler-content'>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/8QdDlNOMCgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+</div>
+<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
+<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
+<li>ex: <code>cd Desktop</code></li>
+</ul>
+</li>
+<li><code>cd ..</code> 退到上一步的folder</li>
+<li><code>mkdir &lt;name&gt;</code> 創建一個新的folder <ul>
+<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
+</ul>
+</li>
+<li><code>ls</code> 展示目前路徑裡的檔案和資料夾</li>
+</ul>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
+<li><code>ctrl+shift+p</code> vscode搜尋欄</li>
+<li><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code><ul>
+<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
+</ul>
+</li>
+<li><code>.\&lt;檔名&gt;.exe</code> 執行code<ul>
+<li><code>.\main.exe</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><blockquote>
+<p>Q: 如果找不到 bin 資料夾 ?</p>
+</blockquote>
+<ul>
+<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   <ul>
+<li>如果出現類似已下指令 可能代表你忘了 save</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 如果有 save 解果出現以下指令 ?</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
+</ul>
+<blockquote>
+<p>Q: terminal那邊要 run code 有更簡潔的方式嗎 ?</p>
+</blockquote>
+<ul>
+<li>直接 <code>ctrl+shift+B</code> 就可以了 (編譯+生exe)</li>
+</ul>
+<blockquote>
+<p>Q: 我用 <code>ctrl + F5</code> 偵錯他會顯示 <code>launch.json</code> 不存在 ? </p>
+</blockquote>
+<ul>
+<li>這是正常的，因為這部影片並沒有提到 debugger 的部分</li>
+<li>debugger 詳細部分可上 <a href="https://code.visualstudio.com/docs/editor/debugging">這篇官網資料</a> 查看</li>
+</ul>
+<blockquote>
+<p>Q: terminal 出現 當 <code>C_Cpp.intelliSenseEngine</code> 設為 <code>disabled</code> 時，無法執行 IntelliSense 的相關命令</p>
+</blockquote>
+<ul>
+<li>可以參考<a href="https://blog.csdn.net/lxj362343/article/details/125711213">這篇博客</a></li>
+</ul>
+<blockquote>
+<p>Q: 檔案執行時一直跳出 launch json 要怎麼辦 ?</p>
+</blockquote>
+<ul>
+<li>看起來你是啟動到 debug 模式了</li>
+<li><a href="https://code.visualstudio.com/docs/cpp/launch-json-reference">詳細資料</a></li>
+</ul>
+<blockquote>
+<p>Q: 執行指令時，出現以下錯誤</p>
+<p><img src="https://i.stack.imgur.com/KrGg0.png" alt="error message"></p>
+</blockquote>
+<ul>
+<li>卸載 <code>clangd</code> 這個 extension</li>
+<li>點擊左上角的 <code>File → Preferences → Settings</code></li>
+<li>在搜尋欄打上 <code>Intellisense engine</code></li>
+<li>找到 <code>C_Cpp: IntelliSense Engine</code> 將其設置為 <code>Default</code> (如下圖)</li>
+</ul>
+<p><img src="https://i.stack.imgur.com/AJnT2.png" alt="將其設置為 default " style="zoom:33%;" /></p>
+<blockquote>
+<p>在影片中 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=289s">4:49</a> 秒時，它找不到 <code>C/C++: Edit Configurations (UI)</code> ?</p>
+</blockquote>
+<ul>
+<li>需要先下載好 C/C++ 的 extension (影片中的 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
+<li><a href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
+</ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>教學</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo next 備份原始檔到 github</title>
+    <url>/2023/03/27/hexo%20next3/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
+<div class="note info no-icon">
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+          </div>
+<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
+<p>到這個根目錄開啟 <code>cmd</code></p>
+<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
+<p>打上以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
+<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
+<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
+<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
+<p>就可以看到你 clone 的 file 了</p>
+<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<blockquote>
+<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
+          </div>
+<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<blockquote>
+<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
+</blockquote>
+<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
+<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
+<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
+<p>重新將 Next 主題下載回來：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>教學</tag>
+        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -729,7 +1084,7 @@
     <url>/2023/03/25/hexo%20next2/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 2 篇 : 博客設定優化」的教學，以下是全部教學篇的總覽</p>
 <div class="note info no-icon">
-            <ul><li><p><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></p></li><li><p><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></p></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
           </div>
 <h2 id="下載軟體"><a href="#下載軟體" class="headerlink" title="下載軟體"></a>下載軟體</h2><h2 id="Scheme-設定"><a href="#Scheme-設定" class="headerlink" title="Scheme 設定"></a>Scheme 設定</h2><p>到 <code>hexo\themes\next\_config.yml</code> 找到以下語法</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># Scheme Settings</span></span><br><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Muse</span></span><br><span class="line"><span class="comment">#scheme: Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dark Mode</span></span><br><span class="line"><span class="attr">darkmode:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
@@ -902,180 +1257,7 @@ e^{ix} = cosx+isinx</script>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>教學</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo next 備份原始檔到 github</title>
-    <url>/2023/03/27/hexo%20next3/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
-<div class="note info no-icon">
-            <ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
-          </div>
-<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
-<p>到這個根目錄開啟 <code>cmd</code></p>
-<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
-<p>打上以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
-<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
-<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
-<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
-<p>就可以看到你 clone 的 file 了</p>
-<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<blockquote>
-<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-<div class="note info">
-            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
-          </div>
-<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<blockquote>
-<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
-</blockquote>
-<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
-<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
-<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
-<p>重新將 Next 主題下載回來：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
-        <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode install</title>
-    <url>/2023/03/14/vscode/</url>
-    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
-<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
-<li>mingw64下載 (可自行挑選下載方式)<ul>
-<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
-<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<div class='spoiler collapsed'>
-    <div class='spoiler-title'>
-        影片
-    </div>
-    <div class='spoiler-content'>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/8QdDlNOMCgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-</div>
-<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
-<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
-<li>ex: <code>cd Desktop</code></li>
-</ul>
-</li>
-<li><code>cd ..</code> 退到上一步的folder</li>
-<li><code>mkdir &lt;name&gt;</code> 創建一個新的folder <ul>
-<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
-</ul>
-</li>
-<li><code>ls</code> 展示目前路徑裡的檔案和資料夾</li>
-</ul>
-<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
-<li><code>ctrl+shift+p</code> vscode搜尋欄</li>
-<li><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code><ul>
-<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
-</ul>
-</li>
-<li><code>.\&lt;檔名&gt;.exe</code> 執行code<ul>
-<li><code>.\main.exe</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><blockquote>
-<p>Q: 如果找不到 bin 資料夾 ?</p>
-</blockquote>
-<ul>
-<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   <ul>
-<li>如果出現類似已下指令 可能代表你忘了 save</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Q: 如果有 save 解果出現以下指令 ?</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
-</blockquote>
-<ul>
-<li>代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
-</ul>
-<blockquote>
-<p>Q: terminal那邊要 run code 有更簡潔的方式嗎 ?</p>
-</blockquote>
-<ul>
-<li>直接 <code>ctrl+shift+B</code> 就可以了 (編譯+生exe)</li>
-</ul>
-<blockquote>
-<p>Q: 我用 <code>ctrl + F5</code> 偵錯他會顯示 <code>launch.json</code> 不存在 ? </p>
-</blockquote>
-<ul>
-<li>這是正常的，因為這部影片並沒有提到 debugger 的部分</li>
-<li>debugger 詳細部分可上 <a href="https://code.visualstudio.com/docs/editor/debugging">這篇官網資料</a> 查看</li>
-</ul>
-<blockquote>
-<p>Q: terminal 出現 當 <code>C_Cpp.intelliSenseEngine</code> 設為 <code>disabled</code> 時，無法執行 IntelliSense 的相關命令</p>
-</blockquote>
-<ul>
-<li>可以參考<a href="https://blog.csdn.net/lxj362343/article/details/125711213">這篇博客</a></li>
-</ul>
-<blockquote>
-<p>Q: 檔案執行時一直跳出 launch json 要怎麼辦 ?</p>
-</blockquote>
-<ul>
-<li>看起來你是啟動到 debug 模式了</li>
-<li><a href="https://code.visualstudio.com/docs/cpp/launch-json-reference">詳細資料</a></li>
-</ul>
-<blockquote>
-<p>Q: 執行指令時，出現以下錯誤</p>
-<p><img src="https://i.stack.imgur.com/KrGg0.png" alt="error message"></p>
-</blockquote>
-<ul>
-<li>卸載 <code>clangd</code> 這個 extension</li>
-<li>點擊左上角的 <code>File → Preferences → Settings</code></li>
-<li>在搜尋欄打上 <code>Intellisense engine</code></li>
-<li>找到 <code>C_Cpp: IntelliSense Engine</code> 將其設置為 <code>Default</code> (如下圖)</li>
-</ul>
-<p><img src="https://i.stack.imgur.com/AJnT2.png" alt="將其設置為 default " style="zoom:33%;" /></p>
-<blockquote>
-<p>在影片中 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=289s">4:49</a> 秒時，它找不到 <code>C/C++: Edit Configurations (UI)</code> ?</p>
-</blockquote>
-<ul>
-<li>需要先下載好 C/C++ 的 extension (影片中的 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
-<li><a href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
-</ul>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
+        <tag>hexo next</tag>
       </tags>
   </entry>
 </search>
