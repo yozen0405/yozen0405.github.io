@@ -1261,7 +1261,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #6311e3;
+  background: #ff9aff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2773,16 +2773,6 @@ body {
   background-position: center center;
   color: #ebebeb;
 }
-.content-wrap {
-  opacity: 0.95;
-}
-.side bar {
-  opacity: 0.95;
-  color: #fff;
-}
-.popup {
-  opacity: 0.95;
-}
 .blockquote-center:before {
   border-top: 1px solid #111;
   filter: invert(100%);
@@ -2820,22 +2810,15 @@ span.exturl:hover {
   border-bottom: none;
   border-bottom: 1px solid #fc6423;
 }
-img {
-  opacity: 100;
+.post-body a:not(.btn) {
+  color: #7bf;
+  border-bottom: none;
 }
-img:hover {
-  opacity: 0.95;
+.post-body a:not(.btn):hover {
+  border-bottom: none;
+  border-bottom: 1px solid #7bf;
 }
 .post-body .image-caption,
 .post-body .figure .caption {
   margin: 10px auto 15px;
-}
-.gist .blob-code-inner {
-  color: #fff;
-}
-.gist .blob-num {
-  color: #000;
-}
-.gist .blob-code {
-  color: #000;
 }
