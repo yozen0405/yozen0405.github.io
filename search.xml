@@ -57,6 +57,58 @@
       </tags>
   </entry>
   <entry>
+    <title>CSES 1669</title>
+    <url>/2023/03/18/CSES1669/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1669/">題目</a></h2><ul>
+<li>無向圖輸出環</li>
+</ul>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
+<li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
+<li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
+</ul>
+</li>
+<li>$x_i \rightarrow  … \rightarrow  x_j \rightarrow  x_i$ 就是一個環</li>
+<li>$\texttt{backtracking}$ 輸出</li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn];</span><br><span class="line"><span class="type">int</span> pre[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u, <span class="type">int</span> par)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == par) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre[v]) &#123; <span class="comment">// if (visited[v])</span></span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            <span class="keyword">while</span> (ans.<span class="built_in">back</span>() != v) &#123; <span class="comment">// backtracking</span></span><br><span class="line">                ans.<span class="built_in">pb</span>(pre[ans.<span class="built_in">back</span>()]);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pre[v] = u;</span><br><span class="line">        <span class="built_in">dfs</span> (v, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        G[v].<span class="built_in">pb</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!pre[i]) &#123;</span><br><span class="line">            pre[i] = i;</span><br><span class="line">            <span class="built_in">dfs</span> (i, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CSES 1678</title>
+    <url>/2023/03/17/CSES1678/</url>
+    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
+<li>有向圖輸出環</li>
+</ul>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li><p>我們想把這張圖變成一張頂環樹</p>
+<ul>
+<li>頂環樹找 $\texttt{cycle}$ 只需要用 $\texttt{topo sort}$ 把  $\texttt{in degree}=0$ 的點刪掉讓圖上只剩環即可</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">topo</span> (); <span class="comment">// 進行 topo sort</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">        tmp = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">                F[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/71330526/204506183-b92d0490-06ce-4b5b-a2cc-33246ed2ffb2.png" alt="頂環樹"></p>
+<div class="note info no-icon">
+            <p>頂環樹 $\texttt{:}$</p><ul><li>圖上只有一個環</li><li>每個 $\texttt{node}$ 的 $\texttt{out degree}$ 都是 $1$<ul><li>所以可以一直走，不可能會有一個結尾的點，也就代表有一個環</li><li>若有結尾的點代表該點 $\texttt{out degree}$ 是 $0$ ， 矛盾</li></ul></li><li>所有 $\texttt{outdegree}$ 是 $0$ 的點一直移除(像是在做 $\texttt{topo sort}$ ) 做完之後，所有人的 $\texttt{outdegree}$ 都至少 $1$ </li><li>對於每個剩下的點，把指出去的邊 ( $\texttt{out-going edge}$ ) 只保留一條 </li></ul>
+          </div>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>讓每個人的 $\texttt{out degree}$ 都恰好是 $1$ 就變成頂環樹了 </li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn], R[maxn], H[maxn], F[maxn];</span><br><span class="line"><span class="type">int</span> out[maxn], in[maxn], vis[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        R[v].<span class="built_in">pb</span>(u);</span><br><span class="line">        out[u]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">topo</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span> &amp;&amp; out[i] &gt;= <span class="number">1</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[u]) &#123;</span><br><span class="line">            in[v]--;</span><br><span class="line">            <span class="keyword">if</span> (in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// print cycle</span></span><br><span class="line">    ans.<span class="built_in">pb</span>(u);</span><br><span class="line">    <span class="keyword">if</span> (vis[u]) &#123;</span><br><span class="line">        cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : F[u]) &#123;</span><br><span class="line">        <span class="built_in">dfs</span> (v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">del</span>(); <span class="comment">// delete out[i] == 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v); <span class="comment">// 頂環樹</span></span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">topo</span> (); <span class="comment">// only keep the cycle</span></span><br><span class="line">    <span class="type">int</span> tmp = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            tmp = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    F[i].<span class="built_in">pb</span>(v); <span class="comment">// only cycle graph</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (~tmp) <span class="built_in">dfs</span> (tmp);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSES 1654</title>
     <url>/2023/03/18/CSES1654/</url>
     <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1654/">題目</a></h2><ul>
@@ -104,115 +156,6 @@
 <li>$(\sim x)=(C \texttt{ xor } x) $</li>
 </ul>
 <h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> C = (<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> F[(<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) + <span class="number">2</span>], R[(<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) + <span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> a[maxn];</span><br><span class="line"></span><br><span class="line"><span class="comment">// SOS DP</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) F[a[i]]++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">21</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; <span class="number">21</span>); mask++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; i))</span><br><span class="line">                F[mask] += F[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) R[C ^ a[i]]++; <span class="comment">// only here different with F</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">21</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; <span class="number">21</span>); mask++) &#123; <span class="comment">// start from 0</span></span><br><span class="line">            <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; i))</span><br><span class="line">                R[mask] += R[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) cin &gt;&gt; a[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">build</span> ();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Q1 = F[a[i]];</span><br><span class="line">        <span class="type">int</span> Q2 = R[C ^ a[i]];</span><br><span class="line">        <span class="type">int</span> Q3 = n - F[C ^ a[i]];</span><br><span class="line">        cout &lt;&lt; Q1 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; Q2 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; Q3 &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>CSES</tag>
-        <tag>題解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CSES 1669</title>
-    <url>/2023/03/18/CSES1669/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1669/">題目</a></h2><ul>
-<li>無向圖輸出環</li>
-</ul>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
-<li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
-<li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
-</ul>
-</li>
-<li>$x_i \rightarrow  … \rightarrow  x_j \rightarrow  x_i$ 就是一個環</li>
-<li>$\texttt{backtracking}$ 輸出</li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn];</span><br><span class="line"><span class="type">int</span> pre[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u, <span class="type">int</span> par)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == par) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre[v]) &#123; <span class="comment">// if (visited[v])</span></span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            <span class="keyword">while</span> (ans.<span class="built_in">back</span>() != v) &#123; <span class="comment">// backtracking</span></span><br><span class="line">                ans.<span class="built_in">pb</span>(pre[ans.<span class="built_in">back</span>()]);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pre[v] = u;</span><br><span class="line">        <span class="built_in">dfs</span> (v, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        G[v].<span class="built_in">pb</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!pre[i]) &#123;</span><br><span class="line">            pre[i] = i;</span><br><span class="line">            <span class="built_in">dfs</span> (i, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>CSES</tag>
-        <tag>題解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CSES 2215</title>
-    <url>/2023/03/14/CSES2215/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/2215/">題目</a></h2><ul>
-<li><p>構造一個 $1..n$ 的排列使得他的 <strong>最長單調子序列</strong> 恰好長度為 $k$</p>
-</li>
-<li><p><strong>最長單調子序列</strong> 是指這個子序列單調遞增或單調遞減</p>
-</li>
-</ul>
-<span id="more"></span>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><blockquote>
-<p>$\texttt{LIS}$ 為 $\texttt{longest increasing subsequnce}$ </p>
-<p>$\texttt{LDS}$ 為 $\texttt{longest decreasing subsequnce}$ </p>
-</blockquote>
-<h3 id="觀察"><a href="#觀察" class="headerlink" title="觀察"></a>觀察</h3><ul>
-<li><p>$\texttt {ans} = \texttt{max} \begin{cases} \texttt{len(LIS)} \\ \texttt{len(LDS)}\end{cases}$</p>
-</li>
-<li><p>發現說要想使答案控制得很好需要使得 $\texttt{len(LIS)}$ 跟 $\texttt{len(LDS)}$ 取得平衡</p>
-</li>
-<li><p>例如 $n=9,k=3$ 那我必須使得 $\texttt{len(LIS) = len(LDS) = 3}$ </p>
-<ul>
-<li><p>使得 $\texttt{LIS}$ 和 $\texttt{LDS}$ 不互相影響</p>
-</li>
-<li><p>$[\underline{\color{red}3 \color{white},2,1},\underline{\color{red}6 \color{white},5,4},\underline{\color{red}9 \color{white},8,7}]$</p>
-</li>
-<li><p>紅色為其中一個 $\texttt{LIS}$ 底線為 $\texttt{LDS}$</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="證明"><a href="#證明" class="headerlink" title="證明"></a>證明</h3><blockquote>
-<p>$\texttt{proof:}$</p>
-<p>$k &lt; \sqrt{n}$ 無解</p>
-</blockquote>
-<ul>
-<li>假設存在一個長度 $n=k^2+1$ 的排列 $p$，它的 $\texttt{LIS}$ 與 $\texttt{LDS}$ 長度皆最多為 $k$<ul>
-<li>此時 $k&lt;\sqrt{n}$</li>
-</ul>
-</li>
-<li>$a_i=$ 以 $a_i$ 結尾的 $\texttt{LIS}$ 長度</li>
-<li>$b_i=$ 以 $b_i$ 結尾的 $\texttt{LDS}$ 長度</li>
-<li>對於所有 $i$ ， $1 \le a_i,b_i\le k$ (我們的假設)</li>
-<li>因為 $(a_i,b_i)$ 有 $k^2$ 種可能 (籠子)</li>
-<li>但目前 $i=1..k^2+1$ 有 $k^2+1$ 種 (鴿子)</li>
-<li>可由鴿籠原理得知必存在兩數 $i,j$ 使 $a_i=a_j,b_i=b_j,(i&lt;j)$</li>
-</ul>
-<blockquote>
-<p>鴿籠原理</p>
-<ul>
-<li>若有 $n$ 個籠子和 $n+1$ 隻鴿子，所有的鴿子都被關在鴿籠裡，那麼至少有一個籠子有至少 $2$ 隻鴿子。</li>
-</ul>
-</blockquote>
-<ul>
-<li><p>那接著分以下 $\texttt{case:}$ </p>
-<ul>
-<li>$\texttt{case1:}$ $p_i&lt;p_j$<ul>
-<li>此時 $a_i=a_j$ 矛盾 (以 $p_i$  結尾的 $\texttt{LIS}$勢必可以再接上 $p_j$，使 $a_j=a_i+1$ )</li>
-</ul>
-</li>
-<li>$\texttt{case2:}$ $p_i&gt;p_j$<ul>
-<li>此時 $b_i=b_j$ 矛盾 (以  $p_i$  結尾的 $\texttt{LDS}$ 勢必可以再接上 $p_j$，使 $b_j=b_i+1$ ) </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>故假設錯誤，代表 $\texttt{len(LIS),len(LDS)}$ 長度會比 $k$ 大，代表 $k&lt;\sqrt{n}$ 無解</p>
-</li>
-</ul>
-<h3 id="構造"><a href="#構造" class="headerlink" title="構造"></a>構造</h3><ul>
-<li>構造方法如上面 $n=9,k=3$ 的那個方法一樣</li>
-<li>分成 $n/k$ 段，每一段從大排到小，兩段之間的開頭必須是從左到右遞增</li>
-<li>如果不夠讓每一段長度都是 $k$ ，那最後一段不用填滿沒關西<ul>
-<li>例如 $n=8,k=3$</li>
-<li>$[3,2,1,6,5,4,8,7]$ </li>
-</ul>
-</li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, k;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向下取整</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ifloor</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b &lt; <span class="number">0</span>) a *= <span class="number">-1</span>, b *= <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a &lt; <span class="number">0</span>) <span class="keyword">return</span> (a - b + <span class="number">1</span>) / b;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> a / b;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 向上取整</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">iceil</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b &lt; <span class="number">0</span>) a *= <span class="number">-1</span>, b *= <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a &gt; <span class="number">0</span>) <span class="keyword">return</span> (a + b - <span class="number">1</span>) / b;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> a / b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 開根號</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sqt</span> <span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> tmp = <span class="built_in">sqrt</span> (x);</span><br><span class="line">    <span class="keyword">if</span> (tmp * tmp &lt; x) tmp++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    m = <span class="built_in">sqt</span> (n);</span><br><span class="line">    <span class="keyword">if</span> (k &lt; m) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> num = <span class="built_in">iceil</span>(n, k); <span class="comment">// 分幾段</span></span><br><span class="line">    <span class="comment">// 每一段有 k 個東西, 共 n/k 段</span></span><br><span class="line">    <span class="type">int</span> pre = <span class="number">0</span>, start = k;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">        <span class="comment">// 3 2 1 6 5 4 9 8 7</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = start; j &gt; pre; j--) &#123;</span><br><span class="line">            cout &lt;&lt; j &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pre = start;</span><br><span class="line">        start += k;</span><br><span class="line">        <span class="keyword">if</span> (start &gt; n) start = n; <span class="comment">// 太大變 n</span></span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    cin &gt;&gt; t;</span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://abc864197532.github.io/2021/09/15/cses-additional-sol/">https://abc864197532.github.io/2021/09/15/cses-additional-sol/</a></li>
-</ul>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>CSES</tag>
@@ -400,29 +343,86 @@
       </tags>
   </entry>
   <entry>
-    <title>CSES 1678</title>
-    <url>/2023/03/17/CSES1678/</url>
-    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
-<li>有向圖輸出環</li>
-</ul>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li><p>我們想把這張圖變成一張頂環樹</p>
-<ul>
-<li>頂環樹找 $\texttt{cycle}$ 只需要用 $\texttt{topo sort}$ 把  $\texttt{in degree}=0$ 的點刪掉讓圖上只剩環即可</li>
-</ul>
+    <title>CSES 2215</title>
+    <url>/2023/03/14/CSES2215/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/2215/">題目</a></h2><ul>
+<li><p>構造一個 $1..n$ 的排列使得他的 <strong>最長單調子序列</strong> 恰好長度為 $k$</p>
+</li>
+<li><p><strong>最長單調子序列</strong> 是指這個子序列單調遞增或單調遞減</p>
 </li>
 </ul>
 <span id="more"></span>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">topo</span> (); <span class="comment">// 進行 topo sort</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">        tmp = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">                F[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://user-images.githubusercontent.com/71330526/204506183-b92d0490-06ce-4b5b-a2cc-33246ed2ffb2.png" alt="頂環樹"></p>
-<div class="note info no-icon">
-            <p>頂環樹 $\texttt{:}$</p><ul><li>圖上只有一個環</li><li>每個 $\texttt{node}$ 的 $\texttt{out degree}$ 都是 $1$<ul><li>所以可以一直走，不可能會有一個結尾的點，也就代表有一個環</li><li>若有結尾的點代表該點 $\texttt{out degree}$ 是 $0$ ， 矛盾</li></ul></li><li>所有 $\texttt{outdegree}$ 是 $0$ 的點一直移除(像是在做 $\texttt{topo sort}$ ) 做完之後，所有人的 $\texttt{outdegree}$ 都至少 $1$ </li><li>對於每個剩下的點，把指出去的邊 ( $\texttt{out-going edge}$ ) 只保留一條 </li></ul>
-          </div>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><blockquote>
+<p>$\texttt{LIS}$ 為 $\texttt{longest increasing subsequnce}$ </p>
+<p>$\texttt{LDS}$ 為 $\texttt{longest decreasing subsequnce}$ </p>
+</blockquote>
+<h3 id="觀察"><a href="#觀察" class="headerlink" title="觀察"></a>觀察</h3><ul>
+<li><p>$\texttt {ans} = \texttt{max} \begin{cases} \texttt{len(LIS)} \\ \texttt{len(LDS)}\end{cases}$</p>
+</li>
+<li><p>發現說要想使答案控制得很好需要使得 $\texttt{len(LIS)}$ 跟 $\texttt{len(LDS)}$ 取得平衡</p>
+</li>
+<li><p>例如 $n=9,k=3$ 那我必須使得 $\texttt{len(LIS) = len(LDS) = 3}$ </p>
 <ul>
-<li>讓每個人的 $\texttt{out degree}$ 都恰好是 $1$ 就變成頂環樹了 </li>
+<li><p>使得 $\texttt{LIS}$ 和 $\texttt{LDS}$ 不互相影響</p>
+</li>
+<li><p>$[\underline{\color{red}3 \color{white},2,1},\underline{\color{red}6 \color{white},5,4},\underline{\color{red}9 \color{white},8,7}]$</p>
+</li>
+<li><p>紅色為其中一個 $\texttt{LIS}$ 底線為 $\texttt{LDS}$</p>
+</li>
 </ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn], R[maxn], H[maxn], F[maxn];</span><br><span class="line"><span class="type">int</span> out[maxn], in[maxn], vis[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        R[v].<span class="built_in">pb</span>(u);</span><br><span class="line">        out[u]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">topo</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span> &amp;&amp; out[i] &gt;= <span class="number">1</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[u]) &#123;</span><br><span class="line">            in[v]--;</span><br><span class="line">            <span class="keyword">if</span> (in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// print cycle</span></span><br><span class="line">    ans.<span class="built_in">pb</span>(u);</span><br><span class="line">    <span class="keyword">if</span> (vis[u]) &#123;</span><br><span class="line">        cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : F[u]) &#123;</span><br><span class="line">        <span class="built_in">dfs</span> (v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">del</span>(); <span class="comment">// delete out[i] == 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v); <span class="comment">// 頂環樹</span></span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">topo</span> (); <span class="comment">// only keep the cycle</span></span><br><span class="line">    <span class="type">int</span> tmp = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            tmp = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    F[i].<span class="built_in">pb</span>(v); <span class="comment">// only cycle graph</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (~tmp) <span class="built_in">dfs</span> (tmp);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="證明"><a href="#證明" class="headerlink" title="證明"></a>證明</h3><blockquote>
+<p>$\texttt{proof:}$</p>
+<p>$k &lt; \sqrt{n}$ 無解</p>
+</blockquote>
+<ul>
+<li>假設存在一個長度 $n=k^2+1$ 的排列 $p$，它的 $\texttt{LIS}$ 與 $\texttt{LDS}$ 長度皆最多為 $k$<ul>
+<li>此時 $k&lt;\sqrt{n}$</li>
+</ul>
+</li>
+<li>$a_i=$ 以 $a_i$ 結尾的 $\texttt{LIS}$ 長度</li>
+<li>$b_i=$ 以 $b_i$ 結尾的 $\texttt{LDS}$ 長度</li>
+<li>對於所有 $i$ ， $1 \le a_i,b_i\le k$ (我們的假設)</li>
+<li>因為 $(a_i,b_i)$ 有 $k^2$ 種可能 (籠子)</li>
+<li>但目前 $i=1..k^2+1$ 有 $k^2+1$ 種 (鴿子)</li>
+<li>可由鴿籠原理得知必存在兩數 $i,j$ 使 $a_i=a_j,b_i=b_j,(i&lt;j)$</li>
+</ul>
+<blockquote>
+<p>鴿籠原理</p>
+<ul>
+<li>若有 $n$ 個籠子和 $n+1$ 隻鴿子，所有的鴿子都被關在鴿籠裡，那麼至少有一個籠子有至少 $2$ 隻鴿子。</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>那接著分以下 $\texttt{case:}$ </p>
+<ul>
+<li>$\texttt{case1:}$ $p_i&lt;p_j$<ul>
+<li>此時 $a_i=a_j$ 矛盾 (以 $p_i$  結尾的 $\texttt{LIS}$勢必可以再接上 $p_j$，使 $a_j=a_i+1$ )</li>
+</ul>
+</li>
+<li>$\texttt{case2:}$ $p_i&gt;p_j$<ul>
+<li>此時 $b_i=b_j$ 矛盾 (以  $p_i$  結尾的 $\texttt{LDS}$ 勢必可以再接上 $p_j$，使 $b_j=b_i+1$ ) </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>故假設錯誤，代表 $\texttt{len(LIS),len(LDS)}$ 長度會比 $k$ 大，代表 $k&lt;\sqrt{n}$ 無解</p>
+</li>
+</ul>
+<h3 id="構造"><a href="#構造" class="headerlink" title="構造"></a>構造</h3><ul>
+<li>構造方法如上面 $n=9,k=3$ 的那個方法一樣</li>
+<li>分成 $n/k$ 段，每一段從大排到小，兩段之間的開頭必須是從左到右遞增</li>
+<li>如果不夠讓每一段長度都是 $k$ ，那最後一段不用填滿沒關西<ul>
+<li>例如 $n=8,k=3$</li>
+<li>$[3,2,1,6,5,4,8,7]$ </li>
+</ul>
+</li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, k;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向下取整</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ifloor</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b &lt; <span class="number">0</span>) a *= <span class="number">-1</span>, b *= <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a &lt; <span class="number">0</span>) <span class="keyword">return</span> (a - b + <span class="number">1</span>) / b;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> a / b;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 向上取整</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">iceil</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b &lt; <span class="number">0</span>) a *= <span class="number">-1</span>, b *= <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a &gt; <span class="number">0</span>) <span class="keyword">return</span> (a + b - <span class="number">1</span>) / b;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> a / b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 開根號</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sqt</span> <span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> tmp = <span class="built_in">sqrt</span> (x);</span><br><span class="line">    <span class="keyword">if</span> (tmp * tmp &lt; x) tmp++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    m = <span class="built_in">sqt</span> (n);</span><br><span class="line">    <span class="keyword">if</span> (k &lt; m) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> num = <span class="built_in">iceil</span>(n, k); <span class="comment">// 分幾段</span></span><br><span class="line">    <span class="comment">// 每一段有 k 個東西, 共 n/k 段</span></span><br><span class="line">    <span class="type">int</span> pre = <span class="number">0</span>, start = k;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">        <span class="comment">// 3 2 1 6 5 4 9 8 7</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = start; j &gt; pre; j--) &#123;</span><br><span class="line">            cout &lt;&lt; j &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pre = start;</span><br><span class="line">        start += k;</span><br><span class="line">        <span class="keyword">if</span> (start &gt; n) start = n; <span class="comment">// 太大變 n</span></span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    cin &gt;&gt; t;</span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://abc864197532.github.io/2021/09/15/cses-additional-sol/">https://abc864197532.github.io/2021/09/15/cses-additional-sol/</a></li>
+</ul>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>CSES</tag>
@@ -882,7 +882,7 @@
 <p>再來就要執行 <code>hexo d</code> Hexo 的部署指令，就會開始將我們前面產生的靜態網頁部署到 Github Pages </p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo d </span><br></pre></td></tr></table></figure>
 <div class="note danger no-icon">
-            <h4 id="如果顯示一大堆警告"><a href="#如果顯示一大堆警告" class="headerlink" title="如果顯示一大堆警告"></a>如果顯示一大堆警告</h4><p>在 <code>cmd</code> 輸入以下指令</p><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git config <span class="literal">--global</span> user.name github_user_name</span><br><span class="line">git config <span class="literal">--global</span> user.email github_user_email</span><br></pre></td></tr></table></figure><p>其中 <code>github_user_name</code> 與 <code>github_user_email</code> 需替代成你 github 的名稱與榜定的 email</p><p>例如我就是</p><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git config <span class="literal">--global</span> yozen0405</span><br><span class="line">git config <span class="literal">--global</span> yozen0405@gmail.com</span><br></pre></td></tr></table></figure>
+            <h4 id="如果顯示一大堆警告"><a href="#如果顯示一大堆警告" class="headerlink" title="如果顯示一大堆警告"></a>如果顯示一大堆警告</h4><p>在 <code>cmd</code> 輸入以下指令</p><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git config <span class="literal">--global</span> user.name github_user_name</span><br><span class="line">git config <span class="literal">--global</span> user.email github_user_email</span><br></pre></td></tr></table></figure><p>其中 <code>github_user_name</code> 與 <code>github_user_email</code> 需替代成你 github 的名稱與榜定的 email</p><p>例如我就是</p><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git config <span class="literal">--global</span> user.name yozen0405</span><br><span class="line">git config <span class="literal">--global</span> user.email yozen0405@gmail.com</span><br></pre></td></tr></table></figure>
           </div>
 <p>如果執行後如圖這樣，恭喜你成功部署上去啦！打上 <code>https://你的github名字/你的github名字.github.io</code> 即可看到</p>
 <p><img src="https://i.imgur.com/OSjiRTi.png" alt="Hexo 檔案成功部署到 Github" style="zoom:50%;" /></p>
@@ -903,180 +903,6 @@
         <tag>教學</tag>
         <tag>github</tag>
         <tag>hexo next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode install</title>
-    <url>/2023/03/14/vscode/</url>
-    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
-<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
-<li>mingw64下載 (可自行挑選下載方式)<ul>
-<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
-<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<div class='spoiler collapsed'>
-    <div class='spoiler-title'>
-        影片
-    </div>
-    <div class='spoiler-content'>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/8QdDlNOMCgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-</div>
-<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
-<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
-<li>ex: <code>cd Desktop</code></li>
-</ul>
-</li>
-<li><code>cd ..</code> 退到上一步的folder</li>
-<li><code>mkdir &lt;name&gt;</code> 創建一個新的folder <ul>
-<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
-</ul>
-</li>
-<li><code>ls</code> 展示目前路徑裡的檔案和資料夾</li>
-</ul>
-<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
-<li><code>ctrl+shift+p</code> vscode搜尋欄</li>
-<li><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code><ul>
-<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
-</ul>
-</li>
-<li><code>.\&lt;檔名&gt;.exe</code> 執行code<ul>
-<li><code>.\main.exe</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><blockquote>
-<p>Q: 如果找不到 bin 資料夾 ?</p>
-</blockquote>
-<ul>
-<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   <ul>
-<li>如果出現類似已下指令 可能代表你忘了 save</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Q: 如果有 save 解果出現以下指令 ?</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
-</blockquote>
-<ul>
-<li>代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
-</ul>
-<blockquote>
-<p>Q: terminal那邊要 run code 有更簡潔的方式嗎 ?</p>
-</blockquote>
-<ul>
-<li>直接 <code>ctrl+shift+B</code> 就可以了 (編譯+生exe)</li>
-</ul>
-<blockquote>
-<p>Q: 我用 <code>ctrl + F5</code> 偵錯他會顯示 <code>launch.json</code> 不存在 ? </p>
-</blockquote>
-<ul>
-<li>這是正常的，因為這部影片並沒有提到 debugger 的部分</li>
-<li>debugger 詳細部分可上 <a href="https://code.visualstudio.com/docs/editor/debugging">這篇官網資料</a> 查看</li>
-</ul>
-<blockquote>
-<p>Q: terminal 出現 當 <code>C_Cpp.intelliSenseEngine</code> 設為 <code>disabled</code> 時，無法執行 IntelliSense 的相關命令</p>
-</blockquote>
-<ul>
-<li>可以參考<a href="https://blog.csdn.net/lxj362343/article/details/125711213">這篇博客</a></li>
-</ul>
-<blockquote>
-<p>Q: 檔案執行時一直跳出 launch json 要怎麼辦 ?</p>
-</blockquote>
-<ul>
-<li>看起來你是啟動到 debug 模式了</li>
-<li><a href="https://code.visualstudio.com/docs/cpp/launch-json-reference">詳細資料</a></li>
-</ul>
-<blockquote>
-<p>Q: 執行指令時，出現以下錯誤</p>
-<p><img src="https://i.stack.imgur.com/KrGg0.png" alt="error message"></p>
-</blockquote>
-<ul>
-<li>卸載 <code>clangd</code> 這個 extension</li>
-<li>點擊左上角的 <code>File → Preferences → Settings</code></li>
-<li>在搜尋欄打上 <code>Intellisense engine</code></li>
-<li>找到 <code>C_Cpp: IntelliSense Engine</code> 將其設置為 <code>Default</code> (如下圖)</li>
-</ul>
-<p><img src="https://i.stack.imgur.com/AJnT2.png" alt="將其設置為 default " style="zoom:33%;" /></p>
-<blockquote>
-<p>在影片中 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=289s">4:49</a> 秒時，它找不到 <code>C/C++: Edit Configurations (UI)</code> ?</p>
-</blockquote>
-<ul>
-<li>需要先下載好 C/C++ 的 extension (影片中的 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
-<li><a href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
-</ul>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo next 備份原始檔到 github</title>
-    <url>/2023/03/27/hexo%20next3/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
-<div class="note info no-icon">
-            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
-          </div>
-<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
-<p>到這個根目錄開啟 <code>cmd</code></p>
-<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
-<p>打上以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
-<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
-<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
-<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
-<p>就可以看到你 clone 的 file 了</p>
-<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<blockquote>
-<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-<div class="note info">
-            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
-          </div>
-<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<blockquote>
-<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
-</blockquote>
-<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
-<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
-<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
-<p>重新將 Next 主題下載回來：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -1258,6 +1084,180 @@ e^{ix} = cosx+isinx</script>
       <tags>
         <tag>教學</tag>
         <tag>hexo next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo next 備份原始檔到 github</title>
+    <url>/2023/03/27/hexo%20next3/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
+<div class="note info no-icon">
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+          </div>
+<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
+<p>到這個根目錄開啟 <code>cmd</code></p>
+<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
+<p>打上以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
+<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
+<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
+<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
+<p>就可以看到你 clone 的 file 了</p>
+<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<blockquote>
+<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
+          </div>
+<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<blockquote>
+<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
+</blockquote>
+<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
+<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
+<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
+<p>重新將 Next 主題下載回來：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>教學</tag>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode install</title>
+    <url>/2023/03/14/vscode/</url>
+    <content><![CDATA[<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
+<li><a href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
+<li>mingw64下載 (可自行挑選下載方式)<ul>
+<li><a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
+<li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        影片
+    </div>
+    <div class='spoiler-content'>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/8QdDlNOMCgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+</div>
+<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
+<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
+<li>ex: <code>cd Desktop</code></li>
+</ul>
+</li>
+<li><code>cd ..</code> 退到上一步的folder</li>
+<li><code>mkdir &lt;name&gt;</code> 創建一個新的folder <ul>
+<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
+</ul>
+</li>
+<li><code>ls</code> 展示目前路徑裡的檔案和資料夾</li>
+</ul>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
+<li><code>ctrl+shift+p</code> vscode搜尋欄</li>
+<li><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code><ul>
+<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
+</ul>
+</li>
+<li><code>.\&lt;檔名&gt;.exe</code> 執行code<ul>
+<li><code>.\main.exe</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><blockquote>
+<p>Q: 如果找不到 bin 資料夾 ?</p>
+</blockquote>
+<ul>
+<li>試試 <a href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   <ul>
+<li>如果出現類似已下指令 可能代表你忘了 save</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 如果有 save 解果出現以下指令 ?</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
+</ul>
+<blockquote>
+<p>Q: terminal那邊要 run code 有更簡潔的方式嗎 ?</p>
+</blockquote>
+<ul>
+<li>直接 <code>ctrl+shift+B</code> 就可以了 (編譯+生exe)</li>
+</ul>
+<blockquote>
+<p>Q: 我用 <code>ctrl + F5</code> 偵錯他會顯示 <code>launch.json</code> 不存在 ? </p>
+</blockquote>
+<ul>
+<li>這是正常的，因為這部影片並沒有提到 debugger 的部分</li>
+<li>debugger 詳細部分可上 <a href="https://code.visualstudio.com/docs/editor/debugging">這篇官網資料</a> 查看</li>
+</ul>
+<blockquote>
+<p>Q: terminal 出現 當 <code>C_Cpp.intelliSenseEngine</code> 設為 <code>disabled</code> 時，無法執行 IntelliSense 的相關命令</p>
+</blockquote>
+<ul>
+<li>可以參考<a href="https://blog.csdn.net/lxj362343/article/details/125711213">這篇博客</a></li>
+</ul>
+<blockquote>
+<p>Q: 檔案執行時一直跳出 launch json 要怎麼辦 ?</p>
+</blockquote>
+<ul>
+<li>看起來你是啟動到 debug 模式了</li>
+<li><a href="https://code.visualstudio.com/docs/cpp/launch-json-reference">詳細資料</a></li>
+</ul>
+<blockquote>
+<p>Q: 執行指令時，出現以下錯誤</p>
+<p><img src="https://i.stack.imgur.com/KrGg0.png" alt="error message"></p>
+</blockquote>
+<ul>
+<li>卸載 <code>clangd</code> 這個 extension</li>
+<li>點擊左上角的 <code>File → Preferences → Settings</code></li>
+<li>在搜尋欄打上 <code>Intellisense engine</code></li>
+<li>找到 <code>C_Cpp: IntelliSense Engine</code> 將其設置為 <code>Default</code> (如下圖)</li>
+</ul>
+<p><img src="https://i.stack.imgur.com/AJnT2.png" alt="將其設置為 default " style="zoom:33%;" /></p>
+<blockquote>
+<p>在影片中 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=289s">4:49</a> 秒時，它找不到 <code>C/C++: Edit Configurations (UI)</code> ?</p>
+</blockquote>
+<ul>
+<li>需要先下載好 C/C++ 的 extension (影片中的 <a href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
+<li><a href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
+</ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>教學</tag>
       </tags>
   </entry>
 </search>
