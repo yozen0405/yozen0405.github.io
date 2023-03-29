@@ -4,14 +4,24 @@ date:
 description: 博客設定優化
 tags: 
 - [教學]
+- [hexo next]
 mathjax: true
 ---
 
 ## 前言
 
-這是基於第一篇教學的優化，還沒看過第一篇可以點這裡
+這是「第 2 篇 : 博客設定優化」的教學，以下是全部教學篇的總覽
 
-<div class="text-center"><a class="btn" href="/2023/03/23/hexo%20next/" title="閱讀"><i class="fa fa-arrow-left fa-fw fa-lg"></i>前篇教學</a></div>
+{% note info no-icon %}
+
+### <i class="fa fa-bars"></i> 總覽
+- <a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a>
+- <a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a>
+- <a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a>
+
+{% endnote %}
+
+## 下載軟體
 
 ## Scheme 設定
 
@@ -36,7 +46,9 @@ darkmode: false
 
 開啟黑暗模式的話就把 `darkmode: false` 改成 `darkmode: true`
 
-## 設定頁尾作者鏈結
+## 頁尾設定
+
+### 作者欄
 
 到 `hexo\config_yml` 找到以下代碼 :
 
@@ -53,22 +65,7 @@ timezone: ''
 
 將 author 改成你的名字
 
-![](https://img.guiblogs.com/hexo30-6/footer-author-text.jpg)
-
-到 `hexo\themes\next\_config.yml` 找到以下這段語法：
-
-```yml
-# If not defined, `author` from Hexo `_config.yml` will be used.
-copyright:
-```
-
-如果想插入連結，撰寫 HTML a 鏈結語法，設定完成後就可以看到頁尾作者文字變成了鏈結
-
-```
-copyright: "<a href='指定鏈結'>你的名字</a>"
-```
-
-![變更頁尾作者名字，順便設定成超鏈結](https://img.guiblogs.com/hexo30-6/footer-author-link.jpg)
+![成果](https://i.imgur.com/8VpYBcu.png)
 
 ### 去除強力驅動
 
@@ -103,6 +100,24 @@ fancybox:
 ```
 
 更改為 `fancybox: true` ，重新 `hexo clean`, `hexo s` 就可以了
+
+### 圖片太透明
+
+到 `hexo\themes\next\source\css` 找到以下代碼 
+
+```css
+img {
+    opacity: .75;
+
+    &:hover {
+        opacity: .9;
+    }
+}
+```
+
+<img src="https://i.imgur.com/WkCVonn.png" alt="將反白代碼全部刪掉" style="zoom:50%;" />
+
+將反白代碼全部刪掉就好
 
 ## 主選單設置
 
@@ -244,6 +259,8 @@ back2top:
 
 ## 程式碼區塊樣式
 
+### 內建
+
 在 `hexo\themes\next\_config.yml` 找到以下這段語法：
 
 ```yml
@@ -262,6 +279,16 @@ codeblock:
 ```
 
 將 `highlight_theme: normal` 改成 `highlight_theme: night bright`
+
+### 自定義
+
+去 `hexo\themes\next\source\css\_common\scaffolding\highlight\theme.styl`
+
+```cpp
+int
+```
+
+
 
 ## 加上數學式
 

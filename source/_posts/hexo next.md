@@ -1,11 +1,26 @@
 ---
 title: hexo next 教學
 date: 
-description: 架設博客教學
+description: 架設博客本體教學
 tags: 
 - [教學]
+- [github]
+- [hexo next]
 mathjax: true
 ---
+
+## 前言
+
+這是「第 1 篇 : 架設博客」的教學，以下是全部教學篇的總覽
+
+{% note info no-icon %}
+
+### <i class="fa fa-bars"></i> 總覽
+- <a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a>
+- <a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a>
+- <a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a>
+
+{% endnote %}
 
 ## 下載軟體
 
@@ -348,8 +363,8 @@ git config --global user.email github_user_email
 例如我就是
 
 ```powershell
-git config --global yozen0405
-git config --global yozen0405@gmail.com
+git config --global user.name yozen0405
+git config --global user.email yozen0405@gmail.com
 ```
 
 {% endnote %}
@@ -390,8 +405,3 @@ git config --global yozen0405@gmail.com
 
 {% endnote %}
 
-## 備註
-
-優化 hexo next 設定的部分，我把它寫在另一個文章，可以點下面的按鈕過去
-
-<div class="text-center"><a class="btn" href="/2023/03/25/hexo%20next2/" title="閱讀"><i class="fa fa-arrow-right fa-fw fa-lg"></i>後篇教學</a></div>

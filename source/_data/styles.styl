@@ -1,5 +1,5 @@
 ::selection {
-    background: #3390FF;
+    background: #2D8DF7;
     color: white;
 }
 
@@ -10,19 +10,6 @@ body {
       background-attachment: fixed;
       background-position:center center;
       color: #EBEBEB; // 全局字體顏色
-}
-
-.content-wrap {
-  opacity: 0.95;
-}
-
-.side bar {
-  opacity: 0.95;
-  color: white;
-}
-
-.popup {
-  opacity: 0.95;
 }
 
 .blockquote-center {
@@ -43,8 +30,8 @@ blockquote {
 .post-body .note {
   color: black;
   ::selection {
-    background: #C4E7E8;
-    color: black;
+    background: #2D8DF7;
+    color: white;
   }
 
   blockquote {
@@ -52,22 +39,21 @@ blockquote {
   }
 }
 
-.post-body .note p a, .post-body .note p span.exturl {
-  color: #0593d3;
+.post-body a:not(.btn) {
+  color: #77BBFF;
   border-bottom: none;
-  border-bottom: 1px solid #0593d3;
   &:hover {
-    color: #fc6423;
     border-bottom: none;
-    border-bottom: 1px solid #fc6423;
+    border-bottom: 2px solid #77BBFF;
   }
 }
 
-img {
-  opacity: 100;
-
+.post-body .note p a, .post-body .note p span.exturl, .post-body .note a, span.exturl {
+  color: #0593d3;
+  border-bottom: none;
   &:hover {
-    opacity: 0.95;
+    border-bottom: none;
+    border-bottom: 2px solid #0593d3;
   }
 }
 
@@ -75,14 +61,6 @@ img {
     margin: 10px auto 15px;
 }
 
-.gist .blob-code-inner {
-  color: white;
-}
-
-.gist .blob-num {
-  color: black;
-}
-
-.gist .blob-code {
-  color: black;
+.post-body h3 {
+  border-bottom: none;
 }
