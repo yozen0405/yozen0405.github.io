@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="架設博客本體教學">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo next 教學">
+<meta property="og:url" content="http://example.com/2023/03/23/hexo%20next/index.html">
+<meta property="og:site_name" content="咖啡">
+<meta property="og:description" content="架設博客本體教學">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/ub2U0xs.png">
+<meta property="og:image" content="https://i.imgur.com/v6LwRcv.png">
+<meta property="og:image" content="https://i.imgur.com/xToEIWN.png">
+<meta property="og:image" content="https://i.imgur.com/DW5u5sE.png">
+<meta property="og:image" content="https://i.imgur.com/uZJS8rH.png">
+<meta property="og:image" content="https://i.imgur.com/fitXCVt.png">
+<meta property="og:image" content="https://i.imgur.com/aq7kdxd.png">
+<meta property="og:image" content="https://i.imgur.com/yi9JAA0.png">
+<meta property="og:image" content="https://i.imgur.com/UGSTxmq.png">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/welcomewebworld-4097b.appspot.com/o/blogImg%2Fother%2F2020-05-10_22-38-18.png?alt=media&amp;token=68a6e168-1ee6-4864-a4d3-73d576e74e24">
+<meta property="og:image" content="https://ycjhuo.gitlab.io/assets/img/20-01.8ceaf1f7.png">
+<meta property="og:image" content="https://i.imgur.com/zaU56V9.png">
+<meta property="og:image" content="https://img.guiblogs.com/hexo30-5/demo-next.jpg">
+<meta property="og:image" content="https://i.imgur.com/iuCXGcf.png">
+<meta property="og:image" content="https://i.imgur.com/gJDSfqc.png">
+<meta property="og:image" content="https://i.imgur.com/MXgtC5S.png">
+<meta property="og:image" content="https://i.imgur.com/OSjiRTi.png">
+<meta property="og:image" content="https://i.imgur.com/znpEkeJ.png">
+<meta property="og:image" content="https://i.imgur.com/Z0B2kFS.png">
+<meta property="og:image" content="https://i.imgur.com/Jo7fktP.png">
+<meta property="og:image" content="https://i.imgur.com/Rslfrvw.png">
+<meta property="article:published_time" content="2023-03-23T00:21:15.463Z">
+<meta property="article:modified_time" content="2023-03-28T09:13:39.582Z">
+<meta property="article:author" content="coffee5427">
+<meta property="article:tag" content="教學">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="hexo next">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/ub2U0xs.png">
+
+<link rel="canonical" href="http://example.com/2023/03/23/hexo%20next/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>hexo next 教學 | 咖啡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">咖啡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">退役競程選手</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-rahlin1004">
+
+    <a href="https://rahlin1004.github.io/" rel="noopener" target="_blank"><i class="fa fa-th fa-fw"></i>rahlin1004</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+      <div class="links-of-author motion-element">
+          <span class="links-of-author-item">
+            <a href="https://github.com/yozen0405" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yozen0405" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://www.facebook.com/profile.php?id=100054052144225" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100054052144225" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://youtube.com/@coffee-ul9fj" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@coffee-ul9fj" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://discord.com/users/714398749388177489" title="Discord → https:&#x2F;&#x2F;discord.com&#x2F;users&#x2F;714398749388177489" rel="noopener" target="_blank"><i class="fab fa-discord fa-fw"></i></a>
+          </span>
+      </div>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/23/hexo%20next/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coffee.jpg">
+      <meta itemprop="name" content="coffee5427">
+      <meta itemprop="description" content="hello">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="咖啡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo next 教學
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2023-03-23 08:21:15" itemprop="dateCreated datePublished" datetime="2023-03-23T08:21:15+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2023-03-28 17:13:39" itemprop="dateModified" datetime="2023-03-28T17:13:39+08:00">2023-03-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/23/hexo%20next/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/23/hexo%20next/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">架設博客本體教學</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 1 篇 : 架設博客」的教學，以下是全部教學篇的總覽</p>
+<div class="note info no-icon">
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+          </div>
+<h2 id="下載軟體"><a href="#下載軟體" class="headerlink" title="下載軟體"></a>下載軟體</h2><blockquote>
+<h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h3><p>下載位置：<a target="_blank" rel="noopener" href="https://nodejs.org/zh-tw/download/">下載 | Node.js</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/ub2U0xs.png" alt="安裝介面" style="zoom:33%;" /></p>
+<p>windows 用戶點<font color="#FC4E4E">紅色</font>圈起來的，mac 用戶點<font color="#00A2E8">藍色</font>圈起來的</p>
+<p>下載好之後開起下載的檔案然後安裝，基本上只要一直點 next 就好了</p>
+<blockquote>
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>下載位置：<a target="_blank" rel="noopener" href="https://git-scm.com/downloads">Git - Downloads</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/v6LwRcv.png" style="zoom:33%;" /></p>
+<p>windows 用戶點<font color="#FC4E4E">紅色</font>圈起來的 <code>Download for Windows</code></p>
+<p>下載好之後開起下載的檔案然後安裝，基本上只要一直點 next 就好了</p>
+<blockquote>
+<h3 id="Vscode"><a href="#Vscode" class="headerlink" title="Vscode"></a>Vscode</h3><p>下載位置：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">Download Visual Studio Code</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/xToEIWN.png" style="zoom:33%;" /></p>
+<p>直接下載就可以用了</p>
+<p>windows 用戶點<font color="#FC4E4E">紅色</font>圈起來的，mac 用戶點<font color="#75F94D">綠色</font>圈起來的</p>
+<blockquote>
+<h3 id="文章編輯器-Typora"><a href="#文章編輯器-Typora" class="headerlink" title="文章編輯器 Typora"></a>文章編輯器 Typora</h3><p>下載位置：<a target="_blank" rel="noopener" href="https://typora.io/#download">Typora — a markdown editor, markdown reader.</a></p>
+</blockquote>
+<p><img src="https://i.imgur.com/DW5u5sE.png" style="zoom:33%;" /></p>
+<p>點<font color="#FC4E4E">紅色</font>圈起來的</p>
+<p>這個軟體使用起來是免費的，所以不用擔心，如果之後看到以下畫面</p>
+<p><img src="https://i.imgur.com/uZJS8rH.png" style="zoom:50%;" /></p>
+<p>就點 <code>不是現在</code> 即可</p>
+<h2 id="架設-hexo"><a href="#架設-hexo" class="headerlink" title="架設 hexo"></a>架設 hexo</h2><h3 id="建立博客根目錄"><a href="#建立博客根目錄" class="headerlink" title="建立博客根目錄"></a>建立博客根目錄</h3><h4 id="For-win11"><a href="#For-win11" class="headerlink" title="For win11"></a>For win11</h4><p>我們先建立一個名為 <code>hexo</code> 的資料夾(在哪裡建立都 ok)</p>
+<p>接著對你建立的名為 <code>hexo</code> 的資料<strong>左鍵點一下</strong> $\rightarrow$ 接著再點擊右鍵 $\rightarrow$ 點擊在終端中開啟</p>
+<blockquote>
+<p>注意: 如果沒有先用左鍵點<strong>一下</strong>資料夾他是不會顯示「在終端中開啟」這個選項的</p>
+</blockquote>
+<p><img src="https://i.imgur.com/fitXCVt.png" alt = "點擊「在終端中開啟」" style="zoom:50%;" /></p>
+<h4 id="For-else"><a href="#For-else" class="headerlink" title="For else"></a>For else</h4><p>在搜尋攔搜尋 cmd，按 enter 開啟，接著就按照你 <code>hexo</code> 資料夾的位置去 <code>cd &lt;folder&gt;</code> ，直到進到 <code>hexo</code> 資料夾內</p>
+<p>例如我目前在 <code>C:\Users\yozen</code> </p>
+<p>而我有安裝 onedrive 所以我的 hexo 路徑在 <code>C:\Users\yozen\Onedrive\桌面\projects\hexo</code> </p>
+<p>以下就是我需要 cd 的路徑</p>
+<p><img src="https://i.imgur.com/aq7kdxd.png" alt="範例" style="zoom: 67%;" /></p>
+<h3 id="檢查"><a href="#檢查" class="headerlink" title="檢查"></a>檢查</h3><p>在終端機(以下都稱作 <code>cmd</code> 內) 輸入以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node <span class="literal">-v</span></span><br><span class="line">npm <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>node -v</code> 查詢安裝的 node 版本</li>
+<li><code>npm -v</code> 查詢安裝的 npm 版本</li>
+<li>正確的話系統就會回報版本給你</li>
+</ul>
+<blockquote>
+<p>記得要先按裝好上面的軟體下載再來檢查，不然一邊下載一邊開著 cmd 是不會成功的</p>
+</blockquote>
+<p>如果都沒有出現 <font color="#FC4E4E">error(紅字)</font> 代表 ok</p>
+<h3 id="利用-npm-下載-Hexo"><a href="#利用-npm-下載-Hexo" class="headerlink" title="利用 npm 下載 Hexo"></a>利用 npm 下載 Hexo</h3><ul>
+<li><p>接著繼續在 <code>cmd</code> 內輸入以下指令</p>
+</li>
+<li><p>在執行完 <code>npm install hexo-cli -g</code> 後，看到 <code>cmd</code> 顯示 <code>INFO Start blogging with Hexo!</code>，代表有安裝到</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo<span class="literal">-cli</span> <span class="literal">-g</span></span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<div class="note danger no-icon">
+            <h4 id="如果出現以下警告"><a href="#如果出現以下警告" class="headerlink" title="如果出現以下警告"></a>如果出現以下警告</h4><p><img src="https://i.imgur.com/yi9JAA0.png" alt=""></p><hr><p>在搜尋欄搜尋 <code>Windows PowerShell</code>，對他點擊右鍵</p><p>$\rightarrow$ 點擊以<strong>「系統管理員身分執行」</strong>，如下圖</p><p><img src="https://i.imgur.com/UGSTxmq.png" style="zoom:50%;" /></p><p>開啟後打上以下指令<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> RemoteSigned</span><br></pre></td></tr></table></figure></p><p><img src="https://firebasestorage.googleapis.com/v0/b/welcomewebworld-4097b.appspot.com/o/blogImg%2Fother%2F2020-05-10_22-38-18.png?alt=media&amp;token=68a6e168-1ee6-4864-a4d3-73d576e74e24" alt=""></p><p>按下(輸入 A) [A] 就可以了</p><p>你就可以再回去試試看執行 <code>npm</code>  指令了</p>
+          </div>
+<h3 id="在自己的電腦上啟動-Hexo"><a href="#在自己的電腦上啟動-Hexo" class="headerlink" title="在自己的電腦上啟動 Hexo"></a>在自己的電腦上啟動 Hexo</h3><p>輸入以下指令來啟動 Hexo</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<ul>
+<li>執行指令後，若有看到這行字的話，就表示我們安裝成功了</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO  Hexo is running at http://localhost:<span class="number">4000</span> . Press Ctrl+C to stop</span><br></pre></td></tr></table></figure>
+<ul>
+<li>之後我們打開瀏覽器 (Chrome, Firefox)，在網址列輸入 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 就可以看到 Hexo 的畫面了 (如下圖)。</li>
+</ul>
+<p><img src="https://ycjhuo.gitlab.io/assets/img/20-01.8ceaf1f7.png" style="zoom: 50%;" /></p>
+<h2 id="建立文章"><a href="#建立文章" class="headerlink" title="建立文章"></a>建立文章</h2><ul>
+<li>要建立新文章的話，在這個資料夾底下 <code>hexo\source\posts</code> 建立 <code>檔名.md</code> (檔名自訂) 即可</li>
+<li>你會看到內建有一篇 <code>hello world.md</code> 那個可以刪掉，或者你直接用他去改都 ok</li>
+<li>至於裡面的內容，一定要先至少打上</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> </span><br><span class="line"><span class="attr">date:</span> </span><br><span class="line"><span class="attr">description:</span> </span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>title : 文章的標題</li>
+<li>date : 發布文章的時間 (可以留空)</li>
+<li>description: 在博客主頁面會顯示的簡述 (可留空)</li>
+<li>tags : 標籤</li>
+</ul>
+<p>在下面的部分 (第 6 行之後) 就可以開始撰寫文章的正文了，以下提供一個範例<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">My</span> <span class="string">first</span> <span class="string">blog</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2020-09-17 21:18:00</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">whats</span> <span class="string">up</span> <span class="string">guys</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> [<span class="string">blog</span>]	</span><br><span class="line"><span class="bullet">-</span> [<span class="string">test</span>]</span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="string">This</span> <span class="string">is</span> <span class="string">my</span> <span class="string">first</span> <span class="string">post.</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>寫好後，重新整理 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 即可看到變化</li>
+</ul>
+<h2 id="加上-NexT-主題"><a href="#加上-NexT-主題" class="headerlink" title="加上 NexT 主題"></a>加上 NexT 主題</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme<span class="literal">-next</span>/hexo<span class="literal">-theme-next</span> themes/next</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/zaU56V9.png" style="zoom:60%;" /></p>
+<p>再來到 <code>hexo\_config.yml</code>  (這裡的 <code>hexo</code> 是指網站一開始的資料夾)</p>
+<p>可以用 vscode 來開啟檔案 </p>
+<p>下載完後在 vscode 用 <code>ctrl + F</code>  搜尋  <code># Extensions</code>，並進行以下設置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span> </span><br></pre></td></tr></table></figure>
+<p>改 <code>theme: next</code></p>
+<p>再來我們在打上 </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>再去  <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 就可以看到變化了，如果要停止網站在 <code>cmd</code> 按 <code>ctrl+c</code> 即可</p>
+<p>之後每次開啟本機端的博客都是先 <code>hexo clean</code> 再 <code>hexo s</code> 就可以啟動了</p>
+<p><img src="https://img.guiblogs.com/hexo30-5/demo-next.jpg" alt="Next 佈景主題樣式" style="zoom: 50%;" /></p>
+<h2 id="網站資訊設定"><a href="#網站資訊設定" class="headerlink" title="網站資訊設定"></a>網站資訊設定</h2><p>到 <code>hexo\config_yml</code> 找到以下代碼 :</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> </span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="attr">author:</span> <span class="string">John</span> <span class="string">Doe</span> </span><br><span class="line"><span class="attr">language:</span> <span class="string">en</span> </span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;&#x27;</span> </span><br></pre></td></tr></table></figure>
+<ul>
+<li>title : 你的部落格標題</li>
+<li>subtitle : 你的部落格副標題</li>
+<li>description : 部落格簡介</li>
+<li>keywords :  網站關鍵字，多個關鍵字用逗號隔開<ul>
+<li>例如 <code>keywords : &#39;關鍵字1&#39;, &#39;關鍵字2&#39;</code></li>
+</ul>
+</li>
+<li>author : 作者名字</li>
+<li>language : 語言，繁體中文請改成 <code>language: zh-TW</code></li>
+<li>timezone : 使用系統時間即可</li>
+</ul>
+<p>記得更改完後要 <code>hexo clean</code>, <code>hexo s</code> 才能看到更動</p>
+<h2 id="將頁面上傳到-github-io"><a href="#將頁面上傳到-github-io" class="headerlink" title="將頁面上傳到 github.io"></a>將頁面上傳到 github.io</h2><h3 id="新增儲存庫"><a href="#新增儲存庫" class="headerlink" title="新增儲存庫"></a>新增儲存庫</h3><p>如果你本身已經有 Github 帳號或是剛辦好的，那就可以新增儲存庫了。首先來到已經為登入狀態的 Github 任一頁面，右上角會有個「+」按鈕，按下去後會出現下拉式選單，點擊第一個「New repository」。</p>
+<p><img src="https://i.imgur.com/iuCXGcf.png" alt="點擊新增儲存庫"></p>
+<p>此時請在你的 Reponsitory name 輸入「你的 Github 帳號.github.io」</p>
+<p>例如我就是 <code>yozen0405.github.io</code></p>
+<p><img src="https://i.imgur.com/gJDSfqc.png" alt="填寫網址"></p>
+<p>填寫完成往下滑按下「Create repository」後，如果看到以下畫面就代表成功囉！此時，右上角是否有看到一個 HTTPS 的網址？請將它複製起來，待會會用到。</p>
+<p><img src="https://i.imgur.com/MXgtC5S.png" alt="儲存庫建立成功"></p>
+<h3 id="設定-Hexo-連結儲存庫"><a href="#設定-Hexo-連結儲存庫" class="headerlink" title="設定 Hexo 連結儲存庫"></a>設定 Hexo 連結儲存庫</h3><p>部署前要先設定 Hexo 的 <code>_config.yml</code> 檔案中連接到 Github 儲存庫的相關設定，首先要找到 <code># Deployment</code> 這段（基本上預設會在檔案最下面）：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span> <span class="comment"># 使用 Git 部署</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/Github帳號/Github帳號.github.io.git</span> <span class="comment"># 你的儲存庫 clone</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span> <span class="comment"># 儲存庫分支</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;First Commit&quot;</span> <span class="comment"># Commit 訊息</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>type：部署類型</li>
+<li>repo：儲存庫 clone (就是剛剛要你複製的那串，貼上去)</li>
+<li>branch：儲存庫分支 </li>
+<li>message：Commit 訊息</li>
+</ul>
+<p>這是我的設定，可以參考</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span> <span class="comment"># 使用 Git 部署</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/yozen0405/yozen0405.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span> <span class="comment"># 儲存庫分支</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;First Commit&quot;</span> <span class="comment"># Commit 訊息</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>預設可能只有 type 而已，然而<strong>必須加上 repo、branch 等資訊才能進行部署</strong>（畢竟要設定部署的儲存庫嘛），message 不是必要的，不過我建議還是加，這樣整體在看的時候比較能夠一目了然每一次的部署是為了什麼而更新</p>
+</li>
+<li><p>再來就是 <strong>冒號後必須空一個空白在接設定值！</strong></p>
+</li>
+</ul>
+<h3 id="上傳到-github"><a href="#上傳到-github" class="headerlink" title="上傳到 github"></a>上傳到 github</h3><p>在 <code>hexo</code> 資料夾用終端機開啟 (<code>cmd</code>)</p>
+<p>輸入以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+<p>部署 Hexo 必須要安裝 <code>Hexo-deployer-git Git</code> 部署套件，因此需要執行以下指令安裝：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo<span class="literal">-deployer-git</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+<p>再來就要執行 <code>hexo d</code> Hexo 的部署指令，就會開始將我們前面產生的靜態網頁部署到 Github Pages </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d </span><br></pre></td></tr></table></figure>
+<div class="note danger no-icon">
+            <h4 id="如果顯示一大堆警告"><a href="#如果顯示一大堆警告" class="headerlink" title="如果顯示一大堆警告"></a>如果顯示一大堆警告</h4><p>在 <code>cmd</code> 輸入以下指令</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config <span class="literal">--global</span> user.name github_user_name</span><br><span class="line">git config <span class="literal">--global</span> user.email github_user_email</span><br></pre></td></tr></table></figure><p>其中 <code>github_user_name</code> 與 <code>github_user_email</code> 需替代成你 github 的名稱與榜定的 email</p><p>例如我就是</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config <span class="literal">--global</span> user.name yozen0405</span><br><span class="line">git config <span class="literal">--global</span> user.email yozen0405@gmail.com</span><br></pre></td></tr></table></figure>
+          </div>
+<p>如果執行後如圖這樣，恭喜你成功部署上去啦！打上 <code>https://你的github名字/你的github名字.github.io</code> 即可看到</p>
+<p><img src="https://i.imgur.com/OSjiRTi.png" alt="Hexo 檔案成功部署到 Github" style="zoom:50%;" /></p>
+<h3 id="公開部落格頁面"><a href="#公開部落格頁面" class="headerlink" title="公開部落格頁面"></a>公開部落格頁面</h3><p><img src="https://i.imgur.com/znpEkeJ.png" style="zoom:33%;" /></p>
+<p>點擊 <code>Settings</code></p>
+<p><img src="https://i.imgur.com/Z0B2kFS.png" style="zoom:33%;" /></p>
+<p>點擊 <code>Pages</code></p>
+<p><img src="https://i.imgur.com/Jo7fktP.png" style="zoom:33%;" /></p>
+<p>點擊紅色框起來的部分就可以看到妳的網站了</p>
+<div class="note danger no-icon">
+            <h4 id="怎麼沒有顯示紅色框起來的部分"><a href="#怎麼沒有顯示紅色框起來的部分" class="headerlink" title="怎麼沒有顯示紅色框起來的部分 ?"></a>怎麼沒有顯示紅色框起來的部分 ?</h4><p>因為你目前的博客還在部署中，要再等一段時間才可</p><p>以下圖片框起來的地方可以看到目前部署的狀態，若是<font color="EF9B0F">黃色</font>代表部署中，<font color="green">綠色</font>代表已完成部署</p><p><img src="https://i.imgur.com/Rslfrvw.png" alt=""></p>
+          </div>
+<div class="note info">
+            <p>之後每次要從本地端將你的資料丟到 github.io 上就直接 <code>hexo clean</code>, <code>hexo d</code> 即可</p>
+          </div>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E5%AD%B8/" rel="tag"># 教學</a>
+              <a href="/tags/github/" rel="tag"># github</a>
+              <a href="/tags/hexo-next/" rel="tag"># hexo next</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/18/CSES1669/" rel="prev" title="CSES 1669">
+      <i class="fa fa-chevron-left"></i> CSES 1669
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/25/hexo%20next2/" rel="next" title="hexo next 設定優化">
+      hexo next 設定優化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E8%A6%BD"><span class="nav-number">1.1.</span> <span class="nav-text"> 總覽</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BC%89%E8%BB%9F%E9%AB%94"><span class="nav-number">2.</span> <span class="nav-text">下載軟體</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js"><span class="nav-number">2.1.</span> <span class="nav-text">Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git"><span class="nav-number">2.2.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vscode"><span class="nav-number">2.3.</span> <span class="nav-text">Vscode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%B7%A8%E8%BC%AF%E5%99%A8-Typora"><span class="nav-number">2.4.</span> <span class="nav-text">文章編輯器 Typora</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E8%A8%AD-hexo"><span class="nav-number">3.</span> <span class="nav-text">架設 hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%8D%9A%E5%AE%A2%E6%A0%B9%E7%9B%AE%E9%8C%84"><span class="nav-number">3.1.</span> <span class="nav-text">建立博客根目錄</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#For-win11"><span class="nav-number">3.1.1.</span> <span class="nav-text">For win11</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#For-else"><span class="nav-number">3.1.2.</span> <span class="nav-text">For else</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5"><span class="nav-number">3.2.</span> <span class="nav-text">檢查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-npm-%E4%B8%8B%E8%BC%89-Hexo"><span class="nav-number">3.3.</span> <span class="nav-text">利用 npm 下載 Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E5%87%BA%E7%8F%BE%E4%BB%A5%E4%B8%8B%E8%AD%A6%E5%91%8A"><span class="nav-number">3.3.1.</span> <span class="nav-text">如果出現以下警告</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E9%9B%BB%E8%85%A6%E4%B8%8A%E5%95%9F%E5%8B%95-Hexo"><span class="nav-number">3.4.</span> <span class="nav-text">在自己的電腦上啟動 Hexo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">建立文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8A-NexT-%E4%B8%BB%E9%A1%8C"><span class="nav-number">5.</span> <span class="nav-text">加上 NexT 主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B6%B2%E7%AB%99%E8%B3%87%E8%A8%8A%E8%A8%AD%E5%AE%9A"><span class="nav-number">6.</span> <span class="nav-text">網站資訊設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%87%E9%A0%81%E9%9D%A2%E4%B8%8A%E5%82%B3%E5%88%B0-github-io"><span class="nav-number">7.</span> <span class="nav-text">將頁面上傳到 github.io</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="nav-number">7.1.</span> <span class="nav-text">新增儲存庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Hexo-%E9%80%A3%E7%B5%90%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="nav-number">7.2.</span> <span class="nav-text">設定 Hexo 連結儲存庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E5%82%B3%E5%88%B0-github"><span class="nav-number">7.3.</span> <span class="nav-text">上傳到 github</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E9%A1%AF%E7%A4%BA%E4%B8%80%E5%A4%A7%E5%A0%86%E8%AD%A6%E5%91%8A"><span class="nav-number">7.3.1.</span> <span class="nav-text">如果顯示一大堆警告</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E9%96%8B%E9%83%A8%E8%90%BD%E6%A0%BC%E9%A0%81%E9%9D%A2"><span class="nav-number">7.4.</span> <span class="nav-text">公開部落格頁面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%8E%E9%BA%BC%E6%B2%92%E6%9C%89%E9%A1%AF%E7%A4%BA%E7%B4%85%E8%89%B2%E6%A1%86%E8%B5%B7%E4%BE%86%E7%9A%84%E9%83%A8%E5%88%86"><span class="nav-number">7.4.1.</span> <span class="nav-text">怎麼沒有顯示紅色框起來的部分 ?</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="coffee5427"
+      src="/images/coffee.jpg">
+  <p class="site-author-name" itemprop="name">coffee5427</p>
+  <div class="site-description" itemprop="description">hello</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coffee5427</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/code-unfold.js"></script>
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EsVt7VquH8Qj5XRh7gNJzv5E-MdYXbMMI',
+      appKey     : 'LbMjQcGf9K3OdBcxtw19tDnV',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

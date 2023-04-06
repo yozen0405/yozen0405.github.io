@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="博客設定優化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo next 設定優化">
+<meta property="og:url" content="http://example.com/2023/03/25/hexo%20next2/index.html">
+<meta property="og:site_name" content="咖啡">
+<meta property="og:description" content="博客設定優化">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/8VpYBcu.png">
+<meta property="og:image" content="https://i.imgur.com/WkCVonn.png">
+<meta property="og:image" content="https://i.imgur.com/ohpaBfP.png">
+<meta property="og:image" content="https://ithelp.ithome.com.tw/upload/images/20201003/20119486pLMHhD3k3H.png">
+<meta property="og:image" content="https://i.imgur.com/9rtDXiJ.png">
+<meta property="og:image" content="https://i.imgur.com/lfp2wYE.png">
+<meta property="og:image" content="https://i.imgur.com/UmFMIeL.png">
+<meta property="article:published_time" content="2023-03-25T13:08:32.438Z">
+<meta property="article:modified_time" content="2023-04-04T10:34:38.982Z">
+<meta property="article:author" content="coffee5427">
+<meta property="article:tag" content="教學">
+<meta property="article:tag" content="hexo next">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/8VpYBcu.png">
+
+<link rel="canonical" href="http://example.com/2023/03/25/hexo%20next2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>hexo next 設定優化 | 咖啡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">咖啡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">退役競程選手</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-rahlin1004">
+
+    <a href="https://rahlin1004.github.io/" rel="noopener" target="_blank"><i class="fa fa-th fa-fw"></i>rahlin1004</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+      <div class="links-of-author motion-element">
+          <span class="links-of-author-item">
+            <a href="https://github.com/yozen0405" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yozen0405" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://www.facebook.com/profile.php?id=100054052144225" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100054052144225" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://youtube.com/@coffee-ul9fj" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@coffee-ul9fj" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://discord.com/users/714398749388177489" title="Discord → https:&#x2F;&#x2F;discord.com&#x2F;users&#x2F;714398749388177489" rel="noopener" target="_blank"><i class="fab fa-discord fa-fw"></i></a>
+          </span>
+      </div>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/25/hexo%20next2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coffee.jpg">
+      <meta itemprop="name" content="coffee5427">
+      <meta itemprop="description" content="hello">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="咖啡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo next 設定優化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2023-03-25 21:08:32" itemprop="dateCreated datePublished" datetime="2023-03-25T21:08:32+08:00">2023-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2023-04-04 18:34:38" itemprop="dateModified" datetime="2023-04-04T18:34:38+08:00">2023-04-04</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/25/hexo%20next2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/25/hexo%20next2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">博客設定優化</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 2 篇 : 博客設定優化」的教學，以下是全部教學篇的總覽</p>
+<div class="note info no-icon">
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+          </div>
+<h2 id="下載軟體"><a href="#下載軟體" class="headerlink" title="下載軟體"></a>下載軟體</h2><h2 id="Scheme-設定"><a href="#Scheme-設定" class="headerlink" title="Scheme 設定"></a>Scheme 設定</h2><p>到 <code>hexo\themes\next\_config.yml</code> 找到以下語法</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># Scheme Settings</span></span><br><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Muse</span></span><br><span class="line"><span class="comment">#scheme: Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dark Mode</span></span><br><span class="line"><span class="attr">darkmode:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>將 <code>scheme: Gemini</code> 註解打掉並將 <code>scheme: Muse</code> 加上註解 <code>#</code></p>
+<p>開啟黑暗模式的話就把 <code>darkmode: false</code> 改成 <code>darkmode: true</code></p>
+<h2 id="頁尾設定"><a href="#頁尾設定" class="headerlink" title="頁尾設定"></a>頁尾設定</h2><h3 id="作者欄"><a href="#作者欄" class="headerlink" title="作者欄"></a>作者欄</h3><p>到 <code>hexo\config_yml</code> 找到以下代碼 :</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> </span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="attr">author:</span> <span class="string">John</span> <span class="string">Doe</span> </span><br><span class="line"><span class="attr">language:</span> <span class="string">en</span> </span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;&#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>將 author 改成你的名字</p>
+<p><img src="https://i.imgur.com/8VpYBcu.png" alt="成果"></p>
+<h3 id="去除強力驅動"><a href="#去除強力驅動" class="headerlink" title="去除強力驅動"></a>去除強力驅動</h3><p>到 <code>hexo\themes\next\layout\_partials\footer.swig</code> 找到以下代碼 :</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if theme.footer.powered %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;powered-by&quot;</span>&gt;</span>&#123;#</span><br><span class="line">  #&#125;&#123;&#123; __(&#x27;footer.powered&#x27;, &#x27;<span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;theme-link&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://hexo.io&quot;</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>&#x27;) &#125;&#125;&#123;#</span><br><span class="line">#&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>直接把上面所展示的代碼全部刪掉就可以了</p>
+<h2 id="圖片點擊放大插件"><a href="#圖片點擊放大插件" class="headerlink" title="圖片點擊放大插件"></a>圖片點擊放大插件</h2><p>到 <code>hexo\themes\next\source\lib</code> 開啟 cmd </p>
+<p>輸入以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme<span class="literal">-next</span>/theme<span class="literal">-next-fancybox3</span> fancybox</span><br></pre></td></tr></table></figure>
+<p>到 <code>hexo\themes\next\_config.yml</code> 找到以下代碼 :</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># FancyBox is a tool that offers a nice and elegant way to add zooming functionality for images.</span></span><br><span class="line"><span class="comment"># For more information: https://fancyapps.com/fancybox</span></span><br><span class="line"><span class="attr">fancybox:</span> </span><br></pre></td></tr></table></figure>
+<p>更改為 <code>fancybox: true</code> ，重新 <code>hexo clean</code>, <code>hexo s</code> 就可以了</p>
+<h3 id="圖片太透明"><a href="#圖片太透明" class="headerlink" title="圖片太透明"></a>圖片太透明</h3><p>到 <code>hexo\themes\next\source\css\_colors.styl</code> 找到以下代碼 </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: .<span class="number">75</span>;</span><br><span class="line"></span><br><span class="line">    &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">        <span class="attribute">opacity</span>: .<span class="number">9</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/WkCVonn.png" alt="將反白代碼全部刪掉" style="zoom:50%;" /></p>
+<p>將反白代碼全部刪掉就好</p>
+<h2 id="主選單設置"><a href="#主選單設置" class="headerlink" title="主選單設置"></a>主選單設置</h2><p><img src="https://i.imgur.com/ohpaBfP.png" alt="Next 主選單設置" style="zoom:70%;" /></p>
+<h3 id="新增自訂頁面"><a href="#新增自訂頁面" class="headerlink" title="新增自訂頁面"></a>新增自訂頁面</h3><p>在根目錄 (<code>hexo</code> 資料夾) 打上以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;頁面名稱（網址用）&quot;</span></span><br></pre></td></tr></table></figure>
+<p>例如我就新增了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+<h3 id="存放位置與頁面資訊"><a href="#存放位置與頁面資訊" class="headerlink" title="存放位置與頁面資訊"></a>存放位置與頁面資訊</h3><p>有別於文章與草稿有各自不同的目錄存放，<strong>頁面檔案是獨立存放於一個目錄中的</strong>，像是我剛剛建立了 about 頁面，頁面存放位置於 <code>hexo\source\about</code> 內，而檔案名稱為 <code>index.md</code>。</p>
+<p>因此如果你要將草稿建立成頁面，假設你的頁面叫做「message」，就要在 source 目錄內建立一個名為 message 的目錄，將草稿檔案移進去目錄後，將檔案名稱改為 <code>index.md</code> 即可。</p>
+<p>如果我們想使頁面不能留言，就再加上 <code>comments: false</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: about</span><br><span class="line">date: 2021-08-28 18:46:39</span><br><span class="line">comments: false </span><br></pre></td></tr></table></figure>
+<h3 id="利用主選單連到頁面"><a href="#利用主選單連到頁面" class="headerlink" title="利用主選單連到頁面"></a>利用主選單連到頁面</h3><p>開啟 <code>hexo\themes\next\_config.yml</code> 檔案並找到以下語法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="comment">#tags: /tags/ || fa fa-tags</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || fa fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure>
+<p>我們只要將 <code>#about</code> 那一行解除註解即可。不過如果你的關於頁面不是設定成 about（或許可能是你的英文名字），那就改成你設定的名稱即可。</p>
+<h3 id="標籤頁面優化"><a href="#標籤頁面優化" class="headerlink" title="標籤頁面優化"></a>標籤頁面優化</h3><p>在 <code>hexo\themes\next\layout</code> 下新建 <code>tag-color.swig</code>，貼上以下代碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">     <span class="keyword">var</span> alltags = <span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>(<span class="string">&#x27;tag-cloud-tags&#x27;</span>);</span><br><span class="line">     <span class="keyword">var</span> tags = alltags[<span class="number">0</span>].<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">var</span> i = tags.<span class="property">length</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">       <span class="keyword">var</span> golden_ratio = <span class="number">0.618033988749895</span>;</span><br><span class="line">       <span class="keyword">var</span> s = <span class="number">0.5</span>;</span><br><span class="line">       <span class="keyword">var</span> v = <span class="number">0.999</span>;</span><br><span class="line">       <span class="keyword">var</span> h = golden_ratio + <span class="title class_">Math</span>.<span class="title function_">random</span>()*<span class="number">0.8</span> - <span class="number">0.5</span>;</span><br><span class="line">       <span class="keyword">var</span> h_i = <span class="built_in">parseInt</span>(h * <span class="number">6</span>);</span><br><span class="line">       <span class="keyword">var</span> f = h * <span class="number">6</span> - h_i;</span><br><span class="line">       <span class="keyword">var</span> p = v * (<span class="number">1</span> - s);</span><br><span class="line">       <span class="keyword">var</span> q = v * (<span class="number">1</span> - f * s);</span><br><span class="line">       <span class="keyword">var</span> t = v * (<span class="number">1</span> - (<span class="number">1</span> - f) * s);</span><br><span class="line">       <span class="keyword">var</span> r, g, b;</span><br><span class="line">       <span class="keyword">switch</span> (h_i) &#123;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">              r = v;</span><br><span class="line">              g = t;</span><br><span class="line">              b = p;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">              r = q;</span><br><span class="line">              g = v;</span><br><span class="line">              b = p;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">              r = p;</span><br><span class="line">              g = v;</span><br><span class="line">              b = t;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">3</span> :</span><br><span class="line">              r = p;</span><br><span class="line">              g = q;</span><br><span class="line">              b = v;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">              r = t;</span><br><span class="line">              g = p;</span><br><span class="line">              b = v;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">              r = v;</span><br><span class="line">              g = p;</span><br><span class="line">              b = q;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          <span class="attr">default</span>:</span><br><span class="line">              r = <span class="number">1</span>;</span><br><span class="line">              g = <span class="number">1</span>;</span><br><span class="line">              b = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">       tags[i].<span class="property">style</span>.<span class="property">background</span> = <span class="string">&quot;rgba(&quot;</span>+<span class="built_in">parseInt</span>(r*<span class="number">255</span>)+<span class="string">&quot;,&quot;</span>+<span class="built_in">parseInt</span>(g*<span class="number">255</span>)+<span class="string">&quot;,&quot;</span>+<span class="built_in">parseInt</span>(b*<span class="number">255</span>)+<span class="string">&quot;,&quot;</span>+<span class="number">0.5</span>+<span class="string">&quot;)&quot;</span>;</span><br><span class="line">     &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  <span class="selector-class">.tag-cloud-tags</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">text-align</span>: center;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">counter-reset</span>: tags;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  <span class="selector-class">.tag-cloud-tags</span> <span class="selector-tag">a</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">display</span>: inline-block;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">border</span>: <span class="number">0px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">10px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">margin</span>: <span class="number">8px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">34</span>, <span class="number">34</span>, <span class="number">34</span>, <span class="number">0.8</span>);</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    </span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="comment">/* 文字前添加相应的符号，content后的Unicode可以自定义*/</span></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  <span class="selector-class">.tag-cloud-tags</span> <span class="selector-tag">a</span><span class="selector-pseudo">:before</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">font-family</span>: <span class="string">&#x27;Font Awesome 5 Free&#x27;</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">content</span>: <span class="string">&quot;\f02b&quot;</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">font-weight</span>: <span class="number">900</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  <span class="selector-class">.tag-cloud-tags</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">     <span class="attribute">box-shadow</span>: <span class="number">0px</span> <span class="number">5px</span> <span class="number">15px</span> <span class="number">0px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">4</span>);</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">     <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1.1</span>);</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">     <span class="attribute">transition-duration</span>: <span class="number">0.15s</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>在來就是要來撰寫隨機生成顏色的部分</p>
+<p>打開 <code>hexo\theme\next\layout\page.swig</code>，ctrl + F 搜尋 <code>&lt;div class=&quot;tag-cloud-title&quot;&gt;</code></p>
+<p>修改代碼如下 (<font color="red">不要直接複製</font>，左側的 <code>+</code> 代表加了這行，<code>-</code> 代表刪除這行)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">      &lt;div <span class="keyword">class</span>=<span class="string">&quot;post-body&#123;%- if page.direction and page.direction.toLowerCase() === &#x27;rtl&#x27; %&#125; rtl&#123;%- endif %&#125;&quot;</span>&gt;</span><br><span class="line">        &#123;%- <span class="keyword">if</span> page.<span class="property">type</span> === <span class="string">&#x27;tags&#x27;</span> %&#125;</span><br><span class="line">          &lt;div <span class="keyword">class</span>=<span class="string">&quot;tag-cloud&quot;</span>&gt;</span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tag-cloud-title&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              &#123;&#123; _p(&#x27;counter.tag_cloud&#x27;, site.tags.length) &#125;&#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tag-cloud-tags&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              &#123;&#123; tagcloud(&#123;</span></span><br><span class="line"><span class="language-xml">                min_font   : theme.tagcloud.min,</span></span><br><span class="line"><span class="language-xml">                max_font   : theme.tagcloud.max,</span></span><br><span class="line"><span class="language-xml">                amount     : theme.tagcloud.amount,</span></span><br><span class="line"><span class="language-xml">-                color      : true,</span></span><br><span class="line"><span class="language-xml">+                color      : false,</span></span><br><span class="line"><span class="language-xml">                start_color: theme.tagcloud.start,</span></span><br><span class="line"><span class="language-xml">                end_color  : theme.tagcloud.end&#125;)</span></span><br><span class="line"><span class="language-xml">              &#125;&#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">          &lt;/div&gt;</span><br><span class="line">+       &#123;% include <span class="string">&#x27;tag-color.swig&#x27;</span> %&#125;  </span><br></pre></td></tr></table></figure>
+<p>如果是 darkmode 嫌文字顏色不搭可以將 <code>hexo\theme\next\layout\page.swig</code> 的這兩行  :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">start_color</span>: theme.<span class="property">tagcloud</span>.<span class="property">start</span>,</span><br><span class="line">end_color  : theme.<span class="property">tagcloud</span>.<span class="property">end</span></span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">start_color</span>: white,</span><br><span class="line">end_color  : white</span><br></pre></td></tr></table></figure>
+<p>如果不想要 tag 的話可以改 <code>hexo\themes\next\layout\tag-color.swig</code> 的這裡</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 文字前添加相应的符号，content后的Unicode可以自定义*/</span></span><br><span class="line">  .<span class="property">tag</span>-cloud-tags <span class="attr">a</span>:before&#123;</span><br><span class="line">    font-<span class="attr">family</span>: <span class="string">&#x27;Font Awesome 5 Free&#x27;</span>;</span><br><span class="line">    <span class="attr">content</span>: <span class="string">&quot;\f02b&quot;</span>;</span><br><span class="line">    font-<span class="attr">weight</span>: <span class="number">900</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 文字前添加相应的符号，content后的Unicode可以自定义*/</span></span><br><span class="line">  .<span class="property">tag</span>-cloud-tags <span class="attr">a</span>:before&#123;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="搜尋功能"><a href="#搜尋功能" class="headerlink" title="搜尋功能"></a>搜尋功能</h3><h2 id="hexo-generator-searchdb"><a href="#hexo-generator-searchdb" class="headerlink" title="hexo-generator-searchdb"></a>hexo-generator-searchdb</h2><p>在根目錄 <code>hexo</code> 開啟 cmd</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>接下來因為 hexo-generator-searchdb 這個套件是針對 NexT 優化出的，所以就可以找得到相關的設置在 <code>hexo\themes\next\_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># If auto, trigger search by changing input.</span></span><br><span class="line">  <span class="comment"># If manual, trigger search by pressing enter key or search button.</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>只需要將 <code>enable</code> 改成 <code>true</code> 就可以讓自己網站資源搜尋功能囉。</p>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20201003/20119486pLMHhD3k3H.png" alt="範例"></p>
+<h2 id="閱讀進度條"><a href="#閱讀進度條" class="headerlink" title="閱讀進度條"></a>閱讀進度條</h2><p>頂部或是底部有個進度條，隨著你的閱讀進度進行滑動。</p>
+<p>在 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reading progress bar</span></span><br><span class="line"><span class="attr">reading_progress:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Available values: top | bottom</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">top</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&quot;#37c6c0&quot;</span></span><br><span class="line">  <span class="attr">height:</span> <span class="string">3px</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>enable：設定是否開啟進度條，開啟則設定 true</li>
+<li>position：設定進度條在頂部還是底部顯示</li>
+<li>color：進度條背景顏色</li>
+<li>height：進度條高度</li>
+</ul>
+<p>將 <code>enable: true</code> 即可</p>
+<h2 id="回到頂部按鈕"><a href="#回到頂部按鈕" class="headerlink" title="回到頂部按鈕"></a>回到頂部按鈕</h2><p><img src="https://i.imgur.com/9rtDXiJ.png" alt=""></p>
+<p>在 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>將 sidebar 設定為 true：設定在側邊欄的個人資訊區塊中，Social Links 下，顯示回到頂部按鈕</li>
+<li>將 scrollpercent 設定為 true：回到頂部按鈕旁加上閱讀進度百分比。</li>
+</ul>
+<h2 id="閱讀全文按鈕"><a href="#閱讀全文按鈕" class="headerlink" title="閱讀全文按鈕"></a>閱讀全文按鈕</h2><p>在文章想切斷的地方加入以下這行(獨立的一行)</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
+<div class="note info no-icon">
+            <h3 id="如何始點擊「閱讀全文」自動跳到最頂層"><a href="#如何始點擊「閱讀全文」自動跳到最頂層" class="headerlink" title="如何始點擊「閱讀全文」自動跳到最頂層?"></a>如何始點擊「閱讀全文」自動跳到最頂層?</h3><p><div class="note default">            <p>如果你覺得點擊閱讀全文就應該從切斷的地方繼續讀那可以跳過這裡</p>          </div></p><p>到 <code>hexo\themes\next\lauout\_macro\post.swig</code> 裡面找到以下語法</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">   &lt;!--/noindex--&gt;</span><br><span class="line">&#123;% elif post.excerpt %&#125;</span><br><span class="line">        &#123;&#123; post.excerpt &#125;&#125;</span><br><span class="line">        &lt;!--noindex--&gt;</span><br><span class="line">        &#123;%- if theme.read_more_btn %&#125;</span><br><span class="line">    &lt;div class=&quot;post-button&quot;&gt;</span><br><span class="line">            &lt;a class=&quot;btn&quot; href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;#more&quot; rel=&quot;contents&quot;&gt;</span><br><span class="line">        &#123;&#123; __(&#x27;post.read_more&#x27;) &#125;&#125; &amp;raquo;</span><br><span class="line">            &lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">        &#123;%- endif %&#125;</span><br><span class="line">        &lt;!--/noindex--&gt;</span><br></pre></td></tr></table></figure><p><img src="https://i.imgur.com/lfp2wYE.png" alt="刪除反白的 #more" style="zoom: 33%;" /></p><p>將 <code>#more</code> 刪掉即可 (上面圖片有反白)</p>
+          </div>
+<h2 id="程式碼區塊樣式"><a href="#程式碼區塊樣式" class="headerlink" title="程式碼區塊樣式"></a>程式碼區塊樣式</h2><h3 id="內建"><a href="#內建" class="headerlink" title="內建"></a>內建</h3><p>在 <code>hexo\themes\next\_config.yml</code> 找到以下這段語法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span></span><br><span class="line">  <span class="comment"># See: https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">  <span class="attr">highlight_theme:</span> <span class="string">normal</span></span><br><span class="line">  <span class="comment"># Add copy button on codeblock</span></span><br><span class="line">  <span class="attr">copy_button:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># Show text copy result.</span></span><br><span class="line">    <span class="attr">show_result:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># Available values: default | flat | mac</span></span><br><span class="line">    <span class="attr">style:</span></span><br></pre></td></tr></table></figure>
+<p>將 <code>highlight_theme: normal</code> 改成 <code>highlight_theme: night bright</code></p>
+<h2 id="加上數學式"><a href="#加上數學式" class="headerlink" title="加上數學式"></a>加上數學式</h2><p>在 <code>hexo\themes\next\_config.yml</code> 中：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Math Formulas Render Support</span></span><br><span class="line"><span class="attr">math:</span></span><br><span class="line">  <span class="comment"># Default (true) will load mathjax / katex script on demand.</span></span><br><span class="line">  <span class="comment"># That is it only render those page which has `mathjax: true` in Front-matter.</span></span><br><span class="line">  <span class="comment"># If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># hexo-renderer-pandoc (or hexo-renderer-kramed) requi#FC4E4E for full MathJax support.</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># See: https://mhchem.github.io/MathJax-mhchem/</span></span><br><span class="line">    <span class="attr">mhchem:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># hexo-renderer-markdown-it-plus (or hexo-renderer-markdown-it with markdown-it-katex plugin) requi#FC4E4E for full Katex support.</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># See: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex</span></span><br><span class="line">    <span class="attr">copy_tex:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>在 window powershell 打上以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo<span class="literal">-renderer-marked</span> <span class="literal">--save</span></span><br><span class="line">npm install hexo<span class="literal">-renderer-pandoc</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+<p>另外需要注意，如果置 <code>mathjax: true</code>，且使用了 <code>hexo-renderer-kramed</code> 渲染引擎，會遇到一行只能使用一個行內公式的情況。</p>
+<p>解決方法是到路徑 <code>hexo\node_modules\kramed\lib\rules\inline.js</code> 將</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inline = &#123;</span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>修改為</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inline = &#123;</span><br><span class="line">  <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>最後，記得在想使用 latex math 的檔案下，加上 <code>mathjax: true</code></p>
+<p><img src="https://i.imgur.com/UmFMIeL.png" style="zoom:67%;" /></p>
+<p>就可以使用 $\LaTeX$ 了</p>
+<h2 id="添加作者頭像"><a href="#添加作者頭像" class="headerlink" title="添加作者頭像"></a>添加作者頭像</h2><p>到 <code>hexo\themes\next\_config.yml</code> 找到下面這行</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sidebar Avatar</span></span><br><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="comment"># Replace the default image and set the url here.</span></span><br><span class="line">  <span class="attr">url:</span> </span><br><span class="line">  <span class="comment"># If true, the avatar will be dispalyed in circle.</span></span><br><span class="line">  <span class="attr">rounded:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be rotated with the cursor.</span></span><br><span class="line">  <span class="attr">rotated:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>url : 網址</li>
+<li>rounded: 是否圓框</li>
+<li>rotated: 是否在鼠標移到上面時旋轉一圈</li>
+</ul>
+<p>將自訂的圖片傳到 <code>hexo\themes\next\source\images</code> 然後在 <code>url:</code> 後面打上 <code>\images\檔案名稱 + 格式</code></p>
+<p>例如我加入了一張名為 <code>coffee.jpg</code> 的圖片，以下是我的 code</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sidebar Avatar</span></span><br><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="comment"># Replace the default image and set the url here.</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/images/coffee.jpg</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be dispalyed in circle.</span></span><br><span class="line">  <span class="attr">rounded:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be rotated with the cursor.</span></span><br><span class="line">  <span class="attr">rotated:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h2 id="增設留言區"><a href="#增設留言區" class="headerlink" title="增設留言區"></a>增設留言區</h2><p>代補</p>
+<h2 id="在文章撰寫特殊區塊"><a href="#在文章撰寫特殊區塊" class="headerlink" title="在文章撰寫特殊區塊"></a>在文章撰寫特殊區塊</h2><h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><figure class="highlight jinja"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">note</span> [class] [no-icon] %&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">文章內容</span></span><br><span class="line"><span class="language-xml"></span><span class="template-tag">&#123;% <span class="name">endnote</span> %&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[class]</code>  :  note 格式，有六種選項 : <code>default</code> , <code>primary</code>, <code>success</code>, <code>info</code>, <code>warning</code> , <code>danger</code></li>
+<li><code>[no-icon]</code> : 打上 <code>no-icon</code> 即可將 icon 去除</li>
+</ul>
+<p>以下是範例</p>
+<figure class="highlight jinja"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">note</span>  success no-icon %&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">#### 標題</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">這裡是內容</span></span><br><span class="line"><span class="language-xml">&gt; 支援引用區塊</span></span><br><span class="line"><span class="language-xml">```</span></span><br><span class="line"><span class="language-xml">也支援程式碼區塊</span></span><br><span class="line"><span class="language-xml">```</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"></span><span class="template-tag">&#123;% <span class="name">endnote</span> %&#125;</span></span><br></pre></td></tr></table></figure>
+<div class="note success no-icon">
+            <h4 id="標題"><a href="#標題" class="headerlink" title="標題"></a>標題</h4><p>這裡是內容</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">也支援程式碼區塊</span><br></pre></td></tr></table></figure><blockquote><p>支援引用區塊</p></blockquote>
+          </div>
+<h4 id="更改-note-樣式"><a href="#更改-note-樣式" class="headerlink" title="更改 note 樣式"></a>更改 note 樣式</h4><p>到 <code>hexo\themes\next\_config.yml</code> 中找到以下代碼</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Note tag (bs-callout)</span></span><br><span class="line"><span class="attr">note:</span></span><br><span class="line">  <span class="comment"># Note tag style values:</span></span><br><span class="line">  <span class="comment">#  - simple    bs-callout old alert style. Default.</span></span><br><span class="line">  <span class="comment">#  - modern    bs-callout new (v2-v3) alert style.</span></span><br><span class="line">  <span class="comment">#  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span></span><br><span class="line">  <span class="comment">#  - disabled  disable all CSS styles import of note tag.</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">flat</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span></span><br><span class="line">  <span class="comment"># Offset also applied to label tag variables. This option can work with disabled note tag.</span></span><br><span class="line">  <span class="attr">light_bg_offset:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>更改 <code>style: flat</code> 為以下選擇<ul>
+<li><code>style: modern</code></li>
+<li><code>style: simple</code></li>
+<li><code>style: flat</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="頁籤功能"><a href="#頁籤功能" class="headerlink" title="頁籤功能"></a>頁籤功能</h3><p>看一下範例 :</p>
+<div class="tabs" id="mytab"><ul class="nav-tabs"><li class="tab"><a href="#mytab-1">mytab 1</a></li><li class="tab active"><a href="#mytab-2">mytab 2</a></li><li class="tab"><a href="#mytab-3">這是頁籤三</a></li><li class="tab"><a href="#mytab-4">mytab 4</a></li><li class="tab"><a href="#mytab-5"><i class="fa fa-user"></i>個人資料</a></li></ul><div class="tab-content"><div class="tab-pane" id="mytab-1"><h4 id="頁籤一"><a href="#頁籤一" class="headerlink" title="頁籤一"></a>頁籤一</h4><p>因沒有特別命名，所以此頁籤會用 <code>mytab</code> 加上流水號。</p></div><div class="tab-pane active" id="mytab-2"><h4 id="頁籤二"><a href="#頁籤二" class="headerlink" title="頁籤二"></a>頁籤二</h4><p>開無痕進來會先看到我。</p></div><div class="tab-pane" id="mytab-3"><h4 id="頁籤三"><a href="#頁籤三" class="headerlink" title="頁籤三"></a>頁籤三</h4><p>這裡有命名，會看到頁籤名不一樣。</p></div><div class="tab-pane" id="mytab-4"><h4 id="頁籤四"><a href="#頁籤四" class="headerlink" title="頁籤四"></a>頁籤四</h4><p>可以看到這裡的流水號是從 4 開始，應該是抓 array index 作為流水號。</p></div><div class="tab-pane" id="mytab-5"><h4 id="頁籤五"><a href="#頁籤五" class="headerlink" title="頁籤五"></a>頁籤五</h4><p>這裡有加 icon，有什麼 icon 可以來<a target="_blank" rel="noopener" href="https://fontawesome.com/icons">這裡</a>找。</p></div></div></div>
+<p>在文件中打上 :</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% tabs mytab,2 %&#125; 將 tab 取名為 mytab，預設會選取第二個頁籤，使用 -1 會不選取</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="section">### 頁籤一</span></span><br><span class="line"></span><br><span class="line">因沒有特別命名，所以此頁籤會用 <span class="code">`mytab`</span> 加上流水號。</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="section">### 頁籤二</span></span><br><span class="line"></span><br><span class="line">開無痕進來會先看到我。</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab 這是頁籤三 --&gt;</span><br><span class="line"><span class="section">### 頁籤三</span></span><br><span class="line"></span><br><span class="line">這裡有命名，會看到頁籤名不一樣。</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="section">### 頁籤四</span></span><br><span class="line"></span><br><span class="line">可以看到這裡的流水號是從 4 開始，應該是抓 array index 作為流水號。</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab 個人資料 @user --&gt;</span><br><span class="line"><span class="section">### 頁籤五</span></span><br><span class="line"></span><br><span class="line">這裡有加 icon，有什麼 icon 可以來[<span class="string">這裡</span>](<span class="link">https://fontawesome.com/icons</span>)找。</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="spoiler"><a href="#spoiler" class="headerlink" title="spoiler"></a>spoiler</h3><p>在 <code>hexo</code> 開啟 <code>cmd</code> ，打上以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo<span class="literal">-sliding-spoiler</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+<p>修改 <code>hexo\node_modules\hexo-sliding-spoiler\assets\spoiler.css</code> 為以下 code</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        code
+    </div>
+    <div class='spoiler-content'>
+        <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.spoiler</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">5px</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">3px</span> solid <span class="built_in">rgb</span>(<span class="number">105</span>, <span class="number">105</span>, <span class="number">105</span>);</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span> <span class="selector-class">.spoiler-title</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">rgb</span>(<span class="number">105</span>, <span class="number">105</span>, <span class="number">105</span>);</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> -<span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">5px</span> <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">200</span>, <span class="number">200</span>, <span class="number">200</span>);</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span> <span class="selector-class">.spoiler-title</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span><span class="selector-class">.collapsed</span> <span class="selector-class">.spoiler-title</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;▲ &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span><span class="selector-class">.expanded</span> <span class="selector-class">.spoiler-title</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;▼ &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span> <span class="selector-class">.spoiler-content</span> &#123;</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">0</span>;</span><br><span class="line">    -moz-<span class="attribute">transition-duration</span>: <span class="number">0.3s</span>;</span><br><span class="line">    -webkit-<span class="attribute">transition-duration</span>: <span class="number">0.3s</span>;</span><br><span class="line">    -o-<span class="attribute">transition-duration</span>: <span class="number">0.3s</span>;</span><br><span class="line">    <span class="attribute">transition-duration</span>: <span class="number">0.3s</span>;</span><br><span class="line">    -moz-<span class="attribute">transition-timing-function</span>: ease-in-out;</span><br><span class="line">    -webkit-<span class="attribute">transition-timing-function</span>: ease-in-out;</span><br><span class="line">    -o-<span class="attribute">transition-timing-function</span>: ease-in-out;</span><br><span class="line">    <span class="attribute">transition-timing-function</span>: ease-in-out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span><span class="selector-class">.collapsed</span> <span class="selector-class">.spoiler-content</span> &#123;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span><span class="selector-class">.expanded</span> <span class="selector-class">.spoiler-content</span> &#123;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">3000px</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.spoiler</span> <span class="selector-class">.spoiler-content</span> <span class="selector-tag">p</span><span class="selector-pseudo">:first</span>-child &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+</div>
+<p>用法就是跟 note 差不多，在 markdown 文件打上</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% spoiler 顯示文字 %&#125;</span><br><span class="line">隱藏內容</span><br><span class="line">&#123;% endspoiler %&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是範例</p>
+<figure class="highlight markdown"><figcaption><span>範例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% spoiler &quot;點擊隱/顯內容&quot; %&#125;</span><br><span class="line"></span><br><span class="line">隱藏的內容</span><br><span class="line">支持 markdown 語法，代碼塊，數學式</span><br><span class="line"></span><br><span class="line"><span class="code">```c++</span></span><br><span class="line"><span class="code">#include &lt;bits/stdc++.h&gt;</span></span><br><span class="line"><span class="code">using namespace std;</span></span><br><span class="line"><span class="code">int main() &#123;</span></span><br><span class="line"><span class="code">	cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; &#x27;\n&#x27;;</span></span><br><span class="line"><span class="code">	return 0;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line"></span><br><span class="line">$$</span><br><span class="line">e^&#123;ix&#125; = cosx+isinx</span><br><span class="line">$$</span><br><span class="line"></span><br><span class="line">&#123;% endspoiler %&#125;</span><br></pre></td></tr></table></figure>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        點擊隱/顯內容
+    </div>
+    <div class='spoiler-content'>
+        <p>隱藏的內容<br>支持 markdown 語法，代碼塊，數學式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Hello World!&quot;</span> &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+e^{ix} = cosx+isinx</script>
+    </div>
+</div> 
+<h2 id="加入-emoji"><a href="#加入-emoji" class="headerlink" title="加入 emoji"></a>加入 emoji</h2><p>在 <code>hexo</code> 資料夾開啟 <code>cmd</code> 打上 :</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo<span class="literal">-filter-emoji</span></span><br></pre></td></tr></table></figure>
+<p>然後就可以在 markdown 檔案用了</p>
+<p>用法 : <code>:emoji_name:</code> 跟 discord emoji 的用法一樣</p>
+<h2 id="自訂樣式"><a href="#自訂樣式" class="headerlink" title="自訂樣式"></a>自訂樣式</h2><h3 id="建立-styles-styl"><a href="#建立-styles-styl" class="headerlink" title="建立 styles.styl"></a>建立 styles.styl</h3><div class="note info">
+            <p>若要進行下面的設置，請務必要先看怎麼建立 <code>styles.styl</code> 檔案 </p>
+          </div>
+<p> 在 <code>hexo\themes\next\_config.yml</code> 中找到</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define custom file paths.</span></span><br><span class="line"><span class="comment"># Create your custom files in site directory `source/_data` and uncomment needed files below.</span></span><br><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="comment">#sidebar: source/_data/sidebar.swig</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="comment">#variable: source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="comment">#style: source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
+<p>將 <code>#style: source/_data/styles.styl</code> 的註解弄掉</p>
+<p>然後去 <code>hexo\source</code> 裡面新建一個名為 <code>_data</code> 的資料夾 (名稱一定要是 <code>_data</code> 不可自行更換)</p>
+<p>進入你建立的 <code>_data</code> 資料夾內，建立名為 <code>styles.styl</code> 的文件</p>
+<h3 id="連結顏色更改"><a href="#連結顏色更改" class="headerlink" title="連結顏色更改"></a>連結顏色更改</h3><p>在 <code>hexo\source\_data\styles.styl</code> 加上：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 修改選中文字底色</span><br><span class="line"><span class="comment">/* webkit, opera, IE9 */</span></span><br><span class="line"><span class="selector-pseudo">::selection</span> &#123; </span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#00c4b6</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f7f7f7</span>; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* firefox */</span></span><br><span class="line">::-moz-selection &#123; </span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#00c4b6</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f7f7f7</span>;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果想修改 note 裡面的連結顏色，加上 :</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.post-body</span> <span class="selector-class">.note</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>, <span class="selector-class">.post-body</span> <span class="selector-class">.note</span> <span class="selector-tag">p</span> <span class="selector-tag">span</span><span class="selector-class">.exturl</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#0593d3</span>;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fc6423</span>;</span><br><span class="line">    <span class="attribute">border-bottom</span>: none;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#fc6423</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="反白顏色更改"><a href="#反白顏色更改" class="headerlink" title="反白顏色更改"></a>反白顏色更改</h3><p>在 <code>hexo\source\_data\styles.styl</code> 加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">::selection</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#3390FF</span>;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面只包含了文章的反白顏色 (不含 <code>note</code>)</p>
+<p>以下是 <code>note</code> 的反白顏色，一樣加在 <code>hexo\source\_data\styles.styl</code> </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.post-body</span> <span class="selector-class">.note</span> &#123;</span><br><span class="line">  <span class="selector-pseudo">::selection</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#C4E7E8</span>;</span><br><span class="line">    <span class="attribute">color</span>: black;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="加上背景圖片"><a href="#加上背景圖片" class="headerlink" title="加上背景圖片"></a>加上背景圖片</h3><p>在 <code>hexo\source\_data\styles.styl</code> 加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">      <span class="attribute">background</span>:<span class="built_in">url</span>(<span class="string">圖片網址</span>);</span><br><span class="line">      <span class="attribute">background-size</span>: cover;</span><br><span class="line">      <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">      <span class="attribute">background-attachment</span>: fixed;</span><br><span class="line">      <span class="attribute">background-position</span>:center center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果是在網路上的圖片，複製圖片位址，然後將 「圖片網址」改成你複製的圖片位址</li>
+<li>如果是在本地的圖片，存在 <code>hexo\source\images</code> (如果沒有此資料夾自己創建一個)，然後把「圖片網址」改成 <code>/images/檔案+格式</code><ul>
+<li>例如 <code>/images/img.jpg</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="文章透明"><a href="#文章透明" class="headerlink" title="文章透明"></a>文章透明</h3><p>在 <code>hexo\source\_data\styles.styl</code> 加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.95</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.side</span> bar &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.95</span>;</span><br><span class="line">  <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.popup</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.95</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中的 <code>opacity: 0.95</code> 是透明度，可以自己調整</p>
+<h3 id="修改字體顏色"><a href="#修改字體顏色" class="headerlink" title="修改字體顏色"></a>修改字體顏色</h3><p>在 <code>hexo\source\_data\styles.styl</code> 加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#EBEBEB</span>; // 全局字體顏色</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡修改了文章的字體顏色，如果想進一步修改 note 的顏色，請加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.post-body</span> <span class="selector-class">.note</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: black; // note 字體顏色</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="行內代碼塊顏色"><a href="#行內代碼塊顏色" class="headerlink" title="行內代碼塊顏色"></a>行內代碼塊顏色</h3><p>在 <code>hexo\source\_data\styles.styl</code> 加上</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">2px</span> <span class="number">4px</span>;</span><br><span class="line">  <span class="attribute">word-wrap</span>: break-word;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#c7254e</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#f9f2f4</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E5%AD%B8/" rel="tag"># 教學</a>
+              <a href="/tags/hexo-next/" rel="tag"># hexo next</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/23/hexo%20next/" rel="prev" title="hexo next 教學">
+      <i class="fa fa-chevron-left"></i> hexo next 教學
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/27/hexo%20next3/" rel="next" title="hexo next 備份原始檔到 github">
+      hexo next 備份原始檔到 github <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E8%A6%BD"><span class="nav-number">1.1.</span> <span class="nav-text"> 總覽</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BC%89%E8%BB%9F%E9%AB%94"><span class="nav-number">2.</span> <span class="nav-text">下載軟體</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scheme-%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">Scheme 設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A0%81%E5%B0%BE%E8%A8%AD%E5%AE%9A"><span class="nav-number">4.</span> <span class="nav-text">頁尾設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E8%80%85%E6%AC%84"><span class="nav-number">4.1.</span> <span class="nav-text">作者欄</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E5%BC%B7%E5%8A%9B%E9%A9%85%E5%8B%95"><span class="nav-number">4.2.</span> <span class="nav-text">去除強力驅動</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%96%E7%89%87%E9%BB%9E%E6%93%8A%E6%94%BE%E5%A4%A7%E6%8F%92%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">圖片點擊放大插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%96%E7%89%87%E5%A4%AA%E9%80%8F%E6%98%8E"><span class="nav-number">5.1.</span> <span class="nav-text">圖片太透明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%81%B8%E5%96%AE%E8%A8%AD%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">主選單設置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E8%87%AA%E8%A8%82%E9%A0%81%E9%9D%A2"><span class="nav-number">6.1.</span> <span class="nav-text">新增自訂頁面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E6%94%BE%E4%BD%8D%E7%BD%AE%E8%88%87%E9%A0%81%E9%9D%A2%E8%B3%87%E8%A8%8A"><span class="nav-number">6.2.</span> <span class="nav-text">存放位置與頁面資訊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E4%B8%BB%E9%81%B8%E5%96%AE%E9%80%A3%E5%88%B0%E9%A0%81%E9%9D%A2"><span class="nav-number">6.3.</span> <span class="nav-text">利用主選單連到頁面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%99%E7%B1%A4%E9%A0%81%E9%9D%A2%E5%84%AA%E5%8C%96"><span class="nav-number">6.4.</span> <span class="nav-text">標籤頁面優化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E5%B0%8B%E5%8A%9F%E8%83%BD"><span class="nav-number">6.5.</span> <span class="nav-text">搜尋功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo-generator-searchdb"><span class="nav-number">7.</span> <span class="nav-text">hexo-generator-searchdb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%B1%E8%AE%80%E9%80%B2%E5%BA%A6%E6%A2%9D"><span class="nav-number">8.</span> <span class="nav-text">閱讀進度條</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E9%A0%82%E9%83%A8%E6%8C%89%E9%88%95"><span class="nav-number">9.</span> <span class="nav-text">回到頂部按鈕</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%B1%E8%AE%80%E5%85%A8%E6%96%87%E6%8C%89%E9%88%95"><span class="nav-number">10.</span> <span class="nav-text">閱讀全文按鈕</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%A7%8B%E9%BB%9E%E6%93%8A%E3%80%8C%E9%96%B1%E8%AE%80%E5%85%A8%E6%96%87%E3%80%8D%E8%87%AA%E5%8B%95%E8%B7%B3%E5%88%B0%E6%9C%80%E9%A0%82%E5%B1%A4"><span class="nav-number">10.1.</span> <span class="nav-text">如何始點擊「閱讀全文」自動跳到最頂層?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%8D%80%E5%A1%8A%E6%A8%A3%E5%BC%8F"><span class="nav-number">11.</span> <span class="nav-text">程式碼區塊樣式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A7%E5%BB%BA"><span class="nav-number">11.1.</span> <span class="nav-text">內建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8A%E6%95%B8%E5%AD%B8%E5%BC%8F"><span class="nav-number">12.</span> <span class="nav-text">加上數學式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%BD%9C%E8%80%85%E9%A0%AD%E5%83%8F"><span class="nav-number">13.</span> <span class="nav-text">添加作者頭像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E8%A8%AD%E7%95%99%E8%A8%80%E5%8D%80"><span class="nav-number">14.</span> <span class="nav-text">增設留言區</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%87%E7%AB%A0%E6%92%B0%E5%AF%AB%E7%89%B9%E6%AE%8A%E5%8D%80%E5%A1%8A"><span class="nav-number">15.</span> <span class="nav-text">在文章撰寫特殊區塊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#note"><span class="nav-number">15.1.</span> <span class="nav-text">note</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%99%E9%A1%8C"><span class="nav-number">15.1.1.</span> <span class="nav-text">標題</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9-note-%E6%A8%A3%E5%BC%8F"><span class="nav-number">15.1.2.</span> <span class="nav-text">更改 note 樣式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A0%81%E7%B1%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">15.2.</span> <span class="nav-text">頁籤功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%81%E7%B1%A4%E4%B8%80"><span class="nav-number">15.2.1.</span> <span class="nav-text">頁籤一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%81%E7%B1%A4%E4%BA%8C"><span class="nav-number">15.2.2.</span> <span class="nav-text">頁籤二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%81%E7%B1%A4%E4%B8%89"><span class="nav-number">15.2.3.</span> <span class="nav-text">頁籤三</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%81%E7%B1%A4%E5%9B%9B"><span class="nav-number">15.2.4.</span> <span class="nav-text">頁籤四</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A0%81%E7%B1%A4%E4%BA%94"><span class="nav-number">15.2.5.</span> <span class="nav-text">頁籤五</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spoiler"><span class="nav-number">15.3.</span> <span class="nav-text">spoiler</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5-emoji"><span class="nav-number">16.</span> <span class="nav-text">加入 emoji</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E8%A8%82%E6%A8%A3%E5%BC%8F"><span class="nav-number">17.</span> <span class="nav-text">自訂樣式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-styles-styl"><span class="nav-number">17.1.</span> <span class="nav-text">建立 styles.styl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%A3%E7%B5%90%E9%A1%8F%E8%89%B2%E6%9B%B4%E6%94%B9"><span class="nav-number">17.2.</span> <span class="nav-text">連結顏色更改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E7%99%BD%E9%A1%8F%E8%89%B2%E6%9B%B4%E6%94%B9"><span class="nav-number">17.3.</span> <span class="nav-text">反白顏色更改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8A%E8%83%8C%E6%99%AF%E5%9C%96%E7%89%87"><span class="nav-number">17.4.</span> <span class="nav-text">加上背景圖片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E9%80%8F%E6%98%8E"><span class="nav-number">17.5.</span> <span class="nav-text">文章透明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E9%AB%94%E9%A1%8F%E8%89%B2"><span class="nav-number">17.6.</span> <span class="nav-text">修改字體顏色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E5%85%A7%E4%BB%A3%E7%A2%BC%E5%A1%8A%E9%A1%8F%E8%89%B2"><span class="nav-number">17.7.</span> <span class="nav-text">行內代碼塊顏色</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="coffee5427"
+      src="/images/coffee.jpg">
+  <p class="site-author-name" itemprop="name">coffee5427</p>
+  <div class="site-description" itemprop="description">hello</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coffee5427</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/code-unfold.js"></script>
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EsVt7VquH8Qj5XRh7gNJzv5E-MdYXbMMI',
+      appKey     : 'LbMjQcGf9K3OdBcxtw19tDnV',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

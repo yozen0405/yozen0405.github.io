@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="links vscode下載  mingw64下載 (可自行挑選下載方式) 路徑1 - google drive 路徑2 - sorceforge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vscode install">
+<meta property="og:url" content="http://example.com/2023/03/14/vscode/index.html">
+<meta property="og:site_name" content="咖啡">
+<meta property="og:description" content="links vscode下載  mingw64下載 (可自行挑選下載方式) 路徑1 - google drive 路徑2 - sorceforge">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.stack.imgur.com/KrGg0.png">
+<meta property="og:image" content="https://i.stack.imgur.com/AJnT2.png">
+<meta property="article:published_time" content="2023-03-14T15:03:11.615Z">
+<meta property="article:modified_time" content="2023-03-20T14:39:28.141Z">
+<meta property="article:author" content="coffee5427">
+<meta property="article:tag" content="教學">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.stack.imgur.com/KrGg0.png">
+
+<link rel="canonical" href="http://example.com/2023/03/14/vscode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>vscode install | 咖啡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">咖啡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">退役競程選手</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-rahlin1004">
+
+    <a href="https://rahlin1004.github.io/" rel="noopener" target="_blank"><i class="fa fa-th fa-fw"></i>rahlin1004</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+      <div class="links-of-author motion-element">
+          <span class="links-of-author-item">
+            <a href="https://github.com/yozen0405" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yozen0405" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://www.facebook.com/profile.php?id=100054052144225" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100054052144225" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://youtube.com/@coffee-ul9fj" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@coffee-ul9fj" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+          </span>
+          <span class="links-of-author-item">
+            <a href="https://discord.com/users/714398749388177489" title="Discord → https:&#x2F;&#x2F;discord.com&#x2F;users&#x2F;714398749388177489" rel="noopener" target="_blank"><i class="fab fa-discord fa-fw"></i></a>
+          </span>
+      </div>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/14/vscode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coffee.jpg">
+      <meta itemprop="name" content="coffee5427">
+      <meta itemprop="description" content="hello">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="咖啡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vscode install
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2023-03-14 23:03:11" itemprop="dateCreated datePublished" datetime="2023-03-14T23:03:11+08:00">2023-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2023-03-20 22:39:28" itemprop="dateModified" datetime="2023-03-20T22:39:28+08:00">2023-03-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/14/vscode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/14/vscode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw" title="Title">vscode下載</a> </li>
+<li>mingw64下載 (可自行挑選下載方式)<ul>
+<li><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">路徑1 - google drive</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z/download" title="Title">路徑2 - sorceforge</a></li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        影片
+    </div>
+    <div class='spoiler-content'>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/8QdDlNOMCgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+</div>
+<h2 id="windows-powershell-cmd"><a href="#windows-powershell-cmd" class="headerlink" title="windows powershell(cmd)"></a>windows powershell(cmd)</h2><ul>
+<li><code>cd &lt;folder&gt;</code> 進入folder<ul>
+<li>ex: <code>cd Desktop</code></li>
+</ul>
+</li>
+<li><code>cd ..</code> 退到上一步的folder</li>
+<li><code>mkdir &lt;name&gt;</code> 創建一個新的folder <ul>
+<li>ex:  <code>mkdir projects</code> 創建一個名叫 <code>projects</code> 的folder </li>
+</ul>
+</li>
+<li><code>ls</code> 展示目前路徑裡的檔案和資料夾</li>
+</ul>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
+<li><code>ctrl+shift+p</code> vscode搜尋欄</li>
+<li><code>g++ &lt;檔名&gt;.cpp -o &lt;名字&gt;</code> 編譯(compile) <code>&lt;檔名&gt;.cpp</code> 並且創建執行檔 <code>&lt;名字&gt;.exe</code><ul>
+<li>ex: <code>g++ main.cpp -o main</code> 編譯 <code>main.cpp</code> 並且將其程式的執行弄到 <code>main.exe</code></li>
+</ul>
+</li>
+<li><code>.\&lt;檔名&gt;.exe</code> 執行code<ul>
+<li><code>.\main.exe</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><figcaption><span>testcode</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><blockquote>
+<p>Q: 如果找不到 bin 資料夾 ?</p>
+</blockquote>
+<ul>
+<li>試試 <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1OVHKpgJB-Uqvbm7TLBlhwjtZc6Z0HCG8/view?usp=sharing" title="Title">google drive</a> 下載的方案   <ul>
+<li>如果出現類似已下指令 可能代表你忘了 save</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 如果有 save 解果出現以下指令 ?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/lib/../lib/libmingw32.a(lib64_libmingw32_a-crt0_c.o):crt0_c.c:(.text.startup+0x2e): undefined reference to `WinMain&#x27;</span><br><span class="line">collect2.exe: error: ld returned 1 exit status</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>代表你可能忘記打 <code>int main ()</code>  或是打錯</li>
+</ul>
+<blockquote>
+<p>Q: terminal那邊要 run code 有更簡潔的方式嗎 ?</p>
+</blockquote>
+<ul>
+<li>直接 <code>ctrl+shift+B</code> 就可以了 (編譯+生exe)</li>
+</ul>
+<blockquote>
+<p>Q: 我用 <code>ctrl + F5</code> 偵錯他會顯示 <code>launch.json</code> 不存在 ? </p>
+</blockquote>
+<ul>
+<li>這是正常的，因為這部影片並沒有提到 debugger 的部分</li>
+<li>debugger 詳細部分可上 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/debugging">這篇官網資料</a> 查看</li>
+</ul>
+<blockquote>
+<p>Q: terminal 出現 當 <code>C_Cpp.intelliSenseEngine</code> 設為 <code>disabled</code> 時，無法執行 IntelliSense 的相關命令</p>
+</blockquote>
+<ul>
+<li>可以參考<a target="_blank" rel="noopener" href="https://blog.csdn.net/lxj362343/article/details/125711213">這篇博客</a></li>
+</ul>
+<blockquote>
+<p>Q: 檔案執行時一直跳出 launch json 要怎麼辦 ?</p>
+</blockquote>
+<ul>
+<li>看起來你是啟動到 debug 模式了</li>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/launch-json-reference">詳細資料</a></li>
+</ul>
+<blockquote>
+<p>Q: 執行指令時，出現以下錯誤</p>
+<p><img src="https://i.stack.imgur.com/KrGg0.png" alt="error message"></p>
+</blockquote>
+<ul>
+<li>卸載 <code>clangd</code> 這個 extension</li>
+<li>點擊左上角的 <code>File → Preferences → Settings</code></li>
+<li>在搜尋欄打上 <code>Intellisense engine</code></li>
+<li>找到 <code>C_Cpp: IntelliSense Engine</code> 將其設置為 <code>Default</code> (如下圖)</li>
+</ul>
+<p><img src="https://i.stack.imgur.com/AJnT2.png" alt="將其設置為 default " style="zoom:33%;" /></p>
+<blockquote>
+<p>在影片中 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=289s">4:49</a> 秒時，它找不到 <code>C/C++: Edit Configurations (UI)</code> ?</p>
+</blockquote>
+<ul>
+<li>需要先下載好 C/C++ 的 extension (影片中的 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8QdDlNOMCgA&amp;t=267s">4:27</a>) ，才有辦法找到</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/62036568/dont-have-c-cpp-properties-json-file-in-vscode">參考資料</a></li>
+</ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E5%AD%B8/" rel="tag"># 教學</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/14/CSES2215/" rel="prev" title="CSES 2215">
+      <i class="fa fa-chevron-left"></i> CSES 2215
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/16/CRT/" rel="next" title="中國剩餘定理 不互質">
+      中國剩餘定理 不互質 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">1.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows-powershell-cmd"><span class="nav-number">2.</span> <span class="nav-text">windows powershell(cmd)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode"><span class="nav-number">3.</span> <span class="nav-text">vscode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E5%95%8F%E9%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">常見問題</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="coffee5427"
+      src="/images/coffee.jpg">
+  <p class="site-author-name" itemprop="name">coffee5427</p>
+  <div class="site-description" itemprop="description">hello</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coffee5427</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/code-unfold.js"></script>
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EsVt7VquH8Qj5XRh7gNJzv5E-MdYXbMMI',
+      appKey     : 'LbMjQcGf9K3OdBcxtw19tDnV',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
