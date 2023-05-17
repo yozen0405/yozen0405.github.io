@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CSES 1654</title>
+    <url>/2023/03/18/CSES1654/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1654/">題目</a></h2><ul>
+<li>給 $n$ 個正整數，$x_1\sim x_n$，對於每個 $x_i$ 分別計算計算符合條件的 $y$ 的數量 :<ol>
+<li>符合 $x_i \mid y = x_i$ 的 $y$ </li>
+<li>符合 $x_i \mathrel{\&amp;} y = x_i$ 的 $y$ </li>
+<li>符合 $x_i \mathrel{\&amp;} y\neq 0$ 的 $y$</li>
+</ol>
+</li>
+</ul>
+<span id="more"></span>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><h3 id="解題"><a href="#解題" class="headerlink" title="解題"></a>解題</h3><ul>
+<li>$\texttt{SOS DP}$<ul>
+<li>$O(N\times 2^N)$</li>
+<li>$N=\log n \approx 20$</li>
+</ul>
+</li>
+<li>$x \mid y = x$<ul>
+<li>$\texttt{subset of } x \texttt{ in } \text{set}(a_i)$</li>
+</ul>
+</li>
+<li>$x\mathrel{\&amp;} y = x$<ul>
+<li>觀察</li>
+<li>$x=1101001$</li>
+<li>$y=11\color{red}0\color{white}1\color{red}0\color{white}\color{red}0\color{white}1$</li>
+<li>$y$ 只能在紅色的地方從 $\color{red}0\color{white}$ 變 $1$</li>
+<li>那就代表說如果 $x,y$ 都 $0,1$ 顛倒那不就變 $y$ 要是 $x$ 的 $\texttt{subset}$ 了嗎</li>
+<li>$(\sim x)=0010110$</li>
+<li>$(\sim y)=00\color{red}1\color{white}0\color{red}1\color{white}\color{red}1\color{white}0$  </li>
+<li>$y$ 只能在紅色的地方從 $\color{red}1\color{white}$ 變 $0$</li>
+<li>答案為 $\texttt{subset of } (\sim x) \texttt{ in } \text{set}(\sim a_i)$</li>
+</ul>
+</li>
+<li>$x$ &amp; $y \neq 0$<ul>
+<li>$n-\texttt{subset of } (\sim x) \texttt{ in } \text{set}(a_i)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
+<li>$(\sim x)$ 不能在 $\texttt{C++}$ 直接用</li>
+<li>必須先另一個夠大的數其中都是 $1$<ul>
+<li>$C=\texttt{(1 &lt;&lt; 21) - 1} =\underbrace{1111…11}_{20}$</li>
+</ul>
+</li>
+<li>$(\sim x)=(C \texttt{ xor } x) $</li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> C = (<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> F[(<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) + <span class="number">2</span>], R[(<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) + <span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> a[maxn];</span><br><span class="line"></span><br><span class="line"><span class="comment">// SOS DP</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) F[a[i]]++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">21</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; <span class="number">21</span>); mask++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; i))</span><br><span class="line">                F[mask] += F[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) R[C ^ a[i]]++; <span class="comment">// only here different with F</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">21</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; <span class="number">21</span>); mask++) &#123; <span class="comment">// start from 0</span></span><br><span class="line">            <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; i))</span><br><span class="line">                R[mask] += R[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) cin &gt;&gt; a[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">build</span> ();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Q1 = F[a[i]];</span><br><span class="line">        <span class="type">int</span> Q2 = R[C ^ a[i]];</span><br><span class="line">        <span class="type">int</span> Q3 = n - F[C ^ a[i]];</span><br><span class="line">        cout &lt;&lt; Q1 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; Q2 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; Q3 &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CSES 1669</title>
+    <url>/2023/03/18/CSES1669/</url>
+    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1669/">題目</a></h2><ul>
+<li>無向圖輸出環</li>
+</ul>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
+<li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
+<li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
+</ul>
+</li>
+<li>$x_i \rightarrow  … \rightarrow  x_j \rightarrow  x_i$ 就是一個環</li>
+<li>$\texttt{backtracking}$ 輸出</li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn];</span><br><span class="line"><span class="type">int</span> pre[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u, <span class="type">int</span> par)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == par) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre[v]) &#123; <span class="comment">// if (visited[v])</span></span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            <span class="keyword">while</span> (ans.<span class="built_in">back</span>() != v) &#123; <span class="comment">// backtracking</span></span><br><span class="line">                ans.<span class="built_in">pb</span>(pre[ans.<span class="built_in">back</span>()]);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pre[v] = u;</span><br><span class="line">        <span class="built_in">dfs</span> (v, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        G[v].<span class="built_in">pb</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!pre[i]) &#123;</span><br><span class="line">            pre[i] = i;</span><br><span class="line">            <span class="built_in">dfs</span> (i, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中國剩餘定理 不互質</title>
     <url>/2023/03/16/CRT/</url>
     <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><ul>
@@ -54,28 +130,6 @@
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>整理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CSES 1669</title>
-    <url>/2023/03/18/CSES1669/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1669/">題目</a></h2><ul>
-<li>無向圖輸出環</li>
-</ul>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>可以隨意找一個點當 $\texttt{source}$ 來進行 $\texttt{dfs}$  <span id="more"></span></li>
-<li>$\texttt{dfs}$ 如果遇到 $\texttt{back edge}$ ，就找到一個環了<ul>
-<li>$\texttt{source} \rightarrow  x_1 \rightarrow  x_2 \rightarrow  …. \rightarrow  x_i \rightarrow  ….. \rightarrow   x_j \xrightarrow[\texttt{backedge}] {} x_i$</li>
-</ul>
-</li>
-<li>$x_i \rightarrow  … \rightarrow  x_j \rightarrow  x_i$ 就是一個環</li>
-<li>$\texttt{backtracking}$ 輸出</li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn];</span><br><span class="line"><span class="type">int</span> pre[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u, <span class="type">int</span> par)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == par) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (pre[v]) &#123; <span class="comment">// if (visited[v])</span></span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            <span class="keyword">while</span> (ans.<span class="built_in">back</span>() != v) &#123; <span class="comment">// backtracking</span></span><br><span class="line">                ans.<span class="built_in">pb</span>(pre[ans.<span class="built_in">back</span>()]);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.<span class="built_in">pb</span>(u);</span><br><span class="line">            cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pre[v] = u;</span><br><span class="line">        <span class="built_in">dfs</span> (v, u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        G[v].<span class="built_in">pb</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!pre[i]) &#123;</span><br><span class="line">            pre[i] = i;</span><br><span class="line">            <span class="built_in">dfs</span> (i, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>CSES</tag>
-        <tag>題解</tag>
       </tags>
   </entry>
   <entry>
@@ -159,6 +213,36 @@
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="https://abc864197532.github.io/2021/09/15/cses-additional-sol/">https://abc864197532.github.io/2021/09/15/cses-additional-sol/</a></li>
 </ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>CSES</tag>
+        <tag>題解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CSES 1678</title>
+    <url>/2023/03/17/CSES1678/</url>
+    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
+<li>有向圖輸出環</li>
+</ul>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li><p>我們想把這張圖變成一張頂環樹</p>
+<ul>
+<li>頂環樹找 $\texttt{cycle}$ 只需要用 $\texttt{topo sort}$ 把  $\texttt{in degree}=0$ 的點刪掉讓圖上只剩環即可</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">topo</span> (); <span class="comment">// 進行 topo sort</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">        tmp = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">                F[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/71330526/204506183-b92d0490-06ce-4b5b-a2cc-33246ed2ffb2.png" alt="頂環樹"></p>
+<div class="note info no-icon">
+            <p>頂環樹 $\texttt{:}$</p><ul><li>圖上只有一個環</li><li>每個 $\texttt{node}$ 的 $\texttt{out degree}$ 都是 $1$<ul><li>所以可以一直走，不可能會有一個結尾的點，也就代表有一個環</li><li>若有結尾的點代表該點 $\texttt{out degree}$ 是 $0$ ， 矛盾</li></ul></li><li>所有 $\texttt{outdegree}$ 是 $0$ 的點一直移除(像是在做 $\texttt{topo sort}$ ) 做完之後，所有人的 $\texttt{outdegree}$ 都至少 $1$ </li><li>對於每個剩下的點，把指出去的邊 ( $\texttt{out-going edge}$ ) 只保留一條 </li></ul>
+          </div>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>讓每個人的 $\texttt{out degree}$ 都恰好是 $1$ 就變成頂環樹了 </li>
+</ul>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn], R[maxn], H[maxn], F[maxn];</span><br><span class="line"><span class="type">int</span> out[maxn], in[maxn], vis[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        R[v].<span class="built_in">pb</span>(u);</span><br><span class="line">        out[u]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">topo</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span> &amp;&amp; out[i] &gt;= <span class="number">1</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[u]) &#123;</span><br><span class="line">            in[v]--;</span><br><span class="line">            <span class="keyword">if</span> (in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// print cycle</span></span><br><span class="line">    ans.<span class="built_in">pb</span>(u);</span><br><span class="line">    <span class="keyword">if</span> (vis[u]) &#123;</span><br><span class="line">        cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : F[u]) &#123;</span><br><span class="line">        <span class="built_in">dfs</span> (v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">del</span>(); <span class="comment">// delete out[i] == 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v); <span class="comment">// 頂環樹</span></span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">topo</span> (); <span class="comment">// only keep the cycle</span></span><br><span class="line">    <span class="type">int</span> tmp = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            tmp = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    F[i].<span class="built_in">pb</span>(v); <span class="comment">// only cycle graph</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (~tmp) <span class="built_in">dfs</span> (tmp);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>CSES</tag>
@@ -374,189 +458,6 @@
         <tag>整理</tag>
         <tag>XOR</tag>
         <tag>線性基</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MST</title>
-    <url>/2023/03/27/MST/</url>
-    <content><![CDATA[<h2 id="算法概要"><a href="#算法概要" class="headerlink" title="算法概要"></a>算法概要</h2><ul>
-<li>對於每個 node 周圍最小 edge 一定會再 MST 內</li>
-<li>Kruskal<ul>
-<li>每次選 <strong>整張圖</strong> 最小權的邊</li>
-</ul>
-</li>
-<li>Prim<ul>
-<li>去選從<strong>起點</strong>擴張出來的集合<strong>周圍的</strong>最小邊</li>
-</ul>
-</li>
-<li>Boruvka<ul>
-<li>對於<strong>目前選到</strong>的每個集合，選他<strong>周圍的</strong>最小邊<span id="more"></span></li>
-<li>對於這種邊數很多，但是很多邊用不到的東西 </li>
-<li>Boruvka 比較容易快速省略掉不需要的邊（只找需要的出來）</li>
-</ul>
-</li>
-</ul>
-<h3 id="習題"><a href="#習題" class="headerlink" title="習題"></a>習題</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>題目</th>
-<th>備註</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://tioj.ck.tp.edu.tw/problems/1795">https://tioj.ck.tp.edu.tw/problems/1795</a></td>
-<td><li>kruskal<br><li>最大 MST &amp; 最小 MST 應用</td>
-</tr>
-<tr>
-<td><a href="https://codeforces.com/problemset/problem/1468/J">https://codeforces.com/problemset/problem/1468/J</a></td>
-<td><li>kruskal<br><li><a href="https://blog.csdn.net/weixin_51797626/article/details/124066368?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124066368-blog-113801758.topnsimilarv1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124066368-blog-113801758.topnsimilarv1&amp;utm_relevant_index=2">題解</a></td>
-</tr>
-<tr>
-<td><a href="https://codeforces.com/problemset/problem/1095/F">https://codeforces.com/problemset/problem/1095/F</a></td>
-<td><li>kruskal<br><li>貪心<br><li>$\text{edge}_w=a_x+a_y \text{ or } w$</td>
-</tr>
-<tr>
-<td><a href="https://codeforces.com/group/GG44hyrVLY/contest/297533/problem/E">0x01 2020 花中一模 pE</a></td>
-<td><li>Boruvka<br><li>$\text{edge}_w=a_x+a_y \text{ or } w$</td>
-</tr>
-<tr>
-<td><a href="https://codeforces.com/contest/1513/problem/D">https://codeforces.com/contest/1513/problem/D</a></td>
-<td><li>kruskal 過程想法<br><li><a href="http://codepad.org/UTaMikoD">code</a></td>
-</tr>
-<tr>
-<td><a href="https://atcoder.jp/contests/abc282/tasks/abc282_e">https://atcoder.jp/contests/abc282/tasks/abc282_e</a></td>
-<td><li>kruskal<br><li>將題目轉換成 MST 問題</td>
-</tr>
-<tr>
-<td><a href="https://tioj.ck.tp.edu.tw/problems/2164">https://tioj.ck.tp.edu.tw/problems/2164</a></td>
-<td><li>prim<br><li>曼哈頓路徑</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="超級原點"><a href="#超級原點" class="headerlink" title="超級原點"></a>超級原點</h2><ul>
-<li><a href="https://codeforces.com/problemset/problem/1245/D">https://codeforces.com/problemset/problem/1245/D</a></li>
-</ul>
-<h2 id="K-度限制生成树"><a href="#K-度限制生成树" class="headerlink" title="K 度限制生成树"></a>K 度限制生成树</h2><ul>
-<li><a href="https://codeforces.com/problemset/problem/125/E">https://codeforces.com/problemset/problem/125/E</a></li>
-<li>$\texttt{Aliens}$ 優化</li>
-</ul>
-<p><img src="https://i.imgur.com/Y1gJe8e.png" style="zoom: 50%;" /></p>
-<h2 id="補圖技巧"><a href="#補圖技巧" class="headerlink" title="補圖技巧"></a>補圖技巧</h2><ul>
-<li>一般題目都會上限 $m=\text{min}(2\times 10^5, \frac{n\times (n-1)}{2})$, 其中 $m$ 代表 $(u,v)$ 沒有邊的數量</li>
-<li>維護一個還沒分到組的 <code>set</code> ,分到組時把他從 <code>set</code> 刪掉</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">    vis[u] = <span class="number">1</span>;</span><br><span class="line">    st.<span class="built_in">erase</span>(u);</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ret;</span><br><span class="line">    <span class="comment">// v 還沒加進集合的</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> v : st) &#123; <span class="comment">// 沒出現 -&gt; 有邊</span></span><br><span class="line">        <span class="keyword">if</span>(!G[u].<span class="built_in">count</span>(v)) ret.<span class="built_in">vush_back</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> ele : ret)&#123;</span><br><span class="line">        st.<span class="built_in">erase</span>(ele);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> ele : ret)&#123;</span><br><span class="line">        vis[ele]=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(ele);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="https://codeforces.com/problemset/problem/920/E">https://codeforces.com/problemset/problem/920/E</a></li>
-<li><a href="https://codeforces.com/problemset/problem/1242/B">https://codeforces.com/problemset/problem/1242/B</a></li>
-</ul>
-<h2 id="衝突邊技巧"><a href="#衝突邊技巧" class="headerlink" title="衝突邊技巧"></a>衝突邊技巧</h2><ul>
-<li>判斷 MST 是否唯一</li>
-<li>如果並非唯一, 代表它可以被相同權重的邊給替換</li>
-<li>$\Rightarrow$ 對於相同的邊一起去跑</li>
-</ul>
-<div class='spoiler collapsed'>
-    <div class='spoiler-title'>
-        範例圖
-    </div>
-    <div class='spoiler-content'>
-        <p><img src="https://i.imgur.com/ie8AaZS.png" style="zoom: 50%;" /></p>
-
-    </div>
-</div>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) par[i] = i;</span><br><span class="line">    <span class="built_in">sort</span>(E.<span class="built_in">begin</span>(), E.<span class="built_in">end</span>(), [](Edge a, Edge b) &#123; <span class="keyword">return</span> a.w &lt; b.w; &#125;);</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m;) &#123;</span><br><span class="line">        <span class="type">int</span> r = i;</span><br><span class="line">        <span class="keyword">while</span> (E[i].w == E[r + <span class="number">1</span>].w) r++; <span class="comment">//[i, r]</span></span><br><span class="line">        <span class="comment">// 判斷有多少合法邊</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= r; j++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="built_in">find</span>(E[j].u), y = <span class="built_in">find</span>(E[j].v);</span><br><span class="line">            <span class="keyword">if</span> (x == y) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">// 是 MST 有可能選到的</span></span><br><span class="line">            cnt++; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判斷真正的唯一方案數有幾個</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= r; j++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="built_in">find</span>(E[j].u), y = <span class="built_in">find</span>(E[j].v);</span><br><span class="line">            <span class="keyword">if</span> (x == y) <span class="keyword">continue</span>; <span class="comment">// 已經被併過了, 屬於同一方案</span></span><br><span class="line">            <span class="comment">// 再不同的集合, 唯一的方案</span></span><br><span class="line">            <span class="built_in">merge</span>(x, y), cnt--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ans = (合法邊) - (唯一方案數) = 其實加了是重複的方案的邊 </span></span><br><span class="line">        i = r + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="https://codeforces.com/contest/1108/problem/F">https://codeforces.com/contest/1108/problem/F</a></li>
-<li><a href="https://codeforces.com/contest/160/problem/D">https://codeforces.com/contest/160/problem/D</a><ul>
-<li>因為對於每條邊都需要看他是哪種性質</li>
-<li>所以要判斷特定的邊是否是唯一的就不能只算唯一方案數了</li>
-<li>必須用 BCC 去看如下</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://cdn.discordapp.com/attachments/972879937180692551/1014553797806272583/858cfd42763fb554.png" alt=""></p>
-<ul>
-<li><a href="https://blog.csdn.net/m0_56280274/article/details/123765300?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-123765300-blog-101834844.topnsimilarv1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-123765300-blog-101834844.topnsimilarv1&amp;utm_relevant_index=2">網址</a><ul>
-<li>他只是想看他是不是”對於跟他邊權一樣”的這些 edge ，唯一的 edge 而已</li>
-<li>所以並不需考慮之前邊權比較小的時候留下來的邊，等同於新建一張圖</li>
-</ul>
-</li>
-</ul>
-<h2 id="維護環技巧"><a href="#維護環技巧" class="headerlink" title="維護環技巧"></a>維護環技巧</h2><ul>
-<li><a href="https://codeforces.com/contest/609/problem/E">https://codeforces.com/contest/609/problem/E</a></li>
-<li><a href="https://tioj.ck.tp.edu.tw/problems/1445">https://tioj.ck.tp.edu.tw/problems/1445</a></li>
-<li>維護環技巧, 加入沒辦選到的, 刪掉環上除了他以外最大</li>
-<li>實作, LCA, kruskal, dp 配合倍增法建表</li>
-<li>次小生成樹</li>
-</ul>
-<h2 id="最小化最大最小差"><a href="#最小化最大最小差" class="headerlink" title="最小化最大最小差"></a>最小化最大最小差</h2><ul>
-<li>找一顆生成樹滿足 有選到的 (權重最大Edge) 減掉 (權重最小Edge) 要<strong>最小</strong><ul>
-<li>$\texttt{min(maxW - minW)}$</li>
-</ul>
-</li>
-<li>有兩層最大或最小可以去枚舉內層</li>
-<li>以這題來說去枚舉 $\texttt{minW}$ 對於每個 $\texttt{minW}$ 找最小的 $\texttt{maxW}$ 讓他剛好可以形成生成樹</li>
-</ul>
-<h3 id="N-1e3-M-1e4-C-1e9-1e9"><a href="#N-1e3-M-1e4-C-1e9-1e9" class="headerlink" title="N = 1e3, M = 1e4, C = -1e9~1e9"></a>N = 1e3, M = 1e4, C = -1e9~1e9</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sort</span> (Edges)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">    <span class="comment">// mn 為 E[i].w, mx 用 Kruskal 找</span></span><br><span class="line">    <span class="built_in">Dsu_init</span>(); <span class="comment">// O(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= m; j++) &#123;</span><br><span class="line">        <span class="comment">// Kruskal O(m)</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans = <span class="built_in">min</span> (ans, mx - mn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tot: O(nlgn + m^2)</span></span><br></pre></td></tr></table></figure>
-<h3 id="N-2e5-M-2e5-C-100"><a href="#N-2e5-M-2e5-C-100" class="headerlink" title="N = 2e5, M = 2e5, C = 100"></a>N = 2e5, M = 2e5, C = 100</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sort</span> (Edges) <span class="comment">// &#123;w, u, v&#125;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= C; i++) &#123;</span><br><span class="line">    <span class="type">int</span> idx = Edges.<span class="built_in">lower_bound</span>(&#123;i, <span class="number">0</span>, <span class="number">0</span>&#125;) - Edges.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="built_in">Dsu_init</span>(); <span class="comment">// O(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = idx; j &lt;= m; j++) &#123;</span><br><span class="line">        <span class="comment">// Kruskal O(m)</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans = <span class="built_in">min</span> (ans, mx - mn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tot: O(nlgn + C(n + m))</span></span><br></pre></td></tr></table></figure>
-<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><ul>
-<li>利用範圍來控制 Kruskal</li>
-</ul>
-<h2 id="最大化最小邊"><a href="#最大化最小邊" class="headerlink" title="最大化最小邊"></a>最大化最小邊</h2><ul>
-<li><a href="https://tioj.ck.tp.edu.tw/problems/1340">https://tioj.ck.tp.edu.tw/problems/1340</a></li>
-<li><a href="https://zerojudge.tw/ShowProblem?problemid=j125">https://zerojudge.tw/ShowProblem?problemid=j125</a></li>
-</ul>
-<h3 id="法1"><a href="#法1" class="headerlink" title="法1"></a>法1</h3><ul>
-<li>從小到大枚舉($\texttt{Greedy}$)</li>
-<li>$\texttt{Kruskal}$ 最大生成樹</li>
-</ul>
-<h3 id="法2"><a href="#法2" class="headerlink" title="法2"></a>法2</h3><ul>
-<li>二分搜</li>
-<li>$\texttt{DFS/BFS check}$ 只選邊權 $\le x$ 的是否能連通</li>
-</ul>
-<h2 id="額外練習"><a href="#額外練習" class="headerlink" title="額外練習"></a>額外練習</h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>題目</th>
-<th>備註</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://atcoder.jp/contests/abc210/tasks/abc210_e">https://atcoder.jp/contests/abc210/tasks/abc210_e</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="https://atcoder.jp/contests/arc076/tasks/arc076_b">https://atcoder.jp/contests/arc076/tasks/arc076_b</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="https://atcoder.jp/contests/abc270/tasks/abc270_f">https://atcoder.jp/contests/abc270/tasks/abc270_f</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="https://codeforces.com/problemset/problem/1245/D">https://codeforces.com/problemset/problem/1245/D</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1138">http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1138</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="https://judge.ioicamp.org/contests/2/problems/207">https://judge.ioicamp.org/contests/2/problems/207</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>MST</tag>
-        <tag>algo</tag>
       </tags>
   </entry>
   <entry>
@@ -825,71 +726,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo next 備份原始檔到 github</title>
-    <url>/2023/03/27/hexo%20next3/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
-<div class="note info no-icon">
-            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
-          </div>
-<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
-<p>到這個根目錄開啟 <code>cmd</code></p>
-<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
-<p>打上以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
-<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
-<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
-<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
-<p>就可以看到你 clone 的 file 了</p>
-<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<blockquote>
-<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-<div class="note info">
-            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
-          </div>
-<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<blockquote>
-<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
-</blockquote>
-<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
-<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
-<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
-<p>重新將 Next 主題下載回來：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
-        <tag>github</tag>
-        <tag>hexo next</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo next 設定優化</title>
     <url>/2023/03/25/hexo%20next2/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 2 篇 : 博客設定優化」的教學，以下是全部教學篇的總覽</p>
@@ -1122,38 +958,68 @@ e^{ix} = cosx+isinx</script>
       </tags>
   </entry>
   <entry>
-    <title>隔離採礦</title>
-    <url>/2023/03/28/%E9%9A%94%E9%9B%A2%E6%8E%A1%E7%A4%A6/</url>
-    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a>題意</h2><blockquote>
-<p>題目 : <a href="https://judge.tcirc.tw/ShowProblem?problemid=d088">https://judge.tcirc.tw/ShowProblem?problemid=d088</a></p>
+    <title>hexo next 備份原始檔到 github</title>
+    <url>/2023/03/27/hexo%20next3/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
+<div class="note info no-icon">
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+          </div>
+<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
+<p>到這個根目錄開啟 <code>cmd</code></p>
+<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
+<p>打上以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
+<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
+<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
+<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
+<p>就可以看到你 clone 的 file 了</p>
+<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<blockquote>
+<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
 </blockquote>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li>$dp[i]=dp[j]+v[i]$<ul>
-<li>$O(n^2)$</li>
-</ul>
-</li>
-<li>維護單調 $\texttt{stack}$<ul>
-<li>從底到 $\texttt{top}$ 看過去是 $\texttt{decreasing}$ (非嚴格)</li>
-</ul>
-</li>
-<li>因為如果中間要隔一個比較高的勢必要被別人支配，也就不能出現在單調 $\texttt{stack}$ 的才能去取 $\texttt{max}$</li>
-</ul>
-<span id="more"></span>
-<ul>
-<li>$h[i]$ 要轉移須找第一個比 $h[i]$  還大的 $h[j]$ 能轉移的區間就是 $[1..j]$ 的 $\texttt{dp}$ 值，除了 $[1..j]$ 所形成的單調 $\texttt{stack}$ 中的 $\texttt{dp}$ 值<ul>
-<li>因為如果在單調 $\texttt{stack}$ 內代表他支配著他左邊的區間，也就代表是只有左邊區間內的元素能轉移</li>
-<li>存在單調 $\texttt{stack}$ 內也意味著右邊的 $h$ 都比自己小</li>
-<li>代表無法跟右邊的元素中間隔一個峰</li>
-<li>找第一個比 $h[i]$  還大的用另外一個單調 $\texttt{stack}$ 維護</li>
-</ul>
-</li>
-<li>$O(n)$</li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e6</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> h[maxn], v[maxn], dp[maxn], dom[maxn];</span><br><span class="line"><span class="type">int</span> mx[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) cin &gt;&gt; h[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) cin &gt;&gt; v[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; stk;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; stk2;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="comment">// dom[i]: h[i] 支配的區間的 dp 值 max</span></span><br><span class="line">        <span class="comment">// mx[i]: 從 1..i 有被支配的 index 的 dp 值取 max</span></span><br><span class="line">        <span class="comment">// 不能支配跟 h[i] 一樣大的, 這樣會造成 h[j] 是 [j..i] 的最大值, 中間並沒有峰</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (stk.<span class="built_in">size</span> () &amp;&amp; h[stk.<span class="built_in">top</span>()] &lt; h[i]) &#123;</span><br><span class="line">            <span class="comment">// 支配 stk.top</span></span><br><span class="line">            dom[i] = <span class="built_in">max</span> (&#123;dom[i], dom[stk.<span class="built_in">top</span>()], dp[stk.<span class="built_in">top</span>()]&#125;);</span><br><span class="line">            <span class="comment">// 記得也要 max 到 dp[stk.top()] 因為 dom[j] 不會包含 dp[j]</span></span><br><span class="line">            stk.<span class="built_in">pop</span> ();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 找上一個比 h[i] strictly greater 的</span></span><br><span class="line">        <span class="keyword">while</span> (stk2.<span class="built_in">size</span> () &amp;&amp; h[stk2.<span class="built_in">top</span>()] &lt;= h[i]) &#123;</span><br><span class="line">            stk2.<span class="built_in">pop</span> ();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (stk.<span class="built_in">empty</span> ()) &#123;</span><br><span class="line">            dp[i] = v[i];</span><br><span class="line">            mx[i] = dom[i];</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (stk2.<span class="built_in">size</span>()) ret = mx[stk2.<span class="built_in">top</span>()]; <span class="comment">// stk2.top: 第一個比 h[i] 大的</span></span><br><span class="line">            mx[i] = <span class="built_in">max</span> (mx[stk.<span class="built_in">top</span>()], dom[i]); <span class="comment">// 大於等於他的 + 他支配的</span></span><br><span class="line">            dp[i] = ret + v[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        stk.<span class="built_in">push</span> (i);</span><br><span class="line">        stk2.<span class="built_in">push</span> (i);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; *<span class="built_in">max_element</span> (dp + <span class="number">1</span>, dp + n + <span class="number">1</span>) &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// push stack </span></span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
+          </div>
+<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<blockquote>
+<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
+</blockquote>
+<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
+<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
+<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
+<p>重新將 Next 主題下載回來：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
-        <tag>題解</tag>
-        <tag>單調對列</tag>
-        <tag>dp</tag>
+        <tag>教學</tag>
+        <tag>github</tag>
+        <tag>hexo next</tag>
       </tags>
   </entry>
   <entry>
@@ -1267,87 +1133,221 @@ e^{ix} = cosx+isinx</script>
       </tags>
   </entry>
   <entry>
-    <title>CSES 1654</title>
-    <url>/2023/03/18/CSES1654/</url>
-    <content><![CDATA[<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a><a href="https://cses.fi/problemset/task/1654/">題目</a></h2><ul>
-<li>給 $n$ 個正整數，$x_1\sim x_n$，對於每個 $x_i$ 分別計算計算符合條件的 $y$ 的數量 :<ol>
-<li>符合 $x_i \mid y = x_i$ 的 $y$ </li>
-<li>符合 $x_i \mathrel{\&amp;} y = x_i$ 的 $y$ </li>
-<li>符合 $x_i \mathrel{\&amp;} y\neq 0$ 的 $y$</li>
-</ol>
+    <title>隔離採礦</title>
+    <url>/2023/03/28/%E9%9A%94%E9%9B%A2%E6%8E%A1%E7%A4%A6/</url>
+    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a>題意</h2><blockquote>
+<p>題目 : <a href="https://judge.tcirc.tw/ShowProblem?problemid=d088">https://judge.tcirc.tw/ShowProblem?problemid=d088</a></p>
+</blockquote>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
+<li>$dp[i]=dp[j]+v[i]$<ul>
+<li>$O(n^2)$</li>
+</ul>
 </li>
+<li>維護單調 $\texttt{stack}$<ul>
+<li>從底到 $\texttt{top}$ 看過去是 $\texttt{decreasing}$ (非嚴格)</li>
+</ul>
+</li>
+<li>因為如果中間要隔一個比較高的勢必要被別人支配，也就不能出現在單調 $\texttt{stack}$ 的才能去取 $\texttt{max}$</li>
 </ul>
 <span id="more"></span>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><h3 id="解題"><a href="#解題" class="headerlink" title="解題"></a>解題</h3><ul>
-<li>$\texttt{SOS DP}$<ul>
-<li>$O(N\times 2^N)$</li>
-<li>$N=\log n \approx 20$</li>
+<ul>
+<li>$h[i]$ 要轉移須找第一個比 $h[i]$  還大的 $h[j]$ 能轉移的區間就是 $[1..j]$ 的 $\texttt{dp}$ 值，除了 $[1..j]$ 所形成的單調 $\texttt{stack}$ 中的 $\texttt{dp}$ 值<ul>
+<li>因為如果在單調 $\texttt{stack}$ 內代表他支配著他左邊的區間，也就代表是只有左邊區間內的元素能轉移</li>
+<li>存在單調 $\texttt{stack}$ 內也意味著右邊的 $h$ 都比自己小</li>
+<li>代表無法跟右邊的元素中間隔一個峰</li>
+<li>找第一個比 $h[i]$  還大的用另外一個單調 $\texttt{stack}$ 維護</li>
 </ul>
 </li>
-<li>$x \mid y = x$<ul>
-<li>$\texttt{subset of } x \texttt{ in } \text{set}(a_i)$</li>
+<li>$O(n)$</li>
 </ul>
-</li>
-<li>$x\mathrel{\&amp;} y = x$<ul>
-<li>觀察</li>
-<li>$x=1101001$</li>
-<li>$y=11\color{red}0\color{white}1\color{red}0\color{white}\color{red}0\color{white}1$</li>
-<li>$y$ 只能在紅色的地方從 $\color{red}0\color{white}$ 變 $1$</li>
-<li>那就代表說如果 $x,y$ 都 $0,1$ 顛倒那不就變 $y$ 要是 $x$ 的 $\texttt{subset}$ 了嗎</li>
-<li>$(\sim x)=0010110$</li>
-<li>$(\sim y)=00\color{red}1\color{white}0\color{red}1\color{white}\color{red}1\color{white}0$  </li>
-<li>$y$ 只能在紅色的地方從 $\color{red}1\color{white}$ 變 $0$</li>
-<li>答案為 $\texttt{subset of } (\sim x) \texttt{ in } \text{set}(\sim a_i)$</li>
-</ul>
-</li>
-<li>$x$ &amp; $y \neq 0$<ul>
-<li>$n-\texttt{subset of } (\sim x) \texttt{ in } \text{set}(a_i)$</li>
-</ul>
-</li>
-</ul>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
-<li>$(\sim x)$ 不能在 $\texttt{C++}$ 直接用</li>
-<li>必須先另一個夠大的數其中都是 $1$<ul>
-<li>$C=\texttt{(1 &lt;&lt; 21) - 1} =\underbrace{1111…11}_{20}$</li>
-</ul>
-</li>
-<li>$(\sim x)=(C \texttt{ xor } x) $</li>
-</ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">3e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> C = (<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> F[(<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) + <span class="number">2</span>], R[(<span class="number">1LL</span> &lt;&lt; <span class="number">21</span>) + <span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> a[maxn];</span><br><span class="line"></span><br><span class="line"><span class="comment">// SOS DP</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) F[a[i]]++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">21</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; <span class="number">21</span>); mask++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; i))</span><br><span class="line">                F[mask] += F[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) R[C ^ a[i]]++; <span class="comment">// only here different with F</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">21</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> mask = <span class="number">0</span>; mask &lt; (<span class="number">1</span> &lt;&lt; <span class="number">21</span>); mask++) &#123; <span class="comment">// start from 0</span></span><br><span class="line">            <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; i))</span><br><span class="line">                R[mask] += R[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) cin &gt;&gt; a[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">build</span> ();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> Q1 = F[a[i]];</span><br><span class="line">        <span class="type">int</span> Q2 = R[C ^ a[i]];</span><br><span class="line">        <span class="type">int</span> Q3 = n - F[C ^ a[i]];</span><br><span class="line">        cout &lt;&lt; Q1 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; Q2 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; Q3 &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(x) x.begin(), x.end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> PQ = priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt;;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e6</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> h[maxn], v[maxn], dp[maxn], dom[maxn];</span><br><span class="line"><span class="type">int</span> mx[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) cin &gt;&gt; h[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) cin &gt;&gt; v[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; stk;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; stk2;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="comment">// dom[i]: h[i] 支配的區間的 dp 值 max</span></span><br><span class="line">        <span class="comment">// mx[i]: 從 1..i 有被支配的 index 的 dp 值取 max</span></span><br><span class="line">        <span class="comment">// 不能支配跟 h[i] 一樣大的, 這樣會造成 h[j] 是 [j..i] 的最大值, 中間並沒有峰</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (stk.<span class="built_in">size</span> () &amp;&amp; h[stk.<span class="built_in">top</span>()] &lt; h[i]) &#123;</span><br><span class="line">            <span class="comment">// 支配 stk.top</span></span><br><span class="line">            dom[i] = <span class="built_in">max</span> (&#123;dom[i], dom[stk.<span class="built_in">top</span>()], dp[stk.<span class="built_in">top</span>()]&#125;);</span><br><span class="line">            <span class="comment">// 記得也要 max 到 dp[stk.top()] 因為 dom[j] 不會包含 dp[j]</span></span><br><span class="line">            stk.<span class="built_in">pop</span> ();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 找上一個比 h[i] strictly greater 的</span></span><br><span class="line">        <span class="keyword">while</span> (stk2.<span class="built_in">size</span> () &amp;&amp; h[stk2.<span class="built_in">top</span>()] &lt;= h[i]) &#123;</span><br><span class="line">            stk2.<span class="built_in">pop</span> ();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (stk.<span class="built_in">empty</span> ()) &#123;</span><br><span class="line">            dp[i] = v[i];</span><br><span class="line">            mx[i] = dom[i];</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (stk2.<span class="built_in">size</span>()) ret = mx[stk2.<span class="built_in">top</span>()]; <span class="comment">// stk2.top: 第一個比 h[i] 大的</span></span><br><span class="line">            mx[i] = <span class="built_in">max</span> (mx[stk.<span class="built_in">top</span>()], dom[i]); <span class="comment">// 大於等於他的 + 他支配的</span></span><br><span class="line">            dp[i] = ret + v[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        stk.<span class="built_in">push</span> (i);</span><br><span class="line">        stk2.<span class="built_in">push</span> (i);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; *<span class="built_in">max_element</span> (dp + <span class="number">1</span>, dp + n + <span class="number">1</span>) &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// push stack </span></span><br><span class="line">    <span class="comment">// ios::sync_with_stdio(0);</span></span><br><span class="line">    <span class="comment">// cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin &gt;&gt; t;</span></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
-        <tag>CSES</tag>
         <tag>題解</tag>
+        <tag>單調對列</tag>
+        <tag>dp</tag>
       </tags>
   </entry>
   <entry>
-    <title>CSES 1678</title>
-    <url>/2023/03/17/CSES1678/</url>
-    <content><![CDATA[<h2 id="題意"><a href="#題意" class="headerlink" title="題意"></a><a href="https://cses.fi/problemset/task/1678">題意</a></h2><ul>
-<li>有向圖輸出環</li>
+    <title>MST</title>
+    <url>/2023/03/27/MST/</url>
+    <content><![CDATA[<h2 id="算法概要"><a href="#算法概要" class="headerlink" title="算法概要"></a>算法概要</h2><ul>
+<li>對於每個 node 周圍最小 edge 一定會再 MST 內</li>
+<li>Kruskal<ul>
+<li>每次選 <strong>整張圖</strong> 最小權的邊</li>
 </ul>
-<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><ul>
-<li><p>我們想把這張圖變成一張頂環樹</p>
-<ul>
-<li>頂環樹找 $\texttt{cycle}$ 只需要用 $\texttt{topo sort}$ 把  $\texttt{in degree}=0$ 的點刪掉讓圖上只剩環即可</li>
+</li>
+<li>Prim<ul>
+<li>去選從<strong>起點</strong>擴張出來的集合<strong>周圍的</strong>最小邊</li>
+</ul>
+</li>
+<li>Boruvka<ul>
+<li>對於<strong>目前選到</strong>的每個集合，選他<strong>周圍的</strong>最小邊<span id="more"></span></li>
+<li>對於這種邊數很多，但是很多邊用不到的東西 </li>
+<li>Boruvka 比較容易快速省略掉不需要的邊（只找需要的出來）</li>
 </ul>
 </li>
 </ul>
-<span id="more"></span>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">topo</span> (); <span class="comment">// 進行 topo sort</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">        tmp = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123; <span class="comment">// 環上的點的 in 跟 out 都會被保留</span></span><br><span class="line">                F[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://user-images.githubusercontent.com/71330526/204506183-b92d0490-06ce-4b5b-a2cc-33246ed2ffb2.png" alt="頂環樹"></p>
-<div class="note info no-icon">
-            <p>頂環樹 $\texttt{:}$</p><ul><li>圖上只有一個環</li><li>每個 $\texttt{node}$ 的 $\texttt{out degree}$ 都是 $1$<ul><li>所以可以一直走，不可能會有一個結尾的點，也就代表有一個環</li><li>若有結尾的點代表該點 $\texttt{out degree}$ 是 $0$ ， 矛盾</li></ul></li><li>所有 $\texttt{outdegree}$ 是 $0$ 的點一直移除(像是在做 $\texttt{topo sort}$ ) 做完之後，所有人的 $\texttt{outdegree}$ 都至少 $1$ </li><li>對於每個剩下的點，把指出去的邊 ( $\texttt{out-going edge}$ ) 只保留一條 </li></ul>
-          </div>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v);</span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>讓每個人的 $\texttt{out degree}$ 都恰好是 $1$ 就變成頂環樹了 </li>
+<h3 id="習題"><a href="#習題" class="headerlink" title="習題"></a>習題</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>題目</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://tioj.ck.tp.edu.tw/problems/1795">https://tioj.ck.tp.edu.tw/problems/1795</a></td>
+<td><li>kruskal<br><li>最大 MST &amp; 最小 MST 應用</td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/problemset/problem/1468/J">https://codeforces.com/problemset/problem/1468/J</a></td>
+<td><li>kruskal<br><li><a href="https://blog.csdn.net/weixin_51797626/article/details/124066368?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124066368-blog-113801758.topnsimilarv1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124066368-blog-113801758.topnsimilarv1&amp;utm_relevant_index=2">題解</a></td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/problemset/problem/1095/F">https://codeforces.com/problemset/problem/1095/F</a></td>
+<td><li>kruskal<br><li>貪心<br><li>$\text{edge}_w=a_x+a_y \text{ or } w$</td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/group/GG44hyrVLY/contest/297533/problem/E">0x01 2020 花中一模 pE</a></td>
+<td><li>Boruvka<br><li>$\text{edge}_w=a_x+a_y \text{ or } w$</td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/contest/1513/problem/D">https://codeforces.com/contest/1513/problem/D</a></td>
+<td><li>kruskal 過程想法<br><li><a href="http://codepad.org/UTaMikoD">code</a></td>
+</tr>
+<tr>
+<td><a href="https://atcoder.jp/contests/abc282/tasks/abc282_e">https://atcoder.jp/contests/abc282/tasks/abc282_e</a></td>
+<td><li>kruskal<br><li>將題目轉換成 MST 問題</td>
+</tr>
+<tr>
+<td><a href="https://tioj.ck.tp.edu.tw/problems/2164">https://tioj.ck.tp.edu.tw/problems/2164</a></td>
+<td><li>prim<br><li>曼哈頓路徑</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="超級原點"><a href="#超級原點" class="headerlink" title="超級原點"></a>超級原點</h2><ul>
+<li><a href="https://codeforces.com/problemset/problem/1245/D">https://codeforces.com/problemset/problem/1245/D</a></li>
 </ul>
-<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mk make_pair</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">2e18</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[maxn], R[maxn], H[maxn], F[maxn];</span><br><span class="line"><span class="type">int</span> out[maxn], in[maxn], vis[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">        G[u].<span class="built_in">pb</span>(v);</span><br><span class="line">        R[v].<span class="built_in">pb</span>(u);</span><br><span class="line">        out[u]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] == <span class="number">0</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : R[u]) &#123;</span><br><span class="line">            out[v]--;</span><br><span class="line">            <span class="keyword">if</span> (out[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">topo</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span> &amp;&amp; out[i] &gt;= <span class="number">1</span>) q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[u]) &#123;</span><br><span class="line">            in[v]--;</span><br><span class="line">            <span class="keyword">if</span> (in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span> <span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// print cycle</span></span><br><span class="line">    ans.<span class="built_in">pb</span>(u);</span><br><span class="line">    <span class="keyword">if</span> (vis[u]) &#123;</span><br><span class="line">        cout &lt;&lt; ans.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ele : ans) cout &lt;&lt; ele &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : F[u]) &#123;</span><br><span class="line">        <span class="built_in">dfs</span> (v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">del</span>(); <span class="comment">// delete out[i] == 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : G[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    H[i].<span class="built_in">pb</span>(v); <span class="comment">// 頂環樹</span></span><br><span class="line">                    in[v]++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">topo</span> (); <span class="comment">// only keep the cycle</span></span><br><span class="line">    <span class="type">int</span> tmp = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (out[i] &gt;= <span class="number">1</span> &amp;&amp; in[i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            tmp = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> v : H[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (out[v] &gt;= <span class="number">1</span> &amp;&amp; in[v] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    F[i].<span class="built_in">pb</span>(v); <span class="comment">// only cycle graph</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (~tmp) <span class="built_in">dfs</span> (tmp);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;IMPOSSIBLE\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">init</span> ();</span><br><span class="line">    <span class="built_in">solve</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="K-度限制生成树"><a href="#K-度限制生成树" class="headerlink" title="K 度限制生成树"></a>K 度限制生成树</h2><ul>
+<li><a href="https://codeforces.com/problemset/problem/125/E">https://codeforces.com/problemset/problem/125/E</a></li>
+<li>$\texttt{Aliens}$ 優化</li>
+</ul>
+<p><img src="https://i.imgur.com/Y1gJe8e.png" style="zoom: 50%;" /></p>
+<h2 id="補圖技巧"><a href="#補圖技巧" class="headerlink" title="補圖技巧"></a>補圖技巧</h2><ul>
+<li>一般題目都會上限 $m=\text{min}(2\times 10^5, \frac{n\times (n-1)}{2})$, 其中 $m$ 代表 $(u,v)$ 沒有邊的數量</li>
+<li>維護一個還沒分到組的 <code>set</code> ,分到組時把他從 <code>set</code> 刪掉</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">    vis[u] = <span class="number">1</span>;</span><br><span class="line">    st.<span class="built_in">erase</span>(u);</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ret;</span><br><span class="line">    <span class="comment">// v 還沒加進集合的</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> v : st) &#123; <span class="comment">// 沒出現 -&gt; 有邊</span></span><br><span class="line">        <span class="keyword">if</span>(!G[u].<span class="built_in">count</span>(v)) ret.<span class="built_in">vush_back</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> ele : ret)&#123;</span><br><span class="line">        st.<span class="built_in">erase</span>(ele);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> ele : ret)&#123;</span><br><span class="line">        vis[ele]=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(ele);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://codeforces.com/problemset/problem/920/E">https://codeforces.com/problemset/problem/920/E</a></li>
+<li><a href="https://codeforces.com/problemset/problem/1242/B">https://codeforces.com/problemset/problem/1242/B</a></li>
+</ul>
+<h2 id="衝突邊技巧"><a href="#衝突邊技巧" class="headerlink" title="衝突邊技巧"></a>衝突邊技巧</h2><ul>
+<li>判斷 MST 是否唯一</li>
+<li>如果並非唯一, 代表它可以被相同權重的邊給替換</li>
+<li>$\Rightarrow$ 對於相同的邊一起去跑</li>
+</ul>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        範例圖
+    </div>
+    <div class='spoiler-content'>
+        <p><img src="https://i.imgur.com/ie8AaZS.png" style="zoom: 50%;" /></p>
+
+    </div>
+</div>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) par[i] = i;</span><br><span class="line">    <span class="built_in">sort</span>(E.<span class="built_in">begin</span>(), E.<span class="built_in">end</span>(), [](Edge a, Edge b) &#123; <span class="keyword">return</span> a.w &lt; b.w; &#125;);</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m;) &#123;</span><br><span class="line">        <span class="type">int</span> r = i;</span><br><span class="line">        <span class="keyword">while</span> (E[i].w == E[r + <span class="number">1</span>].w) r++; <span class="comment">//[i, r]</span></span><br><span class="line">        <span class="comment">// 判斷有多少合法邊</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= r; j++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="built_in">find</span>(E[j].u), y = <span class="built_in">find</span>(E[j].v);</span><br><span class="line">            <span class="keyword">if</span> (x == y) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">// 是 MST 有可能選到的</span></span><br><span class="line">            cnt++; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判斷真正的唯一方案數有幾個</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= r; j++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="built_in">find</span>(E[j].u), y = <span class="built_in">find</span>(E[j].v);</span><br><span class="line">            <span class="keyword">if</span> (x == y) <span class="keyword">continue</span>; <span class="comment">// 已經被併過了, 屬於同一方案</span></span><br><span class="line">            <span class="comment">// 再不同的集合, 唯一的方案</span></span><br><span class="line">            <span class="built_in">merge</span>(x, y), cnt--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ans = (合法邊) - (唯一方案數) = 其實加了是重複的方案的邊 </span></span><br><span class="line">        i = r + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://codeforces.com/contest/1108/problem/F">https://codeforces.com/contest/1108/problem/F</a></li>
+<li><a href="https://codeforces.com/contest/160/problem/D">https://codeforces.com/contest/160/problem/D</a><ul>
+<li>因為對於每條邊都需要看他是哪種性質</li>
+<li>所以要判斷特定的邊是否是唯一的就不能只算唯一方案數了</li>
+<li>必須用 BCC 去看如下</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.discordapp.com/attachments/972879937180692551/1014553797806272583/858cfd42763fb554.png" alt=""></p>
+<ul>
+<li><a href="https://blog.csdn.net/m0_56280274/article/details/123765300?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-123765300-blog-101834844.topnsimilarv1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-123765300-blog-101834844.topnsimilarv1&amp;utm_relevant_index=2">網址</a><ul>
+<li>他只是想看他是不是”對於跟他邊權一樣”的這些 edge ，唯一的 edge 而已</li>
+<li>所以並不需考慮之前邊權比較小的時候留下來的邊，等同於新建一張圖</li>
+</ul>
+</li>
+</ul>
+<h2 id="維護環技巧"><a href="#維護環技巧" class="headerlink" title="維護環技巧"></a>維護環技巧</h2><ul>
+<li><a href="https://codeforces.com/contest/609/problem/E">https://codeforces.com/contest/609/problem/E</a></li>
+<li><a href="https://tioj.ck.tp.edu.tw/problems/1445">https://tioj.ck.tp.edu.tw/problems/1445</a></li>
+<li>維護環技巧, 加入沒辦選到的, 刪掉環上除了他以外最大</li>
+<li>實作, LCA, kruskal, dp 配合倍增法建表</li>
+<li>次小生成樹</li>
+</ul>
+<h2 id="最小化最大最小差"><a href="#最小化最大最小差" class="headerlink" title="最小化最大最小差"></a>最小化最大最小差</h2><ul>
+<li>找一顆生成樹滿足 有選到的 (權重最大Edge) 減掉 (權重最小Edge) 要<strong>最小</strong><ul>
+<li>$\texttt{min(maxW - minW)}$</li>
+</ul>
+</li>
+<li>有兩層最大或最小可以去枚舉內層</li>
+<li>以這題來說去枚舉 $\texttt{minW}$ 對於每個 $\texttt{minW}$ 找最小的 $\texttt{maxW}$ 讓他剛好可以形成生成樹</li>
+</ul>
+<h3 id="N-1e3-M-1e4-C-1e9-1e9"><a href="#N-1e3-M-1e4-C-1e9-1e9" class="headerlink" title="N = 1e3, M = 1e4, C = -1e9~1e9"></a>N = 1e3, M = 1e4, C = -1e9~1e9</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sort</span> (Edges)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">    <span class="comment">// mn 為 E[i].w, mx 用 Kruskal 找</span></span><br><span class="line">    <span class="built_in">Dsu_init</span>(); <span class="comment">// O(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= m; j++) &#123;</span><br><span class="line">        <span class="comment">// Kruskal O(m)</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans = <span class="built_in">min</span> (ans, mx - mn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tot: O(nlgn + m^2)</span></span><br></pre></td></tr></table></figure>
+<h3 id="N-2e5-M-2e5-C-100"><a href="#N-2e5-M-2e5-C-100" class="headerlink" title="N = 2e5, M = 2e5, C = 100"></a>N = 2e5, M = 2e5, C = 100</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sort</span> (Edges) <span class="comment">// &#123;w, u, v&#125;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= C; i++) &#123;</span><br><span class="line">    <span class="type">int</span> idx = Edges.<span class="built_in">lower_bound</span>(&#123;i, <span class="number">0</span>, <span class="number">0</span>&#125;) - Edges.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="built_in">Dsu_init</span>(); <span class="comment">// O(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = idx; j &lt;= m; j++) &#123;</span><br><span class="line">        <span class="comment">// Kruskal O(m)</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans = <span class="built_in">min</span> (ans, mx - mn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tot: O(nlgn + C(n + m))</span></span><br></pre></td></tr></table></figure>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><ul>
+<li>利用範圍來控制 Kruskal</li>
+</ul>
+<h2 id="最大化最小邊"><a href="#最大化最小邊" class="headerlink" title="最大化最小邊"></a>最大化最小邊</h2><ul>
+<li><a href="https://tioj.ck.tp.edu.tw/problems/1340">https://tioj.ck.tp.edu.tw/problems/1340</a></li>
+<li><a href="https://zerojudge.tw/ShowProblem?problemid=j125">https://zerojudge.tw/ShowProblem?problemid=j125</a></li>
+</ul>
+<h3 id="法1"><a href="#法1" class="headerlink" title="法1"></a>法1</h3><ul>
+<li>從小到大枚舉($\texttt{Greedy}$)</li>
+<li>$\texttt{Kruskal}$ 最大生成樹</li>
+</ul>
+<h3 id="法2"><a href="#法2" class="headerlink" title="法2"></a>法2</h3><ul>
+<li>二分搜</li>
+<li>$\texttt{DFS/BFS check}$ 只選邊權 $\le x$ 的是否能連通</li>
+</ul>
+<h2 id="額外練習"><a href="#額外練習" class="headerlink" title="額外練習"></a>額外練習</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>題目</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://atcoder.jp/contests/abc210/tasks/abc210_e">https://atcoder.jp/contests/abc210/tasks/abc210_e</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://atcoder.jp/contests/arc076/tasks/arc076_b">https://atcoder.jp/contests/arc076/tasks/arc076_b</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://atcoder.jp/contests/abc270/tasks/abc270_f">https://atcoder.jp/contests/abc270/tasks/abc270_f</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://codeforces.com/problemset/problem/1245/D">https://codeforces.com/problemset/problem/1245/D</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1138">http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1138</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://judge.ioicamp.org/contests/2/problems/207">https://judge.ioicamp.org/contests/2/problems/207</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
-        <tag>CSES</tag>
-        <tag>題解</tag>
+        <tag>MST</tag>
+        <tag>algo</tag>
       </tags>
   </entry>
 </search>

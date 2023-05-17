@@ -18,28 +18,6 @@
   --btn-default-hover-color: #fff;
   --btn-default-hover-border-color: #222;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --body-bg-color: #282828;
-    --content-bg-color: #333;
-    --card-bg-color: #555;
-    --text-color: #ccc;
-    --blockquote-color: #bbb;
-    --link-color: $white;
-    --link-hover-color: $white;
-    --brand-color: #ddd;
-    --brand-hover-color: #ddd;
-    --table-row-odd-bg-color: #282828;
-    --table-row-hover-bg-color: #363636;
-    --menu-item-bg-color: #555;
-    --btn-default-bg: #222;
-    --btn-default-color: #ccc;
-    --btn-default-border-color: #555;
-    --btn-default-hover-bg: #666;
-    --btn-default-hover-color: #ccc;
-    --btn-default-hover-border-color: #666;
-  }
-}
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -1256,7 +1234,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #796bff;
+  background: #0e71ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2835,66 +2813,4 @@ mjx-container + br {
   .pagination {
     margin: 8px 0 0;
   }
-}
-::selection {
-  background: #2d8df7;
-  color: #fff;
-}
-body {
-  background: url("https://images5.alphacoders.com/737/737385.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center center;
-  color: #ebebeb;
-}
-.blockquote-center:before {
-  border-top: 1px solid #111;
-  filter: invert(100%);
-}
-.blockquote-center:after {
-  border-bottom: 1px solid #111;
-  filter: invert(100%);
-}
-blockquote {
-  color: light #808080;
-}
-.post-body .note {
-  color: #000;
-}
-.post-body .note ::selection {
-  background: #2d8df7;
-  color: #fff;
-}
-.post-body .note blockquote {
-  color: #6e6e6e;
-}
-.post-body a:not(.btn) {
-  color: #7bf;
-  border-bottom: none;
-}
-.post-body a:not(.btn):hover {
-  border-bottom: none;
-  border-bottom: 2px solid #7bf;
-}
-.post-body .note p a,
-.post-body .note p span.exturl,
-.post-body .note a,
-span.exturl {
-  color: #0593d3;
-  border-bottom: none;
-}
-.post-body .note p a:hover,
-.post-body .note p span.exturl:hover,
-.post-body .note a:hover,
-span.exturl:hover {
-  border-bottom: none;
-  border-bottom: 2px solid #0593d3;
-}
-.post-body .image-caption,
-.post-body .figure .caption {
-  margin: 10px auto 15px;
-}
-.post-body h3 {
-  border-bottom: none;
 }
