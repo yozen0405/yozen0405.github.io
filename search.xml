@@ -173,6 +173,71 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo next 備份原始檔到 github</title>
+    <url>/2023/03/27/hexo%20next3/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
+<div class="note info no-icon">
+            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
+          </div>
+<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
+<p>到這個根目錄開啟 <code>cmd</code></p>
+<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
+<p>打上以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
+<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
+<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
+<p>然後再打上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
+<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
+<p>就可以看到你 clone 的 file 了</p>
+<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<blockquote>
+<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
+          </div>
+<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
+<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
+<blockquote>
+<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
+</blockquote>
+<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
+<p>例如我的就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
+<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
+<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
+<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
+<p>重新將 Next 主題下載回來：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>教學</tag>
+        <tag>github</tag>
+        <tag>hexo next</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo next 設定優化</title>
     <url>/2023/03/25/hexo%20next2/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 2 篇 : 博客設定優化」的教學，以下是全部教學篇的總覽</p>
@@ -401,71 +466,6 @@ e^{ix} = cosx+isinx</script>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>教學</tag>
-        <tag>hexo next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo next 備份原始檔到 github</title>
-    <url>/2023/03/27/hexo%20next3/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是「第 3 篇 : 備份原始檔到 github」的教學，讓你可以在不同電腦都可以編輯，以下是全部教學篇的總覽</p>
-<div class="note info no-icon">
-            <h3 id="總覽"><a href="#總覽" class="headerlink" title=" 總覽"></a><i class="fa fa-bars"></i> 總覽</h3><ul><li><a href="/2023/03/23/hexo%20next/">第 1 篇 : 架設博客</a></li><li><a href="/2023/03/25/hexo%20next2/">第 2 篇 : 博客設定優化</a></li><li><a href="/2023/03/27/hexo%20next3/">第 3 篇 : 備份原始檔到 github</a></li></ul>
-          </div>
-<h2 id="備份到-github"><a href="#備份到-github" class="headerlink" title="備份到 github"></a>備份到 github</h2><p>我們先進入到你的博客根目錄 (例如我的是名為 <code>hexo</code> 的資料夾)</p>
-<p>到這個根目錄開啟 <code>cmd</code></p>
-<p><img src="https://i.imgur.com/oBbc0ej.png" alt = "在 hexo 開啟 cmd" style="zoom:73%;" /></p>
-<p>打上以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>接著去你的 github.io，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>再來繼續在 cmd 打上以下指令，會顯示很多 warnings，是正常的，不用理他</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;自訂訊息&#x27;</span><br></pre></td></tr></table></figure>
-<p>「自訂訊息」的部分可以自己取，代表的是現在你目前是第幾個 update，或是第幾個 version 等等</p>
-<p>例如我們是第一次傳到 github 所以我就把它叫做</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &#x27;Initial commit&#x27;</span><br></pre></td></tr></table></figure>
-<p>然後再打上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p>然後你就去你的 github.io 的 github file 介面點擊 master (如圖)</p>
-<p><img src="https://i.imgur.com/FT5GBzb.png" alt="點擊左上角的 gh-pages 再點 master"></p>
-<p>就可以看到你 clone 的 file 了</p>
-<h2 id="從-github-拉到本地端"><a href="#從-github-拉到本地端" class="headerlink" title="從 github 拉到本地端"></a>從 github 拉到本地端</h2><h3 id="已有套件"><a href="#已有套件" class="headerlink" title="已有套件"></a>已有套件</h3><p>如果在電腦上已經寫過博客，那麼可以在已有的工作目錄下同步之前寫的博客<br>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<blockquote>
-<p>記得如果你有裝什麼新的插件而這台電腦沒有的話要再安裝一下</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-<div class="note info">
-            <p>因為你已有套件，所以直接跳到<a href="/2023/03/27/hexo%20next3/#成果">成果這裡</a></p>
-          </div>
-<h3 id="沒有套件"><a href="#沒有套件" class="headerlink" title="沒有套件"></a>沒有套件</h3><h4 id="clone-到本地端"><a href="#clone-到本地端" class="headerlink" title="clone 到本地端"></a>clone 到本地端</h4><p>去你的 github.io 的 github file 頁面，按下 <code>Code</code> 這個按鈕，然後按複製</p>
-<p><img src="https://i.imgur.com/PFy0FYG.png" alt="按下 Code 這個按鈕，然後按複製" style="zoom:50%;" /></p>
-<blockquote>
-<p>如果你是新電腦，那也還需要重新下載我<a href="/2023/03/23/hexo%20next/">第一篇</a>教學所提到的軟體，git 也要重新登入</p>
-</blockquote>
-<p>開一個新的資料夾，名字自取，然後在這個資料夾開啟 cmd 輸入以下指令 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone 你剛剛複製的把它覆蓋在這裡</span><br></pre></td></tr></table></figure>
-<p>例如我的就是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/yozen0405/yozen0405.github.io.git</span><br></pre></td></tr></table></figure>
-<p>然後你會看到裡面出現了一個「你的名字.github.io」的資料夾，我們要輸入以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 你的名字.github.io</span><br><span class="line">git checkout master </span><br></pre></td></tr></table></figure>
-<p>切換好後，如果檔案由原先的各個被產生的靜態網頁變成像是過去在本機設定 Hexo 時的那些檔案，就代表切換成功囉！</p>
-<h4 id="將套件與佈景安裝回來"><a href="#將套件與佈景安裝回來" class="headerlink" title="將套件與佈景安裝回來"></a>將套件與佈景安裝回來</h4><p>node_modules 目錄放置的是我們平常安裝的套件，因為備份時沒有備份到它，此時我們要重新安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<p>執行完指令後，開啟根目錄下的 <code>package.json</code> 檔案，紀錄我們過去安裝的一些套件，也請將這些套件安裝回來。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git install 套件名稱 --save</span><br></pre></td></tr></table></figure>
-<p>重新將 Next 主題下載回來：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>在你博客根目錄 (我的根目錄叫 <code>hexo</code> 的資料夾)下開啟 cmd，輸入以下指令</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>就可以看看是否有還原成功囉！不過一些設定可能還是要再做一下，並且檢查是否還有一些地方需要進行修正。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>教學</tag>
-        <tag>github</tag>
         <tag>hexo next</tag>
       </tags>
   </entry>
